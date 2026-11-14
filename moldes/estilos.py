@@ -158,7 +158,7 @@ STITCHES = [("Ponto atrás", "nas linhas e nas letras"), ("Nó francês", "nas b
 STEPS = [("Imprima", "Em papel firme (180 g ou mais), em tamanho real."), ("Fure", "Sobre um EVA ou isopor, fure cada pontinho com a agulha."), ("Borde", "Siga as linhas com a cor indicada, ponto a ponto.")]
 
 
-def page(key, d=None, title=None, tagline=None, nivel="Fácil"):
+def page(key, d=None, title=None, tagline=None, nivel="Fácil", tamanho="A6 · 10,5 × 14,8 cm"):
     st = STYLES[key]; d = d or st["design"]()
     tf, tw, bf = st["title_font"], st["title_weight"], st["body_font"]
     upper = key == "nordico"
@@ -200,7 +200,7 @@ h1{{position:absolute;top:{'18mm' if upper else '17mm'};left:0;right:0;margin:0;
 <div class="brand">Ateliê de Natal · moldes de bordado em papel</div>
 <h1>{title}</h1>
 <div class="sub">{tagline}</div>
-<div class="chips"><span>Nível {nivel.lower()}</span><span>Tamanho A6 · 10,5 × 14,8 cm</span><span>{len(d.holes) + len(d.knots)} furos</span></div>
+<div class="chips"><span>Nível {nivel.lower()}</span><span>Tamanho {tamanho}</span><span>{len(d.holes) + len(d.knots)} furos</span></div>
 <div class="lbl" style="left:12mm;top:{lt}">Molde para furar</div>
 <svg class="card" style="left:12mm;top:61mm;width:105mm;height:148mm" viewBox="0 0 105 148">{svg_template(d, st['pal'], st['card_bg'], st['frame'])}</svg>
 <div class="lbl" style="left:126mm;top:{lt}">Como fica bordado</div>

@@ -461,6 +461,9 @@ def link_holes(pts, maxd, near):
 # ---------------------------------------------------------------- SVG
 def svg_template(d, pal, card_bg, frame_color):
     out = [f'<rect x="0" y="0" width="105" height="148" rx="2" fill="{card_bg}"/>']
+    for cx, cy, r in getattr(d, "cuts", []):
+        out.append(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="#fff" stroke="#8a8a8a" stroke-width=".35" stroke-dasharray="1.6 1.2"/>')
+        out.append(f'<text x="{cx}" y="{cy + r + 5}" font-size="2.7" text-anchor="middle" fill="#8a8a8a" font-family="Nunito">✂ recorte na linha tracejada</text>')
     for i, j, c in d.stitches:
         a, b = d.holes[i], d.holes[j]
         out.append(f'<line x1="{a[0]:.2f}" y1="{a[1]:.2f}" x2="{b[0]:.2f}" y2="{b[1]:.2f}" stroke="{pal[c]}" stroke-width=".32" stroke-opacity=".55" stroke-linecap="round"/>')
@@ -469,13 +472,17 @@ def svg_template(d, pal, card_bg, frame_color):
         out.append(f'<circle cx="{x:.2f}" cy="{y:.2f}" r=".55" fill="#2b2622"/>')
     for x, y, c in d.holes:
         out.append(f'<circle cx="{x:.2f}" cy="{y:.2f}" r=".5" fill="#2b2622"/>')
-    out.append(f'<rect x="1.2" y="1.2" width="102.6" height="145.6" rx="2" fill="none" stroke="{frame_color}" stroke-width=".3" stroke-dasharray="1.6 1.2"/>')
+    if not getattr(d, "cuts", []):
+        out.append(f'<rect x="1.2" y="1.2" width="102.6" height="145.6" rx="2" fill="none" stroke="{frame_color}" stroke-width=".3" stroke-dasharray="1.6 1.2"/>')
     return "\n".join(out)
 
 
 def svg_result(d, pal, card_bg, twine=None, wobble=0.0):
     rng = np.random.default_rng(3)
     out = [f'<rect x="0" y="0" width="105" height="148" rx="2.5" fill="{card_bg}"/>']
+    for cx, cy, r in getattr(d, "cuts", []):
+        out[0] = '<rect x="0" y="0" width="105" height="148" rx="2.5" fill="#e6d8bc"/>'
+        out.append(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{card_bg}" stroke="#cdbb95" stroke-width=".4"/>')
     for i, j, c in d.stitches:
         a, b = d.holes[i], d.holes[j]
         L = math.dist(a[:2], b[:2])
