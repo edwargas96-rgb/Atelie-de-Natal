@@ -1,6 +1,6 @@
 :root{
   --cream:#FFF8EC; --cream-2:#F7EAD2; --pine:#1F4D3A; --pine-2:#2b6a50; --cherry:#B3282D; --gold:#D9A441; --ink:#2a2a26; --muted:#5d5a4f;
-  --serif:"Fraunces",Georgia,"Times New Roman",serif; --sans:"Nunito Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --serif:"Playfair Display",Georgia,"Times New Roman",serif; --sans:"Nunito Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --r:16px; --shadow:0 6px 22px rgba(31,77,58,.12);
 }
 *{box-sizing:border-box}
@@ -249,3 +249,19 @@ details p{margin:0 0 16px;color:var(--muted)}
   .hero-text{align-self:end}.hero-cta{align-self:start;max-width:480px}.hero-media{width:min(420px,100%);margin:0 auto}
   .hero .btn-xl{width:auto;padding-inline:36px}
 }
+
+/* ---------- topo centralizado (headline, mockup, CTA); bullets pequenos à esquerda ---------- */
+.hero-grid{display:block;max-width:720px;text-align:center}
+.badge{display:inline-flex;align-items:center;gap:8px;margin:0 0 14px;padding:6px 14px;border-radius:999px;background:#fffdf7;border:1px solid rgba(31,77,58,.18);box-shadow:0 2px 8px rgba(31,77,58,.08);font:800 .72rem var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--pine)}
+.badge span{width:9px;height:9px;border-radius:50%;background:var(--cherry)}
+.hero h1{font-weight:800;font-size:clamp(1.85rem,7.4vw,3rem);line-height:1.12;text-align:center;margin:0 0 .5em;letter-spacing:-.01em}
+.hl{color:var(--cherry);background:linear-gradient(transparent 64%,rgba(217,164,65,.6) 64%);padding:0 .12em}
+.hero-media{width:min(500px,100%);margin:0 auto 6px;border:0;border-radius:0;box-shadow:none;background:none;aspect-ratio:auto;overflow:visible}
+.hero-media img{width:100%;height:auto;display:block;filter:drop-shadow(0 12px 22px rgba(31,77,58,.22))}
+.hero .sub{text-align:center;margin:0 auto 14px;max-width:520px;font-size:1.05rem;color:var(--ink)}
+.hero-cta{max-width:none;text-align:center}
+.gains{display:inline-grid;text-align:left;max-width:440px;margin:0 auto 18px;font-size:.95rem}
+.hero .btn-xl{width:min(440px,100%);padding-inline:24px}
+.hero-cta .fine{text-align:center}
+.santa{opacity:.26}
+@media(min-width:820px){.hero-grid{display:block}.hero-text,.hero-cta{max-width:none}.hero-media{width:min(520px,100%)}}
