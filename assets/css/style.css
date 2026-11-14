@@ -356,3 +356,5 @@ details p{margin:0 0 16px;color:var(--muted)}
 .users .stars{color:var(--gold);letter-spacing:1px}
 .users{flex-wrap:nowrap;white-space:nowrap;font-size:clamp(.74rem,3.4vw,.9rem);padding:6px 12px;gap:6px}
 .users b{margin-right:-2px}
+.seal{width:110px;height:110px;font-size:.74rem;bottom:2%}
+.seal i{font-size:.7rem}
