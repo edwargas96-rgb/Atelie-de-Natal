@@ -48,32 +48,23 @@
       '<g class="lid"><rect x="4" y="14" width="40" height="9" rx="2" fill="' + c[0] + '"/><rect x="21" y="14" width="6" height="9" fill="' + c[1] + '"/><path d="M24 14c-8-9-14-3-9 0zM24 14c8-9 14-3 9 0z" fill="none" stroke="' + c[1] + '" stroke-width="3" stroke-linecap="round"/></g>' +
       '<g class="spark" fill="#D9A441"><path d="M24 2l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/><circle cx="8" cy="10" r="2"/><circle cx="40" cy="8" r="2"/></g></svg>';
   }
-  function sampleOf(i) { return C.samples[i % C.samples.length]; }
-
-  function showSample(i) {
-    var s = sampleOf(i), box = $("#sample");
-    box.innerHTML = '<p class="unlocked">Desconto de Natal liberado!</p><h3></h3>' +
-      '<figure class="ph" style="--ar:1/1"><img src="' + s.preview + '" alt="" width="200" height="200" onerror="this.remove()"></figure>' +
-      '<a class="btn btn-ghost" download href="' + s.file + '">Baixar molde de amostra</a>' +
+  function showOpened() {
+    $("#sample").innerHTML = '<p class="unlocked">Presente aberto! Desconto de Natal liberado.</p>' +
+      '<p class="sample-empty">Seu preço de Natal já está na oferta.</p>' +
       '<a class="btn btn-primary" href="#oferta">Ver oferta de Natal</a>';
-    $("h3", box).textContent = s.name;
   }
 
-  function updateCount() {
-    var n = opened.length, el = $("#tree-count");
-    if (el) el.textContent = n ? "Presentes abertos: " + n + " de " + POS.length + ". Todos liberam o mesmo desconto." : "";
+  function lockOthers() {
+    [].forEach.call(document.querySelectorAll(".gift:not(.open)"), function (g) { g.classList.add("locked"); g.setAttribute("aria-disabled", "true"); g.tabIndex = -1; });
   }
 
   function openGift(i, btn) {
-    var first = opened.indexOf(i) === -1;
-    if (first) opened.push(i);
-    save();
-    btn.classList.add("open");
-    btn.setAttribute("aria-label", "Presente " + (i + 1) + " de " + POS.length + ", aberto: " + sampleOf(i).name);
-    [].forEach.call(document.querySelectorAll(".gift.current"), function (g) { g.classList.remove("current"); });
-    btn.classList.add("current");
-    showSample(i); updateCount(); render();
-    if (first && window.AtelieTrack) AtelieTrack.track("PresenteAberto", { presente: sampleOf(i).id, numero: i + 1 }, true);
+    if (opened.length) return; // um presente por visitante; todos valem o mesmo
+    opened.push(i); save();
+    btn.classList.add("open", "current");
+    btn.setAttribute("aria-label", "Presente " + (i + 1) + " de " + POS.length + ", aberto");
+    lockOthers(); showOpened(); render();
+    if (window.AtelieTrack) AtelieTrack.track("PresenteAberto", { numero: i + 1 }, true);
   }
 
   function buildTree() {
@@ -86,11 +77,9 @@
       b.innerHTML = giftSVG(i);
       b.addEventListener("click", function () { openGift(i, b); });
       host.appendChild(b);
-      if (opened.indexOf(i) > -1) { b.classList.add("open"); b.setAttribute("aria-label", "Presente " + (i + 1) + " de " + POS.length + ", aberto: " + sampleOf(i).name); }
+      if (opened[0] === i) { b.classList.add("open", "current"); b.setAttribute("aria-label", "Presente " + (i + 1) + ", aberto"); }
     });
-    var last = opened[opened.length - 1];
-    if (last !== undefined && promoActive) showSample(last);
-    updateCount();
+    if (opened.length && promoActive) { lockOthers(); showOpened(); }
   }
 
   /* ---------- "Ver oferta": libera a mesma promo sem precisar abrir presente ---------- */

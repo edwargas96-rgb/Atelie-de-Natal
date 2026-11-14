@@ -12,4 +12,4 @@ Enquanto o arquivo não existe, a página mostra um quadro de espaço reservado.
 
 Amostras de molde (uma por presente) ficam em `assets/amostras/`: `amostra-N.pdf` e `amostra-N.webp` (N = 1 a 6).
 
-Já incluídas: capa principal, bônus 1, 3, 4 e 5, e as 4 sessões. **Faltam:** `bonus-2.webp` (Caixinha do Natal), `bump.webp` (Ceia sem Estresse).
+Já incluídas: capa principal, bônus 1 a 5 e as 4 sessões. **Falta:** `bump.webp` (Ceia sem Estresse).

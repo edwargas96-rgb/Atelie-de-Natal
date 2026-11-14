@@ -140,3 +140,5 @@ details p{margin:0 0 16px;color:var(--muted)}
 /* páginas legais */
 .legal{padding:40px 0 64px}.legal h1{font-size:2rem}.legal h2{text-align:left;font-size:1.3rem;margin-top:1.6em}
 .legal .draft{background:#fff3cd;border:1px solid #e0c46c;padding:12px 16px;border-radius:10px;font-size:.9rem}
+
+.gift.locked{opacity:.4;cursor:default;filter:grayscale(.5)}.gift.locked:hover svg{transform:none}

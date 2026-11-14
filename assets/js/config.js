@@ -22,15 +22,5 @@ window.ATELIE_CONFIG = {
   // Meta Pixel (ID numérico). Vazio = nenhum rastreamento é carregado.
   pixelId: "",
   // Endpoint da API de Conversões (função em /api/capi). Vazio = só Pixel no navegador.
-  capiEndpoint: "/api/capi",
-
-  // Amostras de molde, uma por presente da árvore.
-  samples: [
-    { id: "cartao", name: "Cartão de Natal com estrela", file: "assets/amostras/amostra-1.pdf", preview: "assets/amostras/amostra-1.webp" },
-    { id: "etiqueta", name: "Etiqueta de presente", file: "assets/amostras/amostra-2.pdf", preview: "assets/amostras/amostra-2.webp" },
-    { id: "enfeite", name: "Enfeite de árvore", file: "assets/amostras/amostra-3.pdf", preview: "assets/amostras/amostra-3.webp" },
-    { id: "marcador", name: "Marcador de lugar da ceia", file: "assets/amostras/amostra-4.pdf", preview: "assets/amostras/amostra-4.webp" },
-    { id: "meia", name: "Meia de lareira", file: "assets/amostras/amostra-5.pdf", preview: "assets/amostras/amostra-5.webp" },
-    { id: "facil", name: "Molde fácil para as crianças", file: "assets/amostras/amostra-6.pdf", preview: "assets/amostras/amostra-6.webp" }
-  ]
+  capiEndpoint: "/api/capi"
 };
