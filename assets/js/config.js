@@ -5,8 +5,8 @@
 window.ATELIE_CONFIG = {
   // Fim da promoção, igual para todos os visitantes (formato ISO com fuso de Brasília).
   // Depois dessa data a página mostra só o preço cheio e a árvore some.
-  promoEnd: "2026-12-24T23:59:00-03:00",
-  promoEndLabel: "24/12 às 23:59",
+  promoEnd: "2026-12-26T23:59:00-03:00",
+  promoEndLabel: "26/12 às 23:59",
 
   // Preços (em reais). O valor cheio só deve aparecer se o preço realmente voltar a ele após a data.
   fullPrice: 167,

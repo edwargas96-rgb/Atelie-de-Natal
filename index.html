@@ -23,94 +23,63 @@
 </head>
 <body>
 
+<div class="promo-bar" id="promo-bar" data-promo-only>
+  <span class="pb-tag">Promoção de Natal</span>
+  <span class="pb-text">Oferta limitada até <b id="pb-date">26 de dezembro</b></span>
+  <span class="pb-count" id="pb-count"></span>
+</div>
+
 <header class="hero" id="topo">
+  <div class="santa" aria-hidden="true">
+    <svg viewBox="0 0 300 110" focusable="false">
+      <g class="reindeer"><ellipse cx="44" cy="62" rx="22" ry="11" fill="#7a4b2b"/><circle cx="68" cy="50" r="8" fill="#7a4b2b"/><circle cx="75" cy="50" r="2.2" fill="#B3282D"/>
+        <path d="M66 43 62 28M62 28 56 24M62 28 66 22M70 42 76 28M76 28 82 25M76 28 77 21" stroke="#5a3820" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M30 70 24 92M40 73 36 94M54 73 60 92M62 70 72 88" stroke="#5a3820" stroke-width="4" stroke-linecap="round"/><path d="M22 58 14 52" stroke="#7a4b2b" stroke-width="5" stroke-linecap="round"/></g>
+      <path d="M62 62 Q100 64 128 76" stroke="#D9A441" stroke-width="2" fill="none"/>
+      <path d="M112 100 Q190 110 276 98 Q290 96 288 82" stroke="#D9A441" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <path d="M126 70 Q136 98 176 98 L262 98 Q284 90 274 62 L206 68 Z" fill="#B3282D"/><path d="M130 76 H270" stroke="#D9A441" stroke-width="2.5"/>
+      <ellipse cx="238" cy="56" rx="26" ry="16" fill="#7a4b2b"/>
+      <path d="M176 70 Q178 48 196 46 Q214 48 214 70 Z" fill="#B3282D"/>
+      <circle cx="196" cy="36" r="9" fill="#f3c9a6"/><path d="M187 40 Q196 58 205 40 Q196 46 187 40Z" fill="#fff"/>
+      <path d="M186 33 Q196 14 208 30 Z" fill="#B3282D"/><rect x="185" y="30" width="24" height="5" rx="2.5" fill="#fff"/><circle cx="209" cy="28" r="4" fill="#fff"/>
+    </svg>
+  </div>
   <div class="wrap hero-grid">
     <div class="hero-text">
-      <p class="eyebrow">Kit para imprimir · Entrega imediata</p>
       <h1>Ateliê de Natal</h1>
       <p class="lead">250 moldes de bordado em papel para o seu Natal</p>
-      <p class="sub">Cartões, enfeites, mesa da ceia e atividades para fazer em família. Você imprime, borda e presenteia.</p>
-      <div class="cta-row">
-        <a class="btn btn-primary" href="#arvore" data-promo-only data-track-scroll>Escolher meu presente</a>
-        <a class="btn btn-ghost" href="#oferta" data-ver-oferta>Ver oferta</a>
-      </div>
-      <p class="fine">Pagamento único · Garantia de 7 dias</p>
+      <p class="tagline">Deixe o seu Natal com a sua cara.</p>
+      <p class="sub">Um hobby que acalma as mãos e a cabeça, e ainda deixa os cartões, a mesa e a casa muito mais bonitos. É só imprimir, bordar e se orgulhar do resultado.</p>
     </div>
-    <figure class="hero-cover ph ph-label" style="--ar:1/1" data-label="Mockup do kit em breve">
-      <img src="assets/img/mockup-hero.webp" width="1000" height="1000" alt="Mockup do kit Ateliê de Natal" onerror="this.remove()">
+    <figure class="hero-media">
+      <video autoplay muted loop playsinline preload="metadata" poster="assets/img/mockup-hero-poster.webp" aria-label="Mockup do kit Ateliê de Natal: bordado Feliz Natal em papel">
+        <source src="assets/img/mockup-hero.mp4" type="video/mp4">
+      </video>
     </figure>
   </div>
 </header>
-
-<section class="sec" id="dor">
-  <div class="wrap">
-    <h2>Esse Natal vai ser igual ao do ano passado?</h2>
-    <div class="carousel car-cards" data-autoplay="1" role="region" aria-roledescription="carrossel" aria-label="Por que este Natal pode ser diferente"><div class="track">
-      <article class="card slide"><h3>Cartão comprado, sem graça</h3><p>Mais um cartão de papelaria que ninguém guarda.</p></article>
-      <article class="card slide"><h3>Correria de última hora</h3><p>Dezembro passa e os presentes ficam para a véspera.</p></article>
-      <article class="card slide"><h3>Mesa sem personalidade</h3><p>A ceia é linda, mas a mesa parece igual a qualquer outra.</p></article>
-      <article class="card slide"><h3>Nada para fazer com as crianças</h3><p>Elas querem participar, e você não tem uma atividade pronta.</p></article>
-    </div><div class="car-ctl"><button type="button" class="car-btn prev" aria-label="Anterior">&#8249;</button><div class="dots"></div><button type="button" class="car-btn next" aria-label="Próximo">&#8250;</button></div></div>
-  </div>
-</section>
-
-<section class="sec sec-alt" id="oque">
-  <div class="wrap">
-    <h2>Como funciona</h2>
-    <ol class="grid g3 steps">
-      <li class="card"><svg class="ico-svg" viewBox="0 0 48 48" aria-hidden="true"><path d="M14 18V8h20v10M14 34H8V18h32v16h-6M14 28h20v14H14z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg><h3>1. Imprima</h3><p>Receba os moldes em PDF e imprima em casa, em papel comum ou mais firme.</p></li>
-      <li class="card"><svg class="ico-svg" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 40 36 8l4 4-28 32zM36 8l4 4M6 42l4-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="12" cy="36" r="1.5" fill="currentColor"/></svg><h3>2. Borde</h3><p>Fure o papel nos pontinhos e siga o desenho com linha e agulha. Sem segredo.</p></li>
-      <li class="card"><svg class="ico-svg" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 20h32v22H8zM6 14h36v6H6zM24 14v28M24 14c-4-8-12-6-10-2s10 2 10 2zm0 0c4-8 12-6 10-2s-10 2-10 2z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg><h3>3. Presenteie ou decore</h3><p>Dê de presente, enfeite a casa e a mesa da ceia ou faça junto com a família.</p></li>
-    </ol>
-    <p class="note">Imagens desta página são ilustrações de exemplo.</p>
-  </div>
-</section>
 
 <section class="sec" id="sessoes">
   <div class="wrap">
     <h2>As 4 sessões do kit</h2>
     <p class="section-sub">Moldes no valor de R$ 97</p>
+    <div class="carousel car-sess" data-loop="1" role="region" aria-roledescription="carrossel" aria-label="As 4 sessões do kit"><div class="track"><article class="slide sess-card"><figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/sessao-1.webp" width="1000" height="1000" alt="Ilustração de exemplo: cartão Feliz Natal e etiquetas de presente bordados" onerror="this.remove()"></figure><h3>Cartões e presentes</h3><p>70 moldes · valor R$ 27</p></article><article class="slide sess-card"><figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/sessao-2.webp" width="1000" height="1000" alt="Ilustração de exemplo: varal de moldes bordados sobre a lareira" onerror="this.remove()"></figure><h3>Árvore e casa</h3><p>70 moldes · valor R$ 27</p></article><article class="slide sess-card"><figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/sessao-3.webp" width="1000" height="1000" alt="Ilustração de exemplo: mesa de ceia com marcadores de lugar e porta-guardanapos bordados" onerror="this.remove()"></figure><h3>Mesa da ceia</h3><p>50 moldes · valor R$ 19</p></article><article class="slide sess-card"><figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/sessao-4.webp" width="1000" height="1000" alt="Ilustração de exemplo: calendário do advento com 24 cartões bordados" onerror="this.remove()"></figure><h3>Em família e crianças</h3><p>60 moldes · valor R$ 24</p></article></div></div>
+    <p class="note">Imagens desta página são ilustrações de exemplo.</p>
+  </div>
+</section>
 
-<div class="carousel car-sess" data-autoplay="1" role="region" aria-roledescription="carrossel" aria-label="As 4 sessões do kit"><div class="track">    <article class="sess slide">
-      <figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/sessao-1.webp" width="1000" height="1000" alt="Ilustração de exemplo: cartão Feliz Natal e etiquetas de presente bordados" onerror="this.remove()"></figure>
-      <div>
-        <h3>Cartões e presentes <small>70 moldes · valor R$ 27</small></h3>
-        <ul class="list">
-          <li><b>30</b> cartões</li><li><b>20</b> etiquetas</li><li><b>10</b> envelopes e embalagens</li><li><b>10</b> convites de ceia</li>
-        </ul>
-      </div>
-    </article>
-
-    <article class="sess slide">
-      <figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/sessao-2.webp" width="1000" height="1000" alt="Ilustração de exemplo: varal de moldes bordados sobre a lareira" onerror="this.remove()"></figure>
-      <div>
-        <h3>Árvore e casa <small>70 moldes · valor R$ 27</small></h3>
-        <ul class="list">
-          <li><b>30</b> enfeites de árvore</li><li><b>15</b> guirlandas e varais</li><li><b>10</b> meias e lareira</li><li><b>15</b> presépio e cenas</li>
-        </ul>
-      </div>
-    </article>
-
-    <article class="sess slide">
-      <figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/sessao-3.webp" width="1000" height="1000" alt="Ilustração de exemplo: mesa de ceia com marcadores de lugar e porta-guardanapos bordados" onerror="this.remove()"></figure>
-      <div>
-        <h3>Mesa da ceia <small>50 moldes · valor R$ 19</small></h3>
-        <ul class="list">
-          <li><b>20</b> marcadores de lugar</li><li><b>10</b> porta-guardanapos</li><li><b>10</b> descansos de copo</li><li><b>10</b> cardápios e plaquinhas</li>
-        </ul>
-      </div>
-    </article>
-
-    <article class="sess slide">
-      <figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/sessao-4.webp" width="1000" height="1000" alt="Ilustração de exemplo: calendário do advento com 24 cartões bordados" onerror="this.remove()"></figure>
-      <div>
-        <h3>Em família e crianças <small>60 moldes · valor R$ 24</small></h3>
-        <ul class="list">
-          <li><b>30</b> moldes fáceis</li><li><b>25</b> do calendário do advento</li><li><b>5</b> atividades em grupo</li>
-        </ul>
-      </div>
-    </article>
-</div><div class="car-ctl"><button type="button" class="car-btn prev" aria-label="Anterior">&#8249;</button><div class="dots"></div><button type="button" class="car-btn next" aria-label="Próximo">&#8250;</button></div></div>
+<section class="sec sec-alt" id="bonus">
+  <div class="wrap">
+    <h2>5 bônus para você começar sem medo</h2>
+    <p class="section-sub">Bônus no valor de R$ 70</p>
+    <div class="carousel car-bonus" data-loop="1" role="region" aria-roledescription="carrossel" aria-label="Bônus do kit"><div class="track">
+      <article class="bonus slide"><figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/bonus-1.webp" width="900" height="900" alt="Capa do bônus Primeiros Pontos" onerror="this.remove()"></figure><h3>Primeiros Pontos</h3><p class="desc">Guia dos 6 pontos básicos</p><p class="pain">“Tenho vontade de bordar, mas acho que vai ficar torto.”</p><p class="val">Valor R$ 14</p></article>
+      <article class="bonus slide"><figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/bonus-2.webp" width="900" height="900" alt="Capa do bônus Caixinha do Natal" onerror="this.remove()"></figure><h3>Caixinha do Natal</h3><p class="desc">Kit de materiais</p><p class="pain">“Comprei material errado e gastei mais que o necessário.”</p><p class="val">Valor R$ 12</p></article>
+      <article class="bonus slide"><figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/bonus-3.webp" width="900" height="900" alt="Capa do bônus 50 Recadinhos de Natal" onerror="this.remove()"></figure><h3>50 Recadinhos de Natal</h3><p class="desc">Mensagens para cartões</p><p class="pain">“Fico olhando o cartão em branco sem saber o que escrever.”</p><p class="val">Valor R$ 12</p></article>
+      <article class="bonus slide"><figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/bonus-4.webp" width="900" height="900" alt="Capa do bônus Semana do Natal" onerror="this.remove()"></figure><h3>Semana do Natal</h3><p class="desc">Plano de 7 dias</p><p class="pain">“Deixo tudo para a última hora e o Natal chega antes.”</p><p class="val">Valor R$ 14</p></article>
+      <article class="bonus slide"><figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/bonus-5.webp" width="900" height="900" alt="Capa do bônus Brinde Bordado" onerror="this.remove()"></figure><h3>Brinde Bordado</h3><p class="desc">20 moldes de Ano-Novo</p><p class="pain">“Depois do dia 25 parece que o kit perde a graça.”</p><p class="val">Valor R$ 18</p></article>
+    </div></div>
+    <p class="note">Imagens desta página são ilustrações de exemplo.</p>
   </div>
 </section>
 
@@ -207,6 +176,30 @@
   </div>
 </section>
 
+<section class="sec" id="dor">
+  <div class="wrap">
+    <h2>Esse Natal vai ser igual ao do ano passado?</h2>
+    <div class="carousel car-cards" data-autoplay="1" role="region" aria-roledescription="carrossel" aria-label="Por que este Natal pode ser diferente"><div class="track">
+      <article class="card slide"><h3>Cartão comprado, sem graça</h3><p>Mais um cartão de papelaria que ninguém guarda.</p></article>
+      <article class="card slide"><h3>Correria de última hora</h3><p>Dezembro passa e os presentes ficam para a véspera.</p></article>
+      <article class="card slide"><h3>Mesa sem personalidade</h3><p>A ceia é linda, mas a mesa parece igual a qualquer outra.</p></article>
+      <article class="card slide"><h3>Nada para fazer com as crianças</h3><p>Elas querem participar, e você não tem uma atividade pronta.</p></article>
+    </div><div class="car-ctl"><button type="button" class="car-btn prev" aria-label="Anterior">&#8249;</button><div class="dots"></div><button type="button" class="car-btn next" aria-label="Próximo">&#8250;</button></div></div>
+  </div>
+</section>
+
+<section class="sec sec-alt" id="oque">
+  <div class="wrap">
+    <h2>Como funciona</h2>
+    <ol class="grid g3 steps">
+      <li class="card"><svg class="ico-svg" viewBox="0 0 48 48" aria-hidden="true"><path d="M14 18V8h20v10M14 34H8V18h32v16h-6M14 28h20v14H14z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg><h3>1. Imprima</h3><p>Receba os moldes em PDF e imprima em casa, em papel comum ou mais firme.</p></li>
+      <li class="card"><svg class="ico-svg" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 40 36 8l4 4-28 32zM36 8l4 4M6 42l4-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><circle cx="12" cy="36" r="1.5" fill="currentColor"/></svg><h3>2. Borde</h3><p>Fure o papel nos pontinhos e siga o desenho com linha e agulha. Sem segredo.</p></li>
+      <li class="card"><svg class="ico-svg" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 20h32v22H8zM6 14h36v6H6zM24 14v28M24 14c-4-8-12-6-10-2s10 2 10 2zm0 0c4-8 12-6 10-2s-10 2-10 2z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg><h3>3. Presenteie ou decore</h3><p>Dê de presente, enfeite a casa e a mesa da ceia ou faça junto com a família.</p></li>
+    </ol>
+    <p class="note">Imagens desta página são ilustrações de exemplo.</p>
+  </div>
+</section>
+
 <section class="sec" id="paraquem">
   <div class="wrap">
     <h2>Para quem é</h2>
@@ -215,21 +208,6 @@
       <article class="card slide"><h3>Quem quer decorar</h3><p>Enfeites de árvore, guirlandas, varais e uma mesa de ceia com personalidade.</p></article>
       <article class="card slide"><h3>Quem quer fazer em família</h3><p>Moldes fáceis, calendário do advento e atividades em grupo para todas as idades.</p></article>
     </div><div class="car-ctl"><button type="button" class="car-btn prev" aria-label="Anterior">&#8249;</button><div class="dots"></div><button type="button" class="car-btn next" aria-label="Próximo">&#8250;</button></div></div>
-  </div>
-</section>
-
-<section class="sec sec-alt" id="bonus">
-  <div class="wrap">
-    <h2>5 bônus para você começar sem medo</h2>
-    <p class="section-sub">Bônus no valor de R$ 70</p>
-    <div class="carousel car-bonus" data-autoplay="1" role="region" aria-roledescription="carrossel" aria-label="Bônus do kit"><div class="track">
-      <article class="bonus slide"><figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/bonus-1.webp" width="900" height="900" alt="Capa do bônus Primeiros Pontos" onerror="this.remove()"></figure><h3>Primeiros Pontos</h3><p class="desc">Guia dos 6 pontos básicos</p><p class="pain">“Tenho vontade de bordar, mas acho que vai ficar torto.”</p><p class="val">Valor R$ 14</p></article>
-      <article class="bonus slide"><figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/bonus-2.webp" width="900" height="900" alt="Capa do bônus Caixinha do Natal" onerror="this.remove()"></figure><h3>Caixinha do Natal</h3><p class="desc">Kit de materiais</p><p class="pain">“Comprei material errado e gastei mais que o necessário.”</p><p class="val">Valor R$ 12</p></article>
-      <article class="bonus slide"><figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/bonus-3.webp" width="900" height="900" alt="Capa do bônus 50 Recadinhos de Natal" onerror="this.remove()"></figure><h3>50 Recadinhos de Natal</h3><p class="desc">Mensagens para cartões</p><p class="pain">“Fico olhando o cartão em branco sem saber o que escrever.”</p><p class="val">Valor R$ 12</p></article>
-      <article class="bonus slide"><figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/bonus-4.webp" width="900" height="900" alt="Capa do bônus Semana do Natal" onerror="this.remove()"></figure><h3>Semana do Natal</h3><p class="desc">Plano de 7 dias</p><p class="pain">“Deixo tudo para a última hora e o Natal chega antes.”</p><p class="val">Valor R$ 14</p></article>
-      <article class="bonus slide"><figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/bonus-5.webp" width="900" height="900" alt="Capa do bônus Brinde Bordado" onerror="this.remove()"></figure><h3>Brinde Bordado</h3><p class="desc">20 moldes de Ano-Novo</p><p class="pain">“Depois do dia 25 parece que o kit perde a graça.”</p><p class="val">Valor R$ 18</p></article>
-    </div><div class="car-ctl"><button type="button" class="car-btn prev" aria-label="Anterior">&#8249;</button><div class="dots"></div><button type="button" class="car-btn next" aria-label="Próximo">&#8250;</button></div></div>
-    <p class="note">Imagens desta página são ilustrações de exemplo.</p>
   </div>
 </section>
 
@@ -287,11 +265,25 @@
   </div>
 </footer>
 
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="m-title" hidden>
+  <div class="modal-card">
+    <div class="confetti" id="confetti" aria-hidden="true"></div>
+    <div class="big-gift" id="big-gift" aria-hidden="true"></div>
+    <p class="m-kicker">Parabéns!</p>
+    <h2 id="m-title">Promoção de Natal desbloqueada</h2>
+    <p class="m-price" id="m-price"></p>
+    <p class="m-note">Preço desbloqueado por tempo limitado.</p>
+    <a class="btn btn-primary btn-xl" href="#oferta" id="m-go">Quero aproveitar</a>
+    <button type="button" class="m-close" id="m-close">Fechar</button>
+  </div>
+</div>
+
 <div class="sticky" id="sticky" hidden>
   <span class="sticky-price" id="sticky-price"></span>
   <a class="btn btn-primary" href="#oferta" id="sticky-btn">Quero o kit</a>
 </div>
 
 <noscript><style>[data-promo-only]{display:revert!important}</style></noscript>
+<div class="snow" id="snow" aria-hidden="true"></div>
 </body>
 </html>

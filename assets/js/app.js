@@ -64,6 +64,7 @@
     btn.classList.add("open", "current");
     btn.setAttribute("aria-label", "Presente " + (i + 1) + " de " + POS.length + ", aberto");
     lockOthers(); showOpened(); render();
+    setTimeout(function () { showModal(i); }, reduce ? 0 : 650);
     if (window.AtelieTrack) AtelieTrack.track("PresenteAberto", { numero: i + 1 }, true);
   }
 
@@ -115,6 +116,79 @@
   $("#sticky-btn").addEventListener("click", function () { if (promoActive && !unlocked()) { var t = $("#arvore"); if (t) { /* leva à árvore para escolher o presente */ this.setAttribute("href", "#arvore"); } } else this.setAttribute("href", "#oferta"); });
 
 
+  /* ---------- carrossel infinito (automático e com swipe) ---------- */
+  function loopCarousel(el) {
+    var track = $(".track", el), orig = [].slice.call(track.children), n = orig.length;
+    function clones() { var f = document.createDocumentFragment(); orig.forEach(function (s) { var c = s.cloneNode(true); c.setAttribute("aria-hidden", "true"); f.appendChild(c); }); return f; }
+    track.insertBefore(clones(), track.firstChild); track.appendChild(clones());
+    var setW = 0, stepW = 0, timer = null, paused = false, visible = false, settle, resume;
+    var interval = el.classList.contains("car-sess") ? 3200 : 3800;
+    function measure() { var k = track.children; setW = k[n].offsetLeft - k[0].offsetLeft; stepW = k[1].offsetLeft - k[0].offsetLeft; }
+    function jump(x) { track.style.scrollSnapType = "none"; track.scrollLeft = x; requestAnimationFrame(function () { track.style.scrollSnapType = ""; }); }
+    function normalize() { measure(); if (!setW) return; if (track.scrollLeft < setW * 0.5) jump(track.scrollLeft + setW); else if (track.scrollLeft >= setW * 1.5) jump(track.scrollLeft - setW); }
+    function start() { measure(); jump(setW); }
+    function stop() { clearInterval(timer); timer = null; }
+    function play() { stop(); if (reduce || paused || !visible) return; timer = setInterval(function () { track.scrollBy({ left: stepW, behavior: "smooth" }); }, interval); }
+    function pause() { paused = true; stop(); clearTimeout(resume); }
+    function later() { clearTimeout(resume); resume = setTimeout(function () { paused = false; play(); }, 3500); }
+    track.addEventListener("scroll", function () { clearTimeout(settle); settle = setTimeout(normalize, 140); }, { passive: true });
+    track.addEventListener("touchstart", pause, { passive: true }); track.addEventListener("touchend", later, { passive: true });
+    track.addEventListener("pointerdown", pause); track.addEventListener("pointerup", later);
+    el.addEventListener("mouseenter", pause); el.addEventListener("mouseleave", later);
+    window.addEventListener("resize", start);
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (en) { visible = en[0].isIntersecting; play(); }, { threshold: 0.3 }).observe(el);
+    start(); setTimeout(start, 700); window.addEventListener("load", start);
+  }
+  [].forEach.call(document.querySelectorAll(".carousel[data-loop]"), loopCarousel);
+
+  /* ---------- barra de promoção: contagem em dias para a data fixa ---------- */
+  function countdown() {
+    var el = $("#pb-count"); if (!el || !promoActive) return;
+    var ms = end - Date.now(), d = Math.ceil(ms / 86400000);
+    el.textContent = ms < 86400000 ? "último dia" : "faltam " + d + " dias";
+  }
+  countdown(); setInterval(countdown, 600000);
+
+  /* ---------- neve ---------- */
+  (function snow() {
+    var box = $("#snow"); if (!box || reduce) return;
+    var count = window.innerWidth < 600 ? 22 : 40;
+    for (var i = 0; i < count; i++) {
+      var f = document.createElement("i"), s = 3 + Math.random() * 5;
+      f.className = "flake"; f.style.width = f.style.height = s + "px"; f.style.left = Math.random() * 100 + "%";
+      f.style.opacity = 0.55 + Math.random() * 0.45;
+      f.style.setProperty("--dx", (Math.random() * 80 - 40) + "px");
+      f.style.animationDuration = (9 + Math.random() * 10) + "s"; f.style.animationDelay = (-Math.random() * 18) + "s";
+      box.appendChild(f);
+    }
+  })();
+
+  /* ---------- tela de parabéns ao abrir o presente ---------- */
+  var modal = $("#modal"), lastFocus = null;
+  function confetti() {
+    var c = $("#confetti"), cols = ["#B3282D", "#D9A441", "#1F4D3A", "#fff", "#e8736f"]; c.innerHTML = "";
+    if (reduce) return;
+    for (var i = 0; i < 42; i++) {
+      var p = document.createElement("i"), a = Math.random() * Math.PI * 2, r = 90 + Math.random() * 150;
+      p.style.background = cols[i % cols.length];
+      p.style.setProperty("--x", Math.cos(a) * r + "px"); p.style.setProperty("--y", (Math.sin(a) * r - 40 + Math.random() * 120) + "px");
+      p.style.setProperty("--r", (Math.random() * 720 - 360) + "deg"); p.style.setProperty("--d", (0.75 + Math.random() * 0.4) + "s");
+      c.appendChild(p);
+    }
+  }
+  function showModal(i) {
+    lastFocus = document.activeElement;
+    $("#big-gift").innerHTML = giftSVG(i);
+    $("#m-price").textContent = fmt.format(C.promoPrice);
+    modal.hidden = false; confetti();
+    setTimeout(function () { $("#m-go").focus(); }, 50);
+  }
+  function closeModal() { modal.hidden = true; if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+  $("#m-close").addEventListener("click", closeModal);
+  $("#m-go").addEventListener("click", function () { modal.hidden = true; });
+  modal.addEventListener("click", function (e) { if (e.target === modal) closeModal(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !modal.hidden) closeModal(); });
+
   /* ---------- carrosséis ---------- */
   function carousel(el) {
     var track = $(".track", el), slides = track.children, dotsBox = $(".dots", el);
@@ -150,7 +224,7 @@
     if ("IntersectionObserver" in window) new IntersectionObserver(function (en) { visible = en[0].isIntersecting; play(); }, { threshold: 0.3 }).observe(el);
     dots(); measure(); setTimeout(function () { measure(); play(); }, 600);
   }
-  [].forEach.call(document.querySelectorAll(".carousel"), carousel);
+  [].forEach.call(document.querySelectorAll(".carousel:not([data-loop])"), carousel);
 
   $("#year").textContent = new Date().getFullYear();
   buildTree();

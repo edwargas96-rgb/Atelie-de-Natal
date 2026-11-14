@@ -148,7 +148,7 @@ details p{margin:0 0 16px;color:var(--muted)}
 
 /* carrossel */
 .carousel{position:relative}
-.track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:6px 2px 14px;-webkit-overflow-scrolling:touch}
+.track{position:relative;display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:6px 2px 14px;-webkit-overflow-scrolling:touch}
 .track::-webkit-scrollbar{display:none}
 .slide{flex:0 0 var(--w,82%);scroll-snap-align:start;min-width:0}
 .car-ctl{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:6px}
@@ -158,10 +158,61 @@ details p{margin:0 0 16px;color:var(--muted)}
 .dots button{width:10px;height:10px;border-radius:50%;border:0;padding:0;background:rgba(31,77,58,.25);cursor:pointer}
 .dots button[aria-current="true"]{background:var(--cherry);transform:scale(1.25)}
 .carousel.no-scroll .car-ctl{display:none}
-.car-cards{--w:78%}.car-cards3{--w:82%}.car-bonus{--w:68%}.car-sess{--w:100%}
+.car-cards{--w:78%}.car-cards3{--w:82%}.car-bonus{--w:68%}.car-sess{--w:74%}
 @media(min-width:620px){.car-cards{--w:calc((100% - 16px)/2)}.car-bonus{--w:calc((100% - 16px)/2)}}
-@media(min-width:760px){.car-cards3{--w:calc((100% - 32px)/3)}.car-bonus{--w:calc((100% - 32px)/3)}}
+@media(min-width:760px){.car-sess{--w:calc((100% - 32px)/3)}.car-cards3{--w:calc((100% - 32px)/3)}.car-bonus{--w:calc((100% - 32px)/3)}}
 @media(min-width:980px){.car-cards{--w:calc((100% - 48px)/4)}.car-bonus{--w:calc((100% - 48px)/4)}}
-.car-sess .sess{margin:0;display:grid;gap:20px;align-items:center}
-@media(min-width:760px){.car-sess .sess{grid-template-columns:1fr 1fr;gap:40px}}
 .car-cards .card,.car-cards3 .card{height:100%}
+
+/* barra de promoção */
+.promo-bar{background:var(--cherry);color:#fff;display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;justify-content:center;padding:9px 16px;font-size:.92rem;text-align:center}
+.pb-tag{background:var(--gold);color:#3a2a05;font-weight:700;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:999px}
+.pb-count{font-weight:700;background:rgba(0,0,0,.22);padding:3px 12px;border-radius:999px}
+.pb-count:empty{display:none}
+
+/* hero */
+.hero{position:relative;overflow:hidden}
+.hero .wrap{position:relative;z-index:1}
+.tagline{font:700 clamp(1.4rem,5.5vw,1.9rem)/1.2 var(--serif);color:var(--cherry);margin:0 0 .5em}
+.hero-media{margin:0 auto;width:min(270px,72%);aspect-ratio:9/16;border-radius:22px;overflow:hidden;box-shadow:0 14px 40px rgba(31,77,58,.28);border:4px solid #fffdf7;background:var(--cream-2)}
+.hero-media video{width:100%;height:100%;object-fit:cover;display:block}
+@media(min-width:820px){.hero-media{width:min(320px,100%);margin-inline:auto}.hero-grid{grid-template-columns:1.2fr .8fr}}
+
+/* papai noel passando ao fundo */
+.santa{position:absolute;top:8%;left:0;width:clamp(150px,30vw,260px);opacity:.38;z-index:0;pointer-events:none;animation:santa 26s linear infinite}
+.santa svg{width:100%;height:auto;display:block;animation:bob 3s ease-in-out infinite}
+@keyframes santa{from{transform:translateX(-120%)}to{transform:translateX(calc(100vw + 20%))}}
+@keyframes bob{50%{transform:translateY(-10px) rotate(-2deg)}}
+
+/* neve */
+.snow{position:fixed;inset:0;pointer-events:none;z-index:15;overflow:hidden}
+.flake{position:absolute;top:-12px;border-radius:50%;background:#fff;box-shadow:0 0 3px rgba(31,77,58,.45);animation:fall linear infinite}
+@keyframes fall{to{transform:translate3d(var(--dx),108vh,0)}}
+
+/* cartões de sessão */
+.sess-card{background:#fffdf7;border:1px solid rgba(217,164,65,.45);border-radius:var(--r);padding:12px;box-shadow:var(--shadow)}
+.sess-card h3{font-size:1.15rem;margin:10px 0 2px}.sess-card p{margin:0;color:var(--cherry);font-weight:700;font-size:.92rem}
+
+/* modal de parabéns */
+.modal{position:fixed;inset:0;z-index:40;display:grid;place-items:center;padding:20px;background:rgba(20,54,39,.8);overflow:hidden}
+.modal[hidden]{display:none}
+.modal-card{position:relative;width:min(400px,100%);background:var(--cream);border:3px solid var(--gold);border-radius:24px;padding:28px 22px 22px;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.4);animation:pop .5s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes pop{from{transform:scale(.6) translateY(40px);opacity:0}}
+.big-gift{width:130px;height:130px;margin:-70px auto 8px;position:relative;z-index:2}
+.big-gift svg{width:100%;height:100%;overflow:visible;animation:hop 1s .2s ease-out both}
+@keyframes hop{0%{transform:translateY(40px) scale(.6)}40%{transform:translateY(-14px) scale(1.1)}60%{transform:translateY(0)}75%{transform:translateY(-6px)}100%{transform:none}}
+.big-gift .lid{transform-box:fill-box;transform-origin:left bottom;animation:lid 1s .7s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes lid{to{transform:translate(3px,-6px) rotate(-18deg)}}
+.big-gift .spark{animation:spark 1.2s .8s ease-out both}
+.m-kicker{font:700 .85rem var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--cherry);margin:0 0 4px;animation:rise .5s 1s both}
+.modal h2{font-size:1.5rem;margin:0 0 6px;animation:rise .5s 1.1s both}
+.m-price{font:700 3.2rem/1.1 var(--serif);color:var(--pine);margin:6px 0;animation:price .7s 1.3s cubic-bezier(.2,1.6,.4,1) both}
+.m-note{margin:0 0 16px;color:var(--muted);font-weight:600;animation:rise .5s 1.5s both}
+.modal .btn{animation:rise .5s 1.6s both}
+.m-close{margin-top:10px;background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;font:600 .95rem var(--sans);min-height:44px;padding:0 12px}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+@keyframes price{from{opacity:0;transform:scale(.3)}}
+.confetti{position:absolute;left:50%;top:60px;width:0;height:0;z-index:3;pointer-events:none}
+.confetti i{position:absolute;width:9px;height:14px;border-radius:2px;opacity:0;animation:conf 1.8s var(--d) ease-out forwards}
+@keyframes conf{0%{opacity:1;transform:translate(0,0) rotate(0)}100%{opacity:0;transform:translate(var(--x),var(--y)) rotate(var(--r))}}
+@media(prefers-reduced-motion:reduce){.santa,.santa svg,.modal-card,.big-gift svg,.big-gift .lid,.big-gift .spark,.m-kicker,.modal h2,.m-price,.m-note,.modal .btn,.confetti i{animation:none!important}.big-gift .lid{transform:translate(3px,-6px) rotate(-18deg)}.flake{animation:none;display:none}}
