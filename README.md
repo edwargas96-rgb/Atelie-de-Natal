@@ -3,7 +3,7 @@
 Site estático (HTML + CSS + JS, sem build). Publique em qualquer hospedagem estática; a pasta `api/` é uma função serverless (Vercel) para a API de Conversões.
 
 ## Configuração
-Tudo em `assets/js/config.js`: data de fim da promo, preços, links dos 2 checkouts, ID do Pixel.
+Tudo em `assets/js/config.js` (inclui o vídeo da mini VSL, `vslVideo`/`vslPoster`, e os prints de prova social): data de fim da promo, preços, links dos 2 checkouts, ID do Pixel.
 
 ## Meta Pixel e CAPI
 - `PageView`, `ViewContent` (ao ver a oferta), `InitiateCheckout` (clique em comprar) e o evento próprio `PresenteAberto`, com `event_id` igual no navegador e no servidor (deduplicação).

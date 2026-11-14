@@ -17,6 +17,10 @@ window.ATELIE_CONFIG = {
   checkoutPromoUrl: "", // checkout com preço promo (R$ 37,90)
 
 
+  // Vídeo da mini VSL (vertical 9:16). Para trocar, substitua os arquivos ou aponte para outros. Vazio = seção escondida.
+  vslVideo: "assets/video/vsl.mp4",
+  vslPoster: "assets/video/vsl-poster.webp",
+
   // Prova social: só preencha com prints/fotos REAIS, com autorização de quem enviou.
   // Ex.: { img: "assets/prova/1.webp", alt: "Conversa com cliente mostrando o calendário bordado" }
   proofs: [

@@ -20,9 +20,10 @@
     var price = un ? C.promoPrice : C.fullPrice;
     var buy = $("#buy");
     $("#price").textContent = fmt.format(price);
-    $("#price-tag").textContent = un ? "Promoção de Natal" : (promoActive ? "Preço do kit" : "Preço do kit");
+    $("#price-tag").textContent = un ? "Preço final com o seu presente" : "Preço final";
     var old = $("#price-old");
-    old.hidden = !un; if (un) old.textContent = "De " + fmt.format(C.fullPrice) + " depois do Natal";
+    old.hidden = !un; if (un) old.textContent = "De " + fmt.format(C.fullPrice);
+    $("#sum-disc").hidden = !un; if (un) $("#sum-disc-val").textContent = "− " + fmt.format(C.fullPrice - C.promoPrice);
     $("#price-note").textContent = un ? "Pagamento único · promoção até " + C.promoEndLabel : "Pagamento único";
     $("#promo-hint").hidden = !(promoActive && !un);
     buy.dataset.kind = un ? "promo" : "full";
@@ -31,6 +32,11 @@
     buy.textContent = "Quero o Ateliê de Natal por " + fmt.format(price);
     $("#sticky-price").textContent = fmt.format(price);
     var dis = document.querySelectorAll("[data-full-int]"); for (var i = 0; i < dis.length; i++) dis[i].textContent = C.fullPrice;
+    // CTAs da página: levam à árvore até o presente ser aberto; depois, à oferta
+    [].forEach.call(document.querySelectorAll("[data-cta]"), function (a) {
+      if (promoActive && !un) { a.href = "#arvore"; a.textContent = "🎁 Quero descobrir meu presente de Natal"; }
+      else { a.href = "#oferta"; a.textContent = "Quero meu kit por " + fmt.format(price); }
+    });
   }
 
   if (!promoActive) document.documentElement.classList.add("promo-off");
@@ -99,13 +105,22 @@
   function stickyUpdate() { sticky.hidden = heroOn || offerOn || treeOn || bonusOn; }
   if ("IntersectionObserver" in window) {
     var io = function (sel, cb, th) { var el = $(sel); if (!el) return; new IntersectionObserver(function (en) { cb(en[0].isIntersecting); }, { threshold: th || 0.15 }).observe(el); };
-    io("#topo", function (v) { heroOn = v; stickyUpdate(); }, 0.2);
+    io("#topo", function (v) { heroOn = v; stickyUpdate(); }, 0.05);
     io("#oferta", function (v) { offerOn = v; stickyUpdate(); if (v) viewContent(); }, 0.25);
     io("#arvore", function (v) { treeOn = v; stickyUpdate(); }, 0.3);
   } else { sticky.hidden = true; viewContent(); }
   $("#sticky-btn").addEventListener("click", function () { if (promoActive && !unlocked()) { var t = $("#arvore"); if (t) { /* leva à árvore para escolher o presente */ this.setAttribute("href", "#arvore"); } } else this.setAttribute("href", "#oferta"); });
 
 
+
+  /* ---------- mini VSL (vídeo trocável em config.js; só carrega ao dar play) ---------- */
+  (function vsl() {
+    var sec = $("#vsl"), v = $("#vsl-video"); if (!sec || !v || !C.vslVideo) return;
+    if (C.vslPoster) v.poster = C.vslPoster;
+    v.src = C.vslVideo; sec.hidden = false;
+    var played = false;
+    v.addEventListener("play", function () { if (!played && window.AtelieTrack) { played = true; AtelieTrack.track("VideoPlay", {}, true); } });
+  })();
 
   /* ---------- prova social (só com itens reais em config.proofs) ---------- */
   (function proofs() {
