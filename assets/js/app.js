@@ -95,16 +95,75 @@
   }
 
   /* ---------- barra fixa (celular) ---------- */
-  var sticky = $("#sticky"), heroOn = true, offerOn = false, treeOn = false;
-  function stickyUpdate() { sticky.hidden = heroOn || offerOn || treeOn; }
+  var sticky = $("#sticky"), heroOn = true, offerOn = false, treeOn = false, bonusOn = false;
+  function stickyUpdate() { sticky.hidden = heroOn || offerOn || treeOn || bonusOn; }
   if ("IntersectionObserver" in window) {
     var io = function (sel, cb, th) { var el = $(sel); if (!el) return; new IntersectionObserver(function (en) { cb(en[0].isIntersecting); }, { threshold: th || 0.15 }).observe(el); };
     io("#topo", function (v) { heroOn = v; stickyUpdate(); }, 0.2);
     io("#oferta", function (v) { offerOn = v; stickyUpdate(); if (v) viewContent(); }, 0.25);
+    io("#bonus", function (v) { bonusOn = v; stickyUpdate(); }, 0.1);
     io("#arvore", function (v) { treeOn = v; stickyUpdate(); }, 0.3);
   } else { sticky.hidden = true; viewContent(); }
   $("#sticky-btn").addEventListener("click", function () { if (promoActive && !unlocked()) { var t = $("#arvore"); if (t) { /* leva à árvore para escolher o presente */ this.setAttribute("href", "#arvore"); } } else this.setAttribute("href", "#oferta"); });
 
+
+
+  /* ---------- presentes embrulhados: passe o dedo para abrir ---------- */
+  function paper(cv, w, h) {
+    var ctx = cv.getContext("2d");
+    var g = ctx.createLinearGradient(0, 0, w, h); g.addColorStop(0, "#c2323a"); g.addColorStop(1, "#8f1d22");
+    ctx.globalCompositeOperation = "source-over"; ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+    ctx.fillStyle = "rgba(255,248,236,.16)";
+    for (var y = 10, r = 0; y < h; y += 26, r++) for (var x = (r % 2) * 13 + 6; x < w; x += 26) { ctx.beginPath(); ctx.arc(x, y, 2.2, 0, 7); ctx.fill(); }
+    ctx.fillStyle = "rgba(217,164,65,.55)";
+    for (var y2 = 23, r2 = 0; y2 < h; y2 += 52, r2++) for (var x2 = (r2 % 2) * 26 + 19; x2 < w; x2 += 52) { ctx.save(); ctx.translate(x2, y2); ctx.rotate(Math.PI / 4); ctx.fillRect(-3, -3, 6, 6); ctx.restore(); }
+    var rb = Math.max(18, w * 0.13);
+    ctx.fillStyle = "#D9A441"; ctx.fillRect(w / 2 - rb / 2, 0, rb, h); ctx.fillRect(0, h * 0.5 - rb / 2, w, rb);
+    ctx.fillStyle = "rgba(255,255,255,.35)"; ctx.fillRect(w / 2 - rb / 2 + 3, 0, 3, h); ctx.fillRect(0, h * 0.5 - rb / 2 + 3, w, 3);
+    ctx.fillStyle = "#c28f2c";
+    [-1, 1].forEach(function (s) { ctx.save(); ctx.translate(w / 2, h * 0.5); ctx.rotate(s * 0.5); ctx.beginPath(); ctx.ellipse(s * rb * 0.9, -rb * 0.45, rb * 0.95, rb * 0.55, 0, 0, 7); ctx.fill(); ctx.restore(); });
+    ctx.fillStyle = "#e6b650"; ctx.beginPath(); ctx.arc(w / 2, h * 0.5, rb * 0.45, 0, 7); ctx.fill();
+    ctx.fillStyle = "#fff8ec"; ctx.font = "700 " + Math.max(11, w * 0.075) + "px 'Nunito Sans',sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("passe o dedo", w / 2, h - 14);
+  }
+  function scratchCard(card, id) {
+    var cv = document.createElement("canvas"), btn = document.createElement("button"), drawing = false, lx = 0, ly = 0, started = false, done = false;
+    var W = 0, H = 0;
+    btn.type = "button"; btn.className = "rv-btn"; btn.textContent = "Abrir presente";
+    btn.setAttribute("aria-label", "Abrir presente: " + $("h3", card).textContent);
+    card.appendChild(cv); card.appendChild(btn);
+    function size() { var w = card.clientWidth, h = card.clientHeight; if (started || (w === W && h === H)) return; W = w; H = h; cv.width = w; cv.height = h; paper(cv, w, h); }
+    function reveal(silent) {
+      if (done) return; done = true; card.classList.add("revealed"); cv.classList.add("gone");
+      if (!silent) { revealed[id] = 1; try { localStorage.setItem(KEY + "_bonus", JSON.stringify(Object.keys(revealed))); } catch (e) {} if (window.AtelieTrack) AtelieTrack.track("BonusAberto", { bonus: $("h3", card).textContent }, true); }
+      setTimeout(function () { cv.style.display = "none"; }, 600); checkAll();
+    }
+    function pt(e) { var r = cv.getBoundingClientRect(); return [(e.clientX - r.left) * (W / r.width), (e.clientY - r.top) * (H / r.height)]; }
+    function ratio() {
+      var d = cv.getContext("2d").getImageData(0, 0, W, H).data, n = 0, t = 0;
+      for (var i = 3; i < d.length; i += 24) { t++; if (d[i] < 128) n++; } return n / t;
+    }
+    cv.addEventListener("pointerdown", function (e) { if (done) return; started = true; drawing = true; cv.setPointerCapture(e.pointerId); var p = pt(e); lx = p[0]; ly = p[1]; stroke(lx, ly, lx, ly); e.preventDefault(); });
+    cv.addEventListener("pointermove", function (e) { if (!drawing) return; var p = pt(e); stroke(lx, ly, p[0], p[1]); lx = p[0]; ly = p[1]; });
+    function end() { if (!drawing) return; drawing = false; if (ratio() > 0.45) reveal(); }
+    cv.addEventListener("pointerup", end); cv.addEventListener("pointercancel", end);
+    function stroke(x1, y1, x2, y2) { var c = cv.getContext("2d"); c.globalCompositeOperation = "destination-out"; c.lineCap = c.lineJoin = "round"; c.lineWidth = Math.max(30, W * 0.22); c.beginPath(); c.moveTo(x1, y1); c.lineTo(x2, y2); c.stroke(); }
+    btn.addEventListener("click", function () { started = true; reveal(); });
+    size(); if ("ResizeObserver" in window) new ResizeObserver(size).observe(card); window.addEventListener("load", size);
+    if (revealed[id]) { started = true; reveal(true); }
+  }
+  var revealed = {};
+  try { (JSON.parse(localStorage.getItem(KEY + "_bonus") || "[]") || []).forEach(function (k) { revealed[k] = 1; }); } catch (e) {}
+  function checkAll() { var all = document.querySelectorAll(".bonus.scratch"), n = document.querySelectorAll(".bonus.scratch.revealed").length; var el = $("#bonus-done"); if (el) el.hidden = n < all.length; }
+  [].forEach.call(document.querySelectorAll(".bonus.scratch"), function (c, i) { scratchCard(c, i); });
+
+  /* ---------- prova social (só com itens reais em config.proofs) ---------- */
+  (function proofs() {
+    var list = C.proofs || [], sec = $("#prova"); if (!sec || !list.length) return;
+    var track = $("#proof-car .track");
+    list.forEach(function (p) { var a = document.createElement("article"); a.className = "slide proof-card"; var im = document.createElement("img"); im.loading = "lazy"; im.src = p.img; im.alt = p.alt || "Depoimento"; a.appendChild(im); track.appendChild(a); });
+    sec.hidden = false;
+  })();
 
   /* ---------- carrossel infinito: gira sozinho e responde ao dedo ---------- */
   function loopCarousel(el) {
@@ -137,7 +196,7 @@
     start(); setTimeout(start, 600); window.addEventListener("load", start);
     raf = requestAnimationFrame(frame);
   }
-  [].forEach.call(document.querySelectorAll(".carousel[data-loop]"), loopCarousel);
+  [].forEach.call(document.querySelectorAll(".carousel[data-loop]"), function (c) { if ($(".track", c).children.length) loopCarousel(c); });
 
   /* ---------- barra de promoção: contagem em dias para a data fixa ---------- */
   function countdown() {

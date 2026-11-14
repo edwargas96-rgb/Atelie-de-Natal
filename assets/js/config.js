@@ -17,6 +17,10 @@ window.ATELIE_CONFIG = {
   checkoutPromoUrl: "", // checkout com preço promo (R$ 37,90)
 
 
+  // Prova social: só preencha com prints/fotos REAIS, com autorização de quem enviou.
+  // Ex.: { img: "assets/prova/1.webp", alt: "Conversa com cliente mostrando o calendário bordado" }
+  proofs: [],
+
   // Meta Pixel (ID numérico). Vazio = nenhum rastreamento é carregado.
   pixelId: "",
   // Endpoint da API de Conversões (função em /api/capi). Vazio = só Pixel no navegador.

@@ -223,3 +223,24 @@ details p{margin:0 0 16px;color:var(--muted)}
 @media(prefers-reduced-motion:reduce){.santa{display:none}}
 
 .hero-text .lead{margin-bottom:.4em}.hero-grid{gap:18px}.tl-badge{margin-bottom:.4em}.guarantee{padding:12px 4px}
+
+/* presentes embrulhados (raspadinha) */
+.g-bonus{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.g-bonus .bonus:last-child{grid-column:1/-1;width:calc(50% - 6px);justify-self:center}
+@media(min-width:760px){.g-bonus{grid-template-columns:repeat(3,1fr)}.g-bonus .bonus:last-child{grid-column:auto;width:auto}}
+@media(min-width:1000px){.g-bonus{grid-template-columns:repeat(5,1fr)}}
+.bonus.scratch{position:relative}
+.scratch canvas{position:absolute;inset:0;width:100%;height:100%;border-radius:var(--r);touch-action:none;cursor:grab;transition:opacity .5s}
+.scratch canvas.gone{opacity:0;pointer-events:none}
+.rv-btn{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);z-index:3;background:var(--cream);border:2px solid var(--gold);color:var(--pine);border-radius:999px;font:700 .8rem var(--sans);padding:6px 12px;cursor:pointer;opacity:0;pointer-events:none}
+.rv-btn:focus-visible{opacity:1;pointer-events:auto}
+.bonus.revealed .rv-btn{display:none}
+.bonus.revealed{animation:unwrap .6s ease-out}
+@keyframes unwrap{0%{transform:scale(.96)}60%{transform:scale(1.03)}100%{transform:none}}
+.bonus-done{text-align:center;margin:18px 0 0;font-weight:700;color:var(--pine)}
+.bonus-done .btn{margin-top:10px}
+.car-proof{--w:72%}
+@media(min-width:760px){.car-proof{--w:calc((100% - 28px)/3)}}
+.proof-card{background:#fffdf7;border:1px solid rgba(217,164,65,.45);border-radius:var(--r);padding:8px;box-shadow:var(--shadow)}
+.proof-card img{width:100%;height:auto;border-radius:10px;display:block}
+@media(prefers-reduced-motion:reduce){.bonus.revealed{animation:none}.scratch canvas{transition:none}}
