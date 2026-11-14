@@ -336,3 +336,9 @@ details p{margin:0 0 16px;color:var(--muted)}
 .digital{margin:14px 0 0;padding-top:12px;border-top:1px dashed rgba(217,164,65,.7);font-size:.85rem;color:var(--muted)}
 .guarantee{background:#fffdf7;border:1px solid rgba(217,164,65,.45);border-radius:var(--r);padding:14px;margin-bottom:26px;align-items:center}
 .cta-final{margin:22px 0 0}
+
+/* presentes piscando até a pessoa abrir um */
+.gift-pending .gift svg{animation:giftpulse 1.5s ease-in-out infinite}
+.gift-pending .gift:nth-child(2n) svg{animation-delay:.3s}.gift-pending .gift:nth-child(3n) svg{animation-delay:.6s}
+@keyframes giftpulse{0%,100%{transform:scale(1);filter:drop-shadow(0 0 0 rgba(255,224,138,0))}50%{transform:scale(1.14);filter:drop-shadow(0 0 9px #ffe08a)}}
+@media(prefers-reduced-motion:reduce){.gift-pending .gift svg{animation:none;filter:drop-shadow(0 0 6px #ffe08a)}}

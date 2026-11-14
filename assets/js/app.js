@@ -16,25 +16,31 @@
 
   /* ---------- preço / botões ---------- */
   function render() {
-    var un = unlocked();
+    var un = unlocked(), locked = promoActive && !un; // locked: precisa abrir o presente antes de comprar
     var price = un ? C.promoPrice : C.fullPrice;
     var buy = $("#buy");
     $("#price").textContent = fmt.format(price);
-    $("#price-tag").textContent = un ? "Preço final com o seu presente" : "Preço final";
+    $("#price-tag").textContent = un ? "Preço final com o seu presente" : (locked ? "Valor de referência" : "Preço final");
     var old = $("#price-old");
     old.hidden = !un; if (un) old.textContent = "De " + fmt.format(C.fullPrice);
     $("#sum-disc").hidden = !un; if (un) $("#sum-disc-val").textContent = "− " + fmt.format(C.fullPrice - C.promoPrice);
-    $("#price-note").textContent = un ? "Pagamento único · promoção até " + C.promoEndLabel : "Pagamento único";
-    $("#promo-hint").hidden = !(promoActive && !un);
-    buy.dataset.kind = un ? "promo" : "full";
-    var link = un ? C.checkoutPromoUrl : C.checkoutFullUrl;
-    buy.href = link ? url(link) : "#oferta";
-    buy.textContent = "Quero o Ateliê de Natal por " + fmt.format(price);
-    $("#sticky-price").textContent = fmt.format(price);
+    $("#price-note").textContent = un ? "Pagamento único · promoção até " + C.promoEndLabel : (locked ? "Abra o seu presente para revelar o preço de Natal" : "Pagamento único");
+    $("#promo-hint").hidden = true;
+    document.documentElement.classList.toggle("gift-pending", locked);
+    if (locked) {
+      buy.dataset.kind = "gift"; buy.href = "#arvore"; buy.textContent = "🎁 Abrir meu presente";
+    } else {
+      buy.dataset.kind = un ? "promo" : "full";
+      var link = un ? C.checkoutPromoUrl : C.checkoutFullUrl;
+      buy.href = link ? url(link) : "#oferta";
+      buy.textContent = "Quero o Ateliê de Natal por " + fmt.format(price);
+    }
+    $("#sticky-price").textContent = locked ? "Seu presente" : fmt.format(price);
+    $("#sticky-btn").textContent = locked ? "🎁 Abrir presente" : "Quero o kit";
     var dis = document.querySelectorAll("[data-full-int]"); for (var i = 0; i < dis.length; i++) dis[i].textContent = C.fullPrice;
     // CTAs da página: levam à árvore até o presente ser aberto; depois, à oferta
     [].forEach.call(document.querySelectorAll("[data-cta]"), function (a) {
-      if (promoActive && !un) { a.href = "#arvore"; a.textContent = "🎁 Quero descobrir meu presente de Natal"; }
+      if (locked) { a.href = "#arvore"; a.textContent = "🎁 Quero descobrir meu presente de Natal"; }
       else { a.href = "#oferta"; a.textContent = "Quero meu kit por " + fmt.format(price); }
     });
   }
@@ -88,6 +94,7 @@
 
   /* ---------- eventos ---------- */
   $("#buy").addEventListener("click", function (e) {
+    if (this.dataset.kind === "gift") return; // ainda não abriu o presente: só rola até a árvore
     var href = this.getAttribute("href");
     if (!href || href === "#oferta") { e.preventDefault(); console.warn("Link de checkout não configurado em assets/js/config.js"); return; }
     var un = this.dataset.kind === "promo";
