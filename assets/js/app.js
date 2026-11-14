@@ -46,8 +46,8 @@
       '<g class="spark" fill="#D9A441"><path d="M24 2l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/><circle cx="8" cy="10" r="2"/><circle cx="40" cy="8" r="2"/></g></svg>';
   }
   function showOpened() {
-    $("#sample").innerHTML = '<p class="unlocked">Presente aberto! Já dá para começar a decorar o seu Natal.</p>' +
-      '<p class="sample-empty">Seu preço especial está liberado para o kit completo, com os 5 presentes de brinde.</p>' +
+    $("#sample").innerHTML = '<p class="unlocked">Presente aberto! Hora de decorar o seu Natal.</p>' +
+      '<p class="sample-empty">Preço especial liberado, com os 5 brindes.</p>' +
       '<a class="btn btn-primary" href="#oferta">Quero o meu por ' + fmt.format(C.promoPrice) + '</a>';
   }
 

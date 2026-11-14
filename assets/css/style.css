@@ -265,3 +265,12 @@ details p{margin:0 0 16px;color:var(--muted)}
 .hero-cta .fine{text-align:center}
 .santa{opacity:.26}
 @media(min-width:820px){.hero-grid{display:block}.hero-text,.hero-cta{max-width:none}.hero-media{width:min(520px,100%)}}
+
+/* prova social: cartões iguais, sem vazio */
+.proof-card{padding:6px}
+.proof-card img{aspect-ratio:8/9;object-fit:cover;object-position:top center}
+.car-proof .track{align-items:stretch}
+#prova{padding-top:18px}
+.car-proof{--w:62%}
+@media(min-width:760px){.car-proof{--w:calc((100% - 42px)/4)}}
+.hero .sub{font-weight:600}
