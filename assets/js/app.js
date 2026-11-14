@@ -8,12 +8,10 @@
   var end = new Date(C.promoEnd).getTime();
   var promoActive = Date.now() < end;
   var opened = [];       // ids de presentes abertos
-  var viaOffer = false;  // visitante escolheu "Ver oferta"
   try { opened = JSON.parse(localStorage.getItem(KEY) || "[]"); if (!Array.isArray(opened)) opened = []; } catch (e) { opened = []; }
-  try { viaOffer = localStorage.getItem(KEY + "_oferta") === "1"; } catch (e) {}
 
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(opened)); if (viaOffer) localStorage.setItem(KEY + "_oferta", "1"); } catch (e) {} }
-  function unlocked() { return promoActive && (opened.length > 0 || viaOffer); }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(opened)); } catch (e) {} }
+  function unlocked() { return promoActive && opened.length > 0; }
   function url(u) { return u ? u + (u.indexOf("?") > -1 ? "&" : "?") + location.search.slice(1) : ""; }
 
   /* ---------- preço / botões ---------- */
@@ -33,7 +31,6 @@
     buy.textContent = "Quero o Ateliê de Natal por " + fmt.format(price);
     $("#sticky-price").textContent = fmt.format(price);
     var dis = document.querySelectorAll("[data-full-int]"); for (var i = 0; i < dis.length; i++) dis[i].textContent = C.fullPrice;
-    $("#bump-price").textContent = C.bumpPrice ? "+ " + fmt.format(C.bumpPrice) : "";
   }
 
   if (!promoActive) document.documentElement.classList.add("promo-off");
@@ -83,13 +80,6 @@
     if (opened.length && promoActive) { lockOthers(); showOpened(); }
   }
 
-  /* ---------- "Ver oferta": libera a mesma promo sem precisar abrir presente ---------- */
-  [].forEach.call(document.querySelectorAll("[data-ver-oferta]"), function (a) {
-    a.addEventListener("click", function () {
-      if (promoActive && !unlocked()) { viaOffer = true; save(); render(); }
-    });
-  });
-
   /* ---------- eventos ---------- */
   $("#buy").addEventListener("click", function (e) {
     var href = this.getAttribute("href");
@@ -116,28 +106,36 @@
   $("#sticky-btn").addEventListener("click", function () { if (promoActive && !unlocked()) { var t = $("#arvore"); if (t) { /* leva à árvore para escolher o presente */ this.setAttribute("href", "#arvore"); } } else this.setAttribute("href", "#oferta"); });
 
 
-  /* ---------- carrossel infinito (automático e com swipe) ---------- */
+  /* ---------- carrossel infinito: gira sozinho e responde ao dedo ---------- */
   function loopCarousel(el) {
     var track = $(".track", el), orig = [].slice.call(track.children), n = orig.length;
     function clones() { var f = document.createDocumentFragment(); orig.forEach(function (s) { var c = s.cloneNode(true); c.setAttribute("aria-hidden", "true"); f.appendChild(c); }); return f; }
     track.insertBefore(clones(), track.firstChild); track.appendChild(clones());
-    var setW = 0, stepW = 0, timer = null, paused = false, visible = false, settle, resume;
-    var interval = el.classList.contains("car-sess") ? 3200 : 3800;
-    function measure() { var k = track.children; setW = k[n].offsetLeft - k[0].offsetLeft; stepW = k[1].offsetLeft - k[0].offsetLeft; }
-    function jump(x) { track.style.scrollSnapType = "none"; track.scrollLeft = x; requestAnimationFrame(function () { track.style.scrollSnapType = ""; }); }
-    function normalize() { measure(); if (!setW) return; if (track.scrollLeft < setW * 0.5) jump(track.scrollLeft + setW); else if (track.scrollLeft >= setW * 1.5) jump(track.scrollLeft - setW); }
-    function start() { measure(); jump(setW); }
-    function stop() { clearInterval(timer); timer = null; }
-    function play() { stop(); if (reduce || paused || !visible) return; timer = setInterval(function () { track.scrollBy({ left: stepW, behavior: "smooth" }); }, interval); }
-    function pause() { paused = true; stop(); clearTimeout(resume); }
-    function later() { clearTimeout(resume); resume = setTimeout(function () { paused = false; play(); }, 3500); }
-    track.addEventListener("scroll", function () { clearTimeout(settle); settle = setTimeout(normalize, 140); }, { passive: true });
-    track.addEventListener("touchstart", pause, { passive: true }); track.addEventListener("touchend", later, { passive: true });
-    track.addEventListener("pointerdown", pause); track.addEventListener("pointerup", later);
-    el.addEventListener("mouseenter", pause); el.addEventListener("mouseleave", later);
+    var setW = 0, pos = 0, visible = false, touching = false, last = 0, raf = 0, resume = 0, idleUntil = 0;
+    var speed = el.classList.contains("car-sess") ? 38 : 34; // pixels por segundo
+    function measure() { var k = track.children; setW = k[n].offsetLeft - k[0].offsetLeft; }
+    function start() { measure(); pos = setW; track.scrollLeft = pos; }
+    function frame(t) {
+      raf = requestAnimationFrame(frame);
+      var dt = Math.min(64, t - last) / 1000; last = t;
+      if (!visible) return;
+      if (touching || Date.now() < idleUntil) { pos = track.scrollLeft; }
+      else { pos += speed * dt; }
+      if (!setW) measure();
+      if (setW) { if (pos >= setW * 2) pos -= setW; else if (pos < setW * 0.5) pos += setW; }
+      if (!touching && Date.now() >= idleUntil) track.scrollLeft = pos;
+      else if (pos !== track.scrollLeft) { track.scrollLeft = pos; }
+    }
+    function hold() { touching = true; }
+    function release() { touching = false; idleUntil = Date.now() + 1800; }
+    track.addEventListener("touchstart", hold, { passive: true });
+    track.addEventListener("touchend", release, { passive: true }); track.addEventListener("touchcancel", release, { passive: true });
+    track.addEventListener("wheel", function () { idleUntil = Date.now() + 1800; }, { passive: true });
+    el.addEventListener("mouseenter", hold); el.addEventListener("mouseleave", release);
     window.addEventListener("resize", start);
-    if ("IntersectionObserver" in window) new IntersectionObserver(function (en) { visible = en[0].isIntersecting; play(); }, { threshold: 0.3 }).observe(el);
-    start(); setTimeout(start, 700); window.addEventListener("load", start);
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }, { threshold: 0.1 }).observe(el); else visible = true;
+    start(); setTimeout(start, 600); window.addEventListener("load", start);
+    raf = requestAnimationFrame(frame);
   }
   [].forEach.call(document.querySelectorAll(".carousel[data-loop]"), loopCarousel);
 

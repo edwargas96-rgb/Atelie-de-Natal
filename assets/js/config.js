@@ -12,12 +12,10 @@ window.ATELIE_CONFIG = {
   fullPrice: 167,
   promoPrice: 37.9,
 
-  // Links dos checkouts externos (Cakto, Hotmart ou Kiwify). Order bump é configurado na plataforma.
+  // Links dos checkouts externos (Cakto, Hotmart ou Kiwify). Qualquer extra de checkout é configurado na plataforma.
   checkoutFullUrl: "", // checkout com preço cheio (R$ 167)
   checkoutPromoUrl: "", // checkout com preço promo (R$ 37,90)
 
-  // Order bump (Ceia sem Estresse). Deixe null para esconder o preço na página.
-  bumpPrice: 9.9,
 
   // Meta Pixel (ID numérico). Vazio = nenhum rastreamento é carregado.
   pixelId: "",
