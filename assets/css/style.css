@@ -347,3 +347,12 @@ details p{margin:0 0 16px;color:var(--muted)}
 .tree-title{color:var(--pine);font-size:clamp(1.55rem,6.2vw,2.3rem);line-height:1.18;max-width:640px;margin:0 auto .6em}
 .sample:has(.tap-hint){background:none;border:0;box-shadow:none;min-height:0;padding:0}
 .tap-hint{font-weight:700;color:var(--cherry);font-size:1rem}
+
+/* hero: mockup mais alto, bullets e número de pessoas */
+.hero h1{margin-bottom:.25em}
+.hero-media{margin-top:-4px;margin-bottom:2px}
+.hero .gains{margin-bottom:12px}
+.users{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;margin:0 0 14px;padding:6px 14px;border-radius:999px;background:#fffdf7;border:1px solid rgba(217,164,65,.55);font-size:.9rem;color:var(--pine)}
+.users .stars{color:var(--gold);letter-spacing:1px}
+.users{flex-wrap:nowrap;white-space:nowrap;font-size:clamp(.74rem,3.4vw,.9rem);padding:6px 12px;gap:6px}
+.users b{margin-right:-2px}
