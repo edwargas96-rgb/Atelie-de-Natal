@@ -1,5 +1,6 @@
-Você vai produzir, sozinho e sem pedir confirmação (exceto no 1º molde), os 250 moldes do produto
 (Modelo recomendado para esta tarefa: Sonnet com esforço baixo. A revisão das imagens é obrigatória.)
+
+Você vai produzir, sozinho e sem pedir confirmação (exceto no 1º molde), os 250 moldes do produto
 "Ateliê de Natal", usando o ChatGPT (chatgpt.com) pelo navegador, com a extensão Claude in Chrome.
 Trabalhe em lotes de 10. Revise cada imagem antes de seguir.
 
