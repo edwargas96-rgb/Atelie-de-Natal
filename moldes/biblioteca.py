@@ -66,6 +66,13 @@ def m_tree(l, simple=False, **_):
         for x, y in [(-28, -15), (30, -24), (-34, 8), (34, 12)]: l.X(x, y)
 
 
+def sub(l, name, x, y, size, swap=False, **kw):
+    """Desenha uma forma menor dentro de outra, mantendo o espaçamento real dos furos."""
+    kr = l.k * size / 100.0
+    s = L(kr); MOTIFS[name](s, simple=True, **kw)
+    merge(l.d, s.d, x, y, size / 100.0, swap)
+
+
 def m_star(l, simple=False, **_):
     l.P(star(0, 0, 40, 17), "gold", closed=True, corners=True)
     if not simple:
@@ -102,11 +109,19 @@ def m_bell(l, simple=False, **_):
         for x in (-12, 0, 12): l.K(x, 21, "green", 1.2)
 
 
-def m_stocking(l, simple=False, **_):
+def m_stocking(l, simple=False, v=0, **_):
     l.P([(-12, -38), (14, -38), (14, 10), (30, 18), (36, 30), (28, 39), (12, 38), (-8, 28), (-12, 20)], "red", closed=True, corners=True)
     l.P([(-12, -24), (14, -24)], "gold")
-    l.P(star(1, -6, 5.5, 2.3), "gold", closed=True, corners=True)
-    if not simple:
+    if v == 1:
+        for y in (-14, -4, 6): l.P([(-12, y + 4), (14, y - 2)], "green")
+        l.P([(-4, 24), (24, 24)], "gold")
+    elif v == 2:
+        sub(l, "floco de neve", 1, -4, 22)
+    elif v == 3:
+        sub(l, "coração", 1, -6, 20); l.P([(-12, 12), (14, 12)], "green")
+    else:
+        l.P(star(1, -6, 5.5, 2.3), "gold", closed=True, corners=True)
+    if v == 0 and not simple:
         for x, y in [(-6, -31), (1, -31), (8, -31), (-2, 14), (8, 22)]: l.K(x, y, "green", 1.3)
         holly(l, 1, -48, math.radians(200), 14); holly(l, 1, -48, math.radians(-20), 14); l.K(1, -50, "red", 1.4)
 
@@ -248,7 +263,100 @@ def m_moon(l, simple=False, **_):
         for x, y in [(-8, -14), (-2, 8), (-12, 12)]: l.K(x, y, "green", 1.1)
 
 
+def m_envelope(l, inner="estrela", **_):
+    l.P([(-40, -24), (40, -24), (40, 30), (-40, 30)], "green", closed=True, corners=True)
+    l.P([(-40, -24), (0, 6), (40, -24)], "green")
+    l.P([(-40, 30), (-12, 4)], "green"); l.P([(40, 30), (12, 4)], "green")
+    l.K(0, 8, "red", 2.2)
+    sub(l, inner, 0, -9, 22)
+    for x, y in [(-30, 20), (30, 20)]: l.X(x, y)
+
+
+def m_sacola(l, inner="estrela", **_):
+    l.P([(-30, -14), (30, -14), (30, 40), (-30, 40)], "red", closed=True, corners=True)
+    l.P([(-30, -4), (30, -4)], "gold")
+    l.P(cubic((-15, -14), (-15, -42), (15, -42), (15, -14), 40), "gold")
+    sub(l, inner, 0, 18, 32)
+    for x in (-22, -11, 0, 11, 22): l.K(x, 33, "green", 1.1)
+
+
+def m_varal(l, inners=("estrela", "coração", "bolinha", "sino", "azevinho"), **_):
+    curve = cubic((-46, -34), (-18, -8), (18, -8), (46, -34), 60)
+    l.P(curve, "gold", sp=3.2)
+    for i, idx in enumerate((6, 18, 30, 42, 54)):
+        x, y = curve[idx]
+        col = "red" if i % 2 == 0 else "green"
+        l.P([(x - 10, y + 1), (x + 10, y + 1), (x, y + 30)], col, closed=True, corners=True)
+        sub(l, inners[i % len(inners)], x, y + 11, 11)
+    l.K(-46, -36, "gold", 1.8); l.K(46, -36, "gold", 1.8)
+    for x, y in [(-30, 30), (30, 30), (0, 38)]: l.X(x, y)
+
+
+def _cone(l, x, top, bottom, w, col, crown=False):
+    l.P([(x, top), (x - w, bottom), (x + w, bottom)], col, closed=True, corners=True)
+    l.P(circ(x, top - 7, 5.5, 22), "gold", closed=True, sp=2.8)
+    if crown: l.P([(x - 6, top - 14), (x - 4, top - 20), (x, top - 15), (x + 4, top - 20), (x + 6, top - 14)], "gold", sp=2.4)
+
+
+def m_presepio(l, simple=False, **_):
+    l.P([(-42, -6), (0, -34), (42, -6)], "gold"); l.P([(-36, -4), (-36, 36)], "gold"); l.P([(36, -4), (36, 36)], "gold")
+    l.P([(-46, 36), (46, 36)], "green")
+    l.P(star(0, -46, 8, 3.4), "gold", closed=True, corners=True)
+    _cone(l, -20, 8, 36, 9, "red"); _cone(l, 22, 6, 36, 9, "green")
+    l.P([(-8, 26), (8, 26), (5, 36), (-5, 36)], "gold", closed=True, corners=True)
+    l.K(0, 22, "red", 1.7)
+    if not simple:
+        for x, y in [(-30, -44), (32, -40), (-38, -30)]: l.X(x, y)
+
+
+def m_reis(l, simple=False, **_):
+    l.P(star(0, -44, 9, 3.8), "gold", closed=True, corners=True)
+    for x, col in ((-28, "red"), (0, "green"), (28, "red")):
+        _cone(l, x, -4, 34, 10, col, crown=True)
+    for x in (-28, 0, 28): l.K(x, 14, "gold", 1.5)
+    l.P([(-46, 36), (46, 36)], "gold")
+    if not simple:
+        for x, y in [(-40, -30), (40, -28)]: l.X(x, y)
+
+
+def m_anjo(l, simple=False, **_):
+    l.P(circ(0, -38, 9, 28), "gold", closed=True, sp=2.8)
+    l.P(circ(0, -28, 7, 22), "red", closed=True, sp=2.8)
+    l.P([(-10, -20), (10, -20), (18, 34), (-18, 34)], "red", closed=True, corners=True)
+    for s in (-1, 1):
+        l.P(cubic((s * 9, -14), (s * 30, -48), (s * 46, -18), (s * 14, 6), 30), "green", closed=True, sp=2.8)
+        l.K(s * 22, -16, "gold", 1.2)
+    l.P([(-18, 22), (18, 22)], "gold")
+    if not simple:
+        for x, y in [(-36, -40), (38, -36), (0, 44)]: l.X(x, y)
+
+
+def m_ovelha(l, simple=False, **_):
+    body = [(26 * math.cos(2 * math.pi * k / 120) + 3 * math.cos(2 * math.pi * k / 120 * 9) * math.cos(2 * math.pi * k / 120), 20 * math.sin(2 * math.pi * k / 120) + 3 * math.sin(2 * math.pi * k / 120 * 9)) for k in range(120)]
+    l.P(body, "gold", closed=True)
+    l.P(chaikin([(-36, -8), (-24, -14), (-20, 2), (-30, 8), (-38, 4)], 2), "green", closed=True)
+    l.K(-31, -4, "red", 1.1)
+    for x in (-14, -4, 10, 20): l.P([(x, 18), (x, 40)], "green", sp=3.0)
+    if not simple:
+        l.P(star(0, -40, 7, 3), "gold", closed=True, corners=True)
+        for x, y in [(0, -4), (12, 2), (-8, 6)]: l.K(x, y, "green", 1.1)
+
+
+def m_lareira(l, simple=False, **_):
+    l.P([(-46, -26), (46, -26), (46, -16), (-46, -16)], "gold", closed=True, corners=True)
+    l.P([(-36, -16), (-36, 42), (36, 42), (36, -16)], "red")
+    l.P([(-24, 42), (-24, 4)] + cubic((-24, 4), (-24, -12), (24, -12), (24, 4), 30) + [(24, 42)], "gold")
+    l.P(chaikin([(-9, 42), (-13, 28), (-5, 16), (-2, 24), (4, 8), (11, 26), (15, 30), (13, 42)], 2), "red", closed=True, sp=2.8)
+    l.P([(-14, 42), (14, 42)], "green")
+    sub(l, "vela", -30, -42, 26); sub(l, "vela", 30, -42, 26)
+    l.P(star(0, -42, 7, 3), "gold", closed=True, corners=True)
+    if not simple:
+        for x in (-30, -15, 0, 15, 30): l.K(x, -21, "green", 1.1)
+
+
 MOTIFS = {
+    "envelope": m_envelope, "sacola": m_sacola, "varal": m_varal, "presépio": m_presepio, "reis magos": m_reis,
+    "anjo": m_anjo, "ovelha": m_ovelha, "lareira": m_lareira,
     "árvore": m_tree, "estrela": m_star, "floco de neve": m_snowflake, "sino": m_bell, "meia": m_stocking,
     "presente": m_gift, "vela": m_candle, "coração": m_heart, "biscoito de gengibre": m_ginger, "luva": m_mitten,
     "boneco de neve": m_snowman, "bengala doce": m_cane, "guirlanda": m_wreath, "rosácea": m_rosette,

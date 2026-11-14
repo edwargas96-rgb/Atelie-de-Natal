@@ -601,122 +601,152 @@
  },
  {
   "categoria": "Cartões e presentes",
-  "tipo": "Selo de embalagem",
-  "forma": "estrela",
-  "formato": "round-s",
+  "tipo": "Envelope",
+  "forma": "envelope",
+  "formato": "card",
   "texto": "",
   "swap": false,
   "simple": true,
-  "extra": {},
-  "nome": "Selo de embalagem estrela",
+  "extra": {
+   "inner": "estrela",
+   "rotulo": "estrela"
+  },
+  "nome": "Envelope estrela",
   "numero": 51
  },
  {
   "categoria": "Cartões e presentes",
-  "tipo": "Selo de embalagem",
-  "forma": "azevinho",
-  "formato": "round-s",
+  "tipo": "Envelope",
+  "forma": "envelope",
+  "formato": "card",
   "texto": "",
   "swap": true,
   "simple": true,
-  "extra": {},
-  "nome": "Selo de embalagem azevinho verde",
+  "extra": {
+   "inner": "azevinho",
+   "rotulo": "azevinho"
+  },
+  "nome": "Envelope azevinho verde",
   "numero": 52
  },
  {
   "categoria": "Cartões e presentes",
-  "tipo": "Selo de embalagem",
-  "forma": "floco de neve",
-  "formato": "round-s",
+  "tipo": "Envelope",
+  "forma": "envelope",
+  "formato": "card",
   "texto": "",
   "swap": false,
   "simple": true,
-  "extra": {},
-  "nome": "Selo de embalagem floco de neve",
+  "extra": {
+   "inner": "coração",
+   "rotulo": "coração"
+  },
+  "nome": "Envelope coração",
   "numero": 53
  },
  {
   "categoria": "Cartões e presentes",
-  "tipo": "Selo de embalagem",
-  "forma": "coração",
-  "formato": "round-s",
+  "tipo": "Envelope",
+  "forma": "envelope",
+  "formato": "card",
   "texto": "",
   "swap": true,
   "simple": true,
-  "extra": {},
-  "nome": "Selo de embalagem coração verde",
+  "extra": {
+   "inner": "floco de neve",
+   "rotulo": "floco de neve"
+  },
+  "nome": "Envelope floco de neve verde",
   "numero": 54
  },
  {
   "categoria": "Cartões e presentes",
-  "tipo": "Selo de embalagem",
-  "forma": "bolinha",
-  "formato": "round-s",
+  "tipo": "Envelope",
+  "forma": "envelope",
+  "formato": "card",
   "texto": "",
   "swap": false,
   "simple": true,
-  "extra": {},
-  "nome": "Selo de embalagem bolinha",
+  "extra": {
+   "inner": "bolinha",
+   "rotulo": "bolinha"
+  },
+  "nome": "Envelope bolinha",
   "numero": 55
  },
  {
   "categoria": "Cartões e presentes",
-  "tipo": "Selo de embalagem",
-  "forma": "presente",
-  "formato": "round-s",
+  "tipo": "Envelope",
+  "forma": "envelope",
+  "formato": "card",
   "texto": "",
   "swap": true,
   "simple": true,
-  "extra": {},
-  "nome": "Selo de embalagem presente verde",
+  "extra": {
+   "inner": "sino",
+   "rotulo": "sino"
+  },
+  "nome": "Envelope sino verde",
   "numero": 56
  },
  {
   "categoria": "Cartões e presentes",
-  "tipo": "Selo de embalagem",
-  "forma": "sino",
-  "formato": "round-s",
+  "tipo": "Embalagem (sacola)",
+  "forma": "sacola",
+  "formato": "card",
   "texto": "",
   "swap": false,
   "simple": true,
-  "extra": {},
-  "nome": "Selo de embalagem sino",
+  "extra": {
+   "inner": "árvore",
+   "rotulo": "árvore"
+  },
+  "nome": "Embalagem (sacola) árvore",
   "numero": 57
  },
  {
   "categoria": "Cartões e presentes",
-  "tipo": "Selo de embalagem",
-  "forma": "árvore",
-  "formato": "round-s",
+  "tipo": "Embalagem (sacola)",
+  "forma": "sacola",
+  "formato": "card",
   "texto": "",
   "swap": true,
   "simple": true,
-  "extra": {},
-  "nome": "Selo de embalagem árvore verde",
+  "extra": {
+   "inner": "presente",
+   "rotulo": "presente"
+  },
+  "nome": "Embalagem (sacola) presente verde",
   "numero": 58
  },
  {
   "categoria": "Cartões e presentes",
-  "tipo": "Selo de embalagem",
-  "forma": "luva",
-  "formato": "round-s",
+  "tipo": "Embalagem (sacola)",
+  "forma": "sacola",
+  "formato": "card",
   "texto": "",
   "swap": false,
   "simple": true,
-  "extra": {},
-  "nome": "Selo de embalagem luva",
+  "extra": {
+   "inner": "vela",
+   "rotulo": "vela"
+  },
+  "nome": "Embalagem (sacola) vela",
   "numero": 59
  },
  {
   "categoria": "Cartões e presentes",
-  "tipo": "Selo de embalagem",
-  "forma": "vela",
-  "formato": "round-s",
+  "tipo": "Embalagem (sacola)",
+  "forma": "sacola",
+  "formato": "card",
   "texto": "",
   "swap": true,
   "simple": true,
-  "extra": {},
-  "nome": "Selo de embalagem vela verde",
+  "extra": {
+   "inner": "meia",
+   "rotulo": "meia"
+  },
+  "nome": "Embalagem (sacola) meia verde",
   "numero": 60
  },
  {
@@ -1313,100 +1343,149 @@
  },
  {
   "categoria": "Árvore e casa",
-  "tipo": "Medalhão",
-  "forma": "floco de neve",
-  "formato": "round",
+  "tipo": "Varal",
+  "forma": "varal",
+  "formato": "card",
   "texto": "",
   "swap": false,
   "simple": false,
   "extra": {
-   "n": 12
+   "inners": [
+    "estrela",
+    "coração",
+    "bolinha",
+    "sino",
+    "azevinho"
+   ],
+   "rotulo": "estrela e coração"
   },
-  "nome": "Medalhão floco de neve",
+  "nome": "Varal estrela e coração",
   "numero": 109
  },
  {
   "categoria": "Árvore e casa",
-  "tipo": "Medalhão",
-  "forma": "bolinha",
-  "formato": "round",
-  "texto": "Amor e luz",
-  "swap": false,
+  "tipo": "Varal",
+  "forma": "varal",
+  "formato": "card",
+  "texto": "",
+  "swap": true,
   "simple": false,
   "extra": {
-   "n": 8
+   "inners": [
+    "árvore",
+    "meia",
+    "presente",
+    "vela",
+    "floco de neve"
+   ],
+   "rotulo": "árvore e meia"
   },
-  "nome": "Medalhão bolinha",
+  "nome": "Varal árvore e meia verde",
   "numero": 110
  },
  {
   "categoria": "Árvore e casa",
-  "tipo": "Medalhão",
-  "forma": "coração",
-  "formato": "round",
+  "tipo": "Varal",
+  "forma": "varal",
+  "formato": "card",
   "texto": "",
-  "swap": true,
+  "swap": false,
   "simple": false,
   "extra": {
-   "n": 10
+   "inners": [
+    "coração",
+    "estrela",
+    "coração",
+    "estrela",
+    "coração"
+   ],
+   "rotulo": "coração e estrela"
   },
-  "nome": "Medalhão coração verde",
+  "nome": "Varal coração e estrela",
   "numero": 111
  },
  {
   "categoria": "Árvore e casa",
-  "tipo": "Medalhão",
-  "forma": "azevinho",
-  "formato": "round",
+  "tipo": "Varal",
+  "forma": "varal",
+  "formato": "card",
   "texto": "",
   "swap": true,
   "simple": false,
   "extra": {
-   "n": 12
+   "inners": [
+    "sino",
+    "bolinha",
+    "sino",
+    "bolinha",
+    "sino"
+   ],
+   "rotulo": "sino e bolinha"
   },
-  "nome": "Medalhão azevinho verde",
+  "nome": "Varal sino e bolinha verde",
   "numero": 112
  },
  {
   "categoria": "Árvore e casa",
-  "tipo": "Medalhão",
-  "forma": "lua e estrelas",
-  "formato": "round",
-  "texto": "Paz e Amor",
+  "tipo": "Varal",
+  "forma": "varal",
+  "formato": "card",
+  "texto": "",
   "swap": false,
   "simple": false,
   "extra": {
-   "n": 8
+   "inners": [
+    "floco de neve",
+    "estrela",
+    "floco de neve",
+    "estrela",
+    "floco de neve"
+   ],
+   "rotulo": "floco de neve e estrela"
   },
-  "nome": "Medalhão lua e estrelas",
+  "nome": "Varal floco de neve e estrela",
   "numero": 113
  },
  {
   "categoria": "Árvore e casa",
-  "tipo": "Medalhão",
-  "forma": "sino",
-  "formato": "round",
-  "texto": "",
-  "swap": false,
-  "simple": false,
-  "extra": {
-   "n": 10
-  },
-  "nome": "Medalhão sino",
-  "numero": 114
- },
- {
-  "categoria": "Árvore e casa",
-  "tipo": "Medalhão",
-  "forma": "estrela",
-  "formato": "round",
+  "tipo": "Varal",
+  "forma": "varal",
+  "formato": "card",
   "texto": "",
   "swap": true,
   "simple": false,
   "extra": {
-   "n": 12
+   "inners": [
+    "azevinho",
+    "bolinha",
+    "azevinho",
+    "bolinha",
+    "azevinho"
+   ],
+   "rotulo": "azevinho e bolinha"
   },
-  "nome": "Medalhão estrela verde",
+  "nome": "Varal azevinho e bolinha verde",
+  "numero": 114
+ },
+ {
+  "categoria": "Árvore e casa",
+  "tipo": "Varal",
+  "forma": "varal",
+  "formato": "card",
+  "texto": "",
+  "swap": false,
+  "simple": false,
+  "extra": {
+   "inners": [
+    "luva",
+    "meia",
+    "luva",
+    "meia",
+    "luva"
+   ],
+   "rotulo": "luva e meia"
+  },
+  "nome": "Varal luva e meia",
   "numero": 115
  },
  {
@@ -1417,7 +1496,9 @@
   "texto": "Boas Festas",
   "swap": false,
   "simple": false,
-  "extra": {},
+  "extra": {
+   "v": 0
+  },
   "nome": "Meia da lareira meia",
   "numero": 116
  },
@@ -1429,7 +1510,9 @@
   "texto": "Feliz Natal",
   "swap": true,
   "simple": false,
-  "extra": {},
+  "extra": {
+   "v": 1
+  },
   "nome": "Meia da lareira meia verde",
   "numero": 117
  },
@@ -1441,7 +1524,9 @@
   "texto": "Natal em família",
   "swap": false,
   "simple": false,
-  "extra": {},
+  "extra": {
+   "v": 2
+  },
   "nome": "Meia da lareira meia (versão 2)",
   "numero": 118
  },
@@ -1453,7 +1538,9 @@
   "texto": "Com carinho",
   "swap": true,
   "simple": false,
-  "extra": {},
+  "extra": {
+   "v": 3
+  },
   "nome": "Meia da lareira meia verde (versão 2)",
   "numero": 119
  },
@@ -1465,69 +1552,167 @@
   "texto": "Paz e Amor",
   "swap": false,
   "simple": false,
-  "extra": {},
+  "extra": {
+   "v": 0
+  },
   "nome": "Meia da lareira meia (versão 3)",
   "numero": 120
  },
  {
   "categoria": "Árvore e casa",
-  "tipo": "Cartaz da lareira",
-  "forma": "luva",
+  "tipo": "Lareira",
+  "forma": "lareira",
   "formato": "card",
-  "texto": "Boas Festas",
-  "swap": true,
+  "texto": "Lar doce lar",
+  "swap": false,
   "simple": false,
   "extra": {},
-  "nome": "Cartaz da lareira luva verde",
+  "nome": "Lareira lareira",
   "numero": 121
  },
  {
   "categoria": "Árvore e casa",
-  "tipo": "Cartaz da lareira",
-  "forma": "vela",
+  "tipo": "Lareira",
+  "forma": "lareira",
+  "formato": "card",
+  "texto": "Natal em casa",
+  "swap": true,
+  "simple": false,
+  "extra": {},
+  "nome": "Lareira lareira verde",
+  "numero": 122
+ },
+ {
+  "categoria": "Árvore e casa",
+  "tipo": "Lareira",
+  "forma": "lareira",
   "formato": "card",
   "texto": "Feliz Natal",
   "swap": false,
   "simple": false,
   "extra": {},
-  "nome": "Cartaz da lareira vela",
-  "numero": 122
- },
- {
-  "categoria": "Árvore e casa",
-  "tipo": "Cartaz da lareira",
-  "forma": "bengala doce",
-  "formato": "card",
-  "texto": "Natal em família",
-  "swap": true,
-  "simple": false,
-  "extra": {},
-  "nome": "Cartaz da lareira bengala doce verde",
+  "nome": "Lareira lareira (versão 2)",
   "numero": 123
  },
  {
   "categoria": "Árvore e casa",
-  "tipo": "Cartaz da lareira",
-  "forma": "sino",
+  "tipo": "Lareira",
+  "forma": "lareira",
   "formato": "card",
-  "texto": "Com carinho",
-  "swap": false,
+  "texto": "Calor de Natal",
+  "swap": true,
   "simple": false,
   "extra": {},
-  "nome": "Cartaz da lareira sino",
+  "nome": "Lareira lareira verde (versão 2)",
   "numero": 124
  },
  {
   "categoria": "Árvore e casa",
-  "tipo": "Cartaz da lareira",
-  "forma": "estrela",
+  "tipo": "Lareira",
+  "forma": "lareira",
   "formato": "card",
-  "texto": "Paz e Amor",
+  "texto": "",
+  "swap": false,
+  "simple": false,
+  "extra": {},
+  "nome": "Lareira lareira (versão 3)",
+  "numero": 125
+ },
+ {
+  "categoria": "Árvore e casa",
+  "tipo": "Presépio",
+  "forma": "presépio",
+  "formato": "card",
+  "texto": "Noite Feliz",
+  "swap": false,
+  "simple": false,
+  "extra": {},
+  "nome": "Presépio presépio",
+  "numero": 126
+ },
+ {
+  "categoria": "Árvore e casa",
+  "tipo": "Presépio",
+  "forma": "presépio",
+  "formato": "card",
+  "texto": "Paz na Terra",
   "swap": true,
   "simple": false,
   "extra": {},
-  "nome": "Cartaz da lareira estrela verde",
-  "numero": 125
+  "nome": "Presépio presépio verde",
+  "numero": 127
+ },
+ {
+  "categoria": "Árvore e casa",
+  "tipo": "Presépio",
+  "forma": "presépio",
+  "formato": "card",
+  "texto": "Jesus nasceu",
+  "swap": false,
+  "simple": false,
+  "extra": {},
+  "nome": "Presépio presépio (versão 2)",
+  "numero": 128
+ },
+ {
+  "categoria": "Árvore e casa",
+  "tipo": "Presépio",
+  "forma": "reis magos",
+  "formato": "card",
+  "texto": "Reis Magos",
+  "swap": true,
+  "simple": false,
+  "extra": {},
+  "nome": "Presépio reis magos verde",
+  "numero": 129
+ },
+ {
+  "categoria": "Árvore e casa",
+  "tipo": "Presépio",
+  "forma": "reis magos",
+  "formato": "card",
+  "texto": "Guiados pela estrela",
+  "swap": false,
+  "simple": false,
+  "extra": {},
+  "nome": "Presépio reis magos",
+  "numero": 130
+ },
+ {
+  "categoria": "Árvore e casa",
+  "tipo": "Presépio",
+  "forma": "anjo",
+  "formato": "card",
+  "texto": "Glória a Deus",
+  "swap": true,
+  "simple": false,
+  "extra": {},
+  "nome": "Presépio anjo verde",
+  "numero": 131
+ },
+ {
+  "categoria": "Árvore e casa",
+  "tipo": "Presépio",
+  "forma": "anjo",
+  "formato": "card",
+  "texto": "Anjo da paz",
+  "swap": false,
+  "simple": false,
+  "extra": {},
+  "nome": "Presépio anjo",
+  "numero": 132
+ },
+ {
+  "categoria": "Árvore e casa",
+  "tipo": "Presépio",
+  "forma": "ovelha",
+  "formato": "card",
+  "texto": "Pastores",
+  "swap": true,
+  "simple": false,
+  "extra": {},
+  "nome": "Presépio ovelha verde",
+  "numero": 133
  },
  {
   "categoria": "Árvore e casa",
@@ -1539,7 +1724,7 @@
   "simple": false,
   "extra": {},
   "nome": "Cena de Natal lua e estrelas",
-  "numero": 126
+  "numero": 134
  },
  {
   "categoria": "Árvore e casa",
@@ -1551,7 +1736,7 @@
   "simple": false,
   "extra": {},
   "nome": "Cena de Natal boneco de neve",
-  "numero": 127
+  "numero": 135
  },
  {
   "categoria": "Árvore e casa",
@@ -1563,7 +1748,7 @@
   "simple": false,
   "extra": {},
   "nome": "Cena de Natal árvore",
-  "numero": 128
+  "numero": 136
  },
  {
   "categoria": "Árvore e casa",
@@ -1575,7 +1760,7 @@
   "simple": false,
   "extra": {},
   "nome": "Cena de Natal estrela",
-  "numero": 129
+  "numero": 137
  },
  {
   "categoria": "Árvore e casa",
@@ -1587,7 +1772,7 @@
   "simple": false,
   "extra": {},
   "nome": "Cena de Natal vela",
-  "numero": 130
+  "numero": 138
  },
  {
   "categoria": "Árvore e casa",
@@ -1599,79 +1784,7 @@
   "simple": false,
   "extra": {},
   "nome": "Cena de Natal sino",
-  "numero": 131
- },
- {
-  "categoria": "Árvore e casa",
-  "tipo": "Cena de Natal",
-  "forma": "lua e estrelas",
-  "formato": "card",
-  "texto": "Noite Feliz",
-  "swap": false,
-  "simple": false,
-  "extra": {},
-  "nome": "Cena de Natal lua e estrelas (versão 2)",
-  "numero": 132
- },
- {
-  "categoria": "Árvore e casa",
-  "tipo": "Cena de Natal",
-  "forma": "boneco de neve",
-  "formato": "card",
-  "texto": "Hora de brincar",
-  "swap": false,
-  "simple": false,
-  "extra": {},
-  "nome": "Cena de Natal boneco de neve (versão 2)",
-  "numero": 133
- },
- {
-  "categoria": "Árvore e casa",
-  "tipo": "Cena de Natal",
-  "forma": "árvore",
-  "formato": "card",
-  "texto": "Feliz Natal",
-  "swap": true,
-  "simple": false,
-  "extra": {},
-  "nome": "Cena de Natal árvore verde",
-  "numero": 134
- },
- {
-  "categoria": "Árvore e casa",
-  "tipo": "Cena de Natal",
-  "forma": "estrela",
-  "formato": "card",
-  "texto": "Estrela de Belém",
-  "swap": true,
-  "simple": false,
-  "extra": {},
-  "nome": "Cena de Natal estrela verde",
-  "numero": 135
- },
- {
-  "categoria": "Árvore e casa",
-  "tipo": "Cena de Natal",
-  "forma": "vela",
-  "formato": "card",
-  "texto": "Luz do Natal",
-  "swap": true,
-  "simple": false,
-  "extra": {},
-  "nome": "Cena de Natal vela verde",
-  "numero": 136
- },
- {
-  "categoria": "Árvore e casa",
-  "tipo": "Cena de Natal",
-  "forma": "sino",
-  "formato": "card",
-  "texto": "Boas Festas",
-  "swap": true,
-  "simple": false,
-  "extra": {},
-  "nome": "Cena de Natal sino verde",
-  "numero": 137
+  "numero": 139
  },
  {
   "categoria": "Árvore e casa",
@@ -1679,34 +1792,10 @@
   "forma": "azevinho",
   "formato": "card",
   "texto": "Paz e Amor",
-  "swap": true,
+  "swap": false,
   "simple": false,
   "extra": {},
-  "nome": "Cena de Natal azevinho verde",
-  "numero": 138
- },
- {
-  "categoria": "Árvore e casa",
-  "tipo": "Cena de Natal",
-  "forma": "floco de neve",
-  "formato": "card",
-  "texto": "Neve de Natal",
-  "swap": true,
-  "simple": false,
-  "extra": {},
-  "nome": "Cena de Natal floco de neve verde",
-  "numero": 139
- },
- {
-  "categoria": "Árvore e casa",
-  "tipo": "Cena de Natal",
-  "forma": "presente",
-  "formato": "card",
-  "texto": "Para você",
-  "swap": true,
-  "simple": false,
-  "extra": {},
-  "nome": "Cena de Natal presente verde",
+  "nome": "Cena de Natal azevinho",
   "numero": 140
  },
  {
@@ -3031,62 +3120,72 @@
  },
  {
   "categoria": "Em família e crianças",
-  "tipo": "Cartaz em grupo",
+  "tipo": "Atividade em grupo",
   "forma": "árvore",
-  "formato": "card",
-  "texto": "Natal em família",
+  "formato": "grupo",
+  "texto": "",
   "swap": false,
   "simple": true,
-  "extra": {},
-  "nome": "Cartaz em grupo árvore",
+  "extra": {
+   "rotulo": "árvore em 4 pedaços"
+  },
+  "nome": "Atividade em grupo árvore em 4 pedaços",
   "numero": 246
  },
  {
   "categoria": "Em família e crianças",
-  "tipo": "Cartaz em grupo",
+  "tipo": "Atividade em grupo",
   "forma": "estrela",
-  "formato": "card",
-  "texto": "Feliz Natal",
-  "swap": false,
+  "formato": "grupo",
+  "texto": "",
+  "swap": true,
   "simple": true,
-  "extra": {},
-  "nome": "Cartaz em grupo estrela",
+  "extra": {
+   "rotulo": "estrela em 4 pedaços"
+  },
+  "nome": "Atividade em grupo estrela em 4 pedaços verde",
   "numero": 247
  },
  {
   "categoria": "Em família e crianças",
-  "tipo": "Cartaz em grupo",
-  "forma": "boneco de neve",
-  "formato": "card",
-  "texto": "Todos juntos",
+  "tipo": "Atividade em grupo",
+  "forma": "guirlanda",
+  "formato": "grupo",
+  "texto": "",
   "swap": false,
   "simple": true,
-  "extra": {},
-  "nome": "Cartaz em grupo boneco de neve",
+  "extra": {
+   "rotulo": "guirlanda em 4 pedaços"
+  },
+  "nome": "Atividade em grupo guirlanda em 4 pedaços",
   "numero": 248
  },
  {
   "categoria": "Em família e crianças",
-  "tipo": "Cartaz em grupo",
-  "forma": "presente",
-  "formato": "card",
-  "texto": "Gratidão",
-  "swap": false,
+  "tipo": "Atividade em grupo",
+  "forma": "boneco de neve",
+  "formato": "grupo",
+  "texto": "",
+  "swap": true,
   "simple": true,
-  "extra": {},
-  "nome": "Cartaz em grupo presente",
+  "extra": {
+   "rotulo": "boneco de neve em 4 pedaços"
+  },
+  "nome": "Atividade em grupo boneco de neve em 4 pedaços verde",
   "numero": 249
  },
  {
   "categoria": "Em família e crianças",
-  "tipo": "Cartaz em grupo",
-  "forma": "sino",
-  "formato": "card",
-  "texto": "Amor e luz",
+  "tipo": "Atividade em grupo",
+  "forma": "presente",
+  "formato": "grupo",
+  "texto": "",
   "swap": false,
   "simple": true,
-  "extra": {},
-  "nome": "Cartaz em grupo sino",
+  "extra": {
+   "rotulo": "presente em 4 pedaços"
+  },
+  "nome": "Atividade em grupo presente em 4 pedaços",
   "numero": 250
  }
 ]

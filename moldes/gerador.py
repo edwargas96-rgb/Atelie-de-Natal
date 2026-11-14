@@ -464,6 +464,8 @@ def svg_template(d, pal, card_bg, frame_color):
     for cx, cy, r in getattr(d, "cuts", []):
         out.append(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="#fff" stroke="#8a8a8a" stroke-width=".35" stroke-dasharray="1.6 1.2"/>')
         out.append(f'<text x="{cx}" y="{cy + r + 5}" font-size="2.7" text-anchor="middle" fill="#8a8a8a" font-family="Nunito">✂ recorte na linha tracejada</text>')
+    for (x1, y1), (x2, y2) in getattr(d, "guides", []):
+        out.append(f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" stroke="#9a9a9a" stroke-width=".4" stroke-dasharray="1.8 1.2"/>')
     for i, j, c in d.stitches:
         a, b = d.holes[i], d.holes[j]
         out.append(f'<line x1="{a[0]:.2f}" y1="{a[1]:.2f}" x2="{b[0]:.2f}" y2="{b[1]:.2f}" stroke="{pal[c]}" stroke-width=".32" stroke-opacity=".55" stroke-linecap="round"/>')

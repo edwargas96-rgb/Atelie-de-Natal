@@ -19,3 +19,5 @@ A folha `moldes/lotes/lote-NN.png` mostra os 10 do lote para conferência visual
   marcadores de lugar com linha única.
 - Limite conhecido: 17 formas-base com variações de cor, texto e formato (quadrado, redondo Ø 9 cm, redondo Ø 6 cm).
   Nas categorias com muitas peças (meias, marcadores, descansos) há repetição de forma.
+- Versão 2: criadas as formas que faltavam para bater com a página: envelopes (6) e sacolas de embalagem (4), varais de bandeirinhas (7),
+  lareiras (5), presépio, reis magos, anjo e ovelha (8) e atividades em grupo em 4 pedaços (5). Meias agora têm 4 estampas diferentes.

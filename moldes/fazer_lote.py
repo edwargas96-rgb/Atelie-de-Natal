@@ -19,9 +19,16 @@ def ring_knots(d, cx, cy, r, n, swap):
 def desenhar(c):
     d = Design(); f, forma, txt, sw, simple = c["formato"], c["forma"], c["texto"], c["swap"], c["simple"]
     extra = c.get("extra", {})
-    kw = {"n": extra["n"]} if "n" in extra and forma == "guirlanda" else {}
+    kw = {k: extra[k] for k in ("n", "inner", "inners", "v") if k in extra and not (k == "n" and forma != "guirlanda")}
     tam, nivel = "A6 · 10,5 × 14,8 cm", "Fácil"
-    if f == "card":
+    if f == "grupo":
+        tam = "A6 · 4 pedaços para bordar em grupo"
+        frame(d, "gold")
+        d.guides = [((52.5, 14), (52.5, 134)), ((13, 72), (92, 72))]
+        motif(d, forma, 52.5, 72, 88, sw, True)
+        for qx, qy, nlab in [(26, 24, "1"), (79, 24, "2"), (26, 122, "3"), (79, 122, "4")]:
+            d.lettering([nlab], FONT, 7.5, (qx, qy), "red", sp=2.0)
+    elif f == "card":
         frame(d, "gold")
         if extra.get("cardapio"):
             motif(d, forma, 52.5, 44, 44, sw, True)
@@ -37,7 +44,7 @@ def desenhar(c):
             motif(d, forma, 52.5, 58, size, sw, simple, **kw)
             d.lettering(txt.split("|"), FONT, 13.5 if len(txt) < 14 else 11, (52.5, 122), "green" if sw else "red", sp=2.6, tracking=.2)
         else:
-            motif(d, forma, 52.5, 72, 84, sw, simple, **kw)
+            motif(d, forma, 52.5, 74 if forma in ("envelope", "sacola") else 72, 84, sw, simple, **kw)
     else:
         tam = "Ø 9 cm · papel redondo" if f in ("round", "advento") else "Ø 6 cm · papel redondo"
         R = 46 if f in ("round", "advento") else 30
@@ -67,7 +74,7 @@ def main(lote):
     for x in os.listdir(build): os.remove(os.path.join(build, x))
     for c in cat[a:b]:
         d, tam, nivel = desenhar(c)
-        html = page("classico", d=d, title=c["nome"], tagline=f"Molde {c['numero']:03d} · {c['categoria']}", nivel=nivel, tamanho=tam)
+        html = page("classico", d=d, title=c["nome"], tagline=f"Molde {c['numero']:03d} · {c['categoria']}" + (" · bordem juntos: 1 pedaço por pessoa" if c["formato"] == "grupo" else ""), nivel=nivel, tamanho=tam)
         open(os.path.join(build, f"{c['numero']:03d}.html"), "w").write(html)
     print("lote", lote, [c["numero"] for c in cat[a:b]])
 
