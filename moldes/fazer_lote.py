@@ -30,7 +30,7 @@ def desenhar(c):
                 d.path([(24, y), (81, y)], "gold", 4.2)
         elif extra.get("nome"):
             motif(d, forma, 52.5, 56, 58, sw, True)
-            d.lettering([txt], FONT, 9, (52.5, 112), "red", sp=2.2)
+            d.lettering([txt], FONT, 9, (30, 117), "red", sp=2.2)
             d.path([(22, 124), (83, 124)], "gold", 4.2)
         elif txt:
             size = 74 if not simple else 68
@@ -52,9 +52,9 @@ def desenhar(c):
             motif(d, forma, 52.5, 68 if has_t else 74, (50 if has_t else 66) if forma not in ("guirlanda", "rosácea") else (52 if has_t else 70), sw, simple, **kw)
             if has_t: d.lettering(txt.split("|"), FONT, 8.5 if len(txt) > 12 else 9.5, (52.5, 107), "green" if sw else "red", sp=2.4)
         else:  # round-s (Ø 6 cm)
-            ring_knots(d, 52.5, 74, 26, 22, sw)
-            motif(d, forma, 52.5, 70 if txt else 74, 30 if txt else 38, sw, True)
-            if txt: d.lettering([txt], FONT, 6.2, (52.5, 92), "green" if sw else "red", sp=2.0)
+            ring_knots(d, 52.5, 74, 27.5, 22, sw)
+            motif(d, forma, 52.5, 66 if c["tipo"] == "Etiqueta" else 74, 36 if c["tipo"] == "Etiqueta" else 42, sw, True)
+            if c["tipo"] == "Etiqueta": d.path([(40, 90), (65, 90)], "gold", 3.2)   # linha para escrever o nome
     n = len(d.holes) + len(d.knots)
     nivel = "Fácil" if n < 230 else ("Médio" if n < 380 else "Avançado")
     return d, tam, nivel

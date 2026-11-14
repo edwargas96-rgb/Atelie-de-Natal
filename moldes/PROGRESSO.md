@@ -13,3 +13,9 @@ A folha `moldes/lotes/lote-NN.png` mostra os 10 do lote para conferência visual
 
 ## Estado
 (atualizado a cada lote revisado)
+
+- Lotes 1 a 25 (moldes 001-250): **gerados e revisados** (estilo Clássico, PDF A4 em `moldes/saida/`).
+- Ajustes feitos na revisão: texto das etiquetas redondas trocado por linha para escrever o nome; textos das cenas casados com a forma;
+  marcadores de lugar com linha única.
+- Limite conhecido: 17 formas-base com variações de cor, texto e formato (quadrado, redondo Ø 9 cm, redondo Ø 6 cm).
+  Nas categorias com muitas peças (meias, marcadores, descansos) há repetição de forma.

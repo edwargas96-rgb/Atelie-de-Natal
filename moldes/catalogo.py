@@ -30,11 +30,14 @@ for i in range(15):
     add(C2, "Guirlanda" if i < 8 else "Medalhão", ["guirlanda", "rosácea"][i % 2] if i < 8 else ["estrela", "floco de neve", "bolinha", "coração", "azevinho", "lua e estrelas", "sino"][i % 7], "round", FRASES[i % 10] if i % 3 == 0 else "", swap=(i % 4 >= 2), extra={"n": 8 + (i % 3) * 2})
 for i in range(10):
     add(C2, "Meia da lareira" if i < 5 else "Cartaz da lareira", "meia" if i < 5 else ["luva", "vela", "bengala doce", "sino", "estrela"][i - 5], "card", ["Boas Festas", "Feliz Natal", "Natal em família", "Com carinho", "Paz e Amor"][i % 5], swap=(i % 2 == 1))
+CENA = {"lua e estrelas": "Noite Feliz", "boneco de neve": "Hora de brincar", "árvore": "Feliz Natal", "estrela": "Estrela de Belém", "vela": "Luz do Natal",
+        "sino": "Boas Festas", "azevinho": "Paz e Amor", "floco de neve": "Neve de Natal", "presente": "Para você"}
 for i in range(15):
-    add(C2, "Cena de Natal", ["lua e estrelas", "boneco de neve", "árvore", "estrela", "vela", "sino", "lua e estrelas", "boneco de neve", "árvore", "estrela", "vela", "sino", "azevinho", "floco de neve", "presente"][i], "card", ["Noite Feliz", "Paz na Terra", "Feliz Natal", "Estrela de Belém", "Luz do Natal"][i % 5] if i < 15 else "", swap=(i >= 8))
+    f = ["lua e estrelas", "boneco de neve", "árvore", "estrela", "vela", "sino", "lua e estrelas", "boneco de neve", "árvore", "estrela", "vela", "sino", "azevinho", "floco de neve", "presente"][i]
+    add(C2, "Cena de Natal", f, "card", CENA[f], swap=(i >= 8))
 # --- Mesa da ceia (50)
 for i in range(20):
-    add(C3, "Marcador de lugar", F[(i * 2) % 17] if F[(i * 2) % 17] != "guirlanda" else "azevinho", "card", "Nome: ______", swap=(i % 2 == 1), simple=True, extra={"nome": True})
+    add(C3, "Marcador de lugar", F[(i * 2) % 17] if F[(i * 2) % 17] != "guirlanda" else "azevinho", "card", "Nome:", swap=(i % 2 == 1), simple=True, extra={"nome": True})
 for i in range(10):
     add(C3, "Porta-guardanapo", ["azevinho", "estrela", "floco de neve", "bolinha", "sino", "vela", "coração", "árvore", "bengala doce", "luva"][i], "card", "", swap=(i % 2 == 1), simple=True)
 for i in range(10):
