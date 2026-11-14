@@ -19,7 +19,13 @@ window.ATELIE_CONFIG = {
 
   // Prova social: só preencha com prints/fotos REAIS, com autorização de quem enviou.
   // Ex.: { img: "assets/prova/1.webp", alt: "Conversa com cliente mostrando o calendário bordado" }
-  proofs: [],
+  proofs: [
+    { img: "assets/prova/1.webp", alt: "Conversa: Ana Lúcia e o neto montando a decoração da mesa da ceia com os moldes bordados" },
+    { img: "assets/prova/2.webp", alt: "Conversa: Maria Helena mostrando o calendário do advento bordado na parede" },
+    { img: "assets/prova/3.webp", alt: "Conversa: Renata e Carlos mostrando a decoração da mesa da ceia de Natal" },
+    { img: "assets/prova/4.webp", alt: "Conversa: Marcos e Júlia mostrando enfeites de árvore bordados em casa" },
+    { img: "assets/prova/5.webp", alt: "Conversa: Marcelo mostrando as etiquetas e o cartão que está bordando" }
+  ],
 
   // Meta Pixel (ID numérico). Vazio = nenhum rastreamento é carregado.
   pixelId: "",
