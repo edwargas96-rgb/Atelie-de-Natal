@@ -4,7 +4,7 @@ Enquanto o arquivo não existe, a página mostra um quadro de espaço reservado.
 
 | Arquivo | Uso |
 |---|---|
-| `capa-principal.webp` | Hero (quadrada, ~1000×1000) |
+| `mockup-hero.webp` | Mockup do hero (quadrada, ~1000×1000); sem o arquivo aparece um quadro "Mockup em breve" |
 | `bonus-1.webp` … `bonus-5.webp` | Capas dos 5 bônus (quadrada) |
 | `bump.webp` | Capa do order bump Ceia sem Estresse (quadrada) |
 | `sessao-1.webp` … `sessao-4.webp` | Mockups das 4 sessões (quadrada) |

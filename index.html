@@ -36,8 +36,8 @@
       </div>
       <p class="fine">Pagamento único · Garantia de 7 dias</p>
     </div>
-    <figure class="hero-cover ph" style="--ar:1/1">
-      <img src="assets/img/capa-principal.webp" width="1000" height="1000" alt="Capa do kit Ateliê de Natal com bastidor bordado e cartões de molde" onerror="this.remove()">
+    <figure class="hero-cover ph ph-label" style="--ar:1/1" data-label="Mockup do kit em breve">
+      <img src="assets/img/mockup-hero.webp" width="1000" height="1000" alt="Mockup do kit Ateliê de Natal" onerror="this.remove()">
     </figure>
   </div>
 </header>
@@ -45,12 +45,12 @@
 <section class="sec" id="dor">
   <div class="wrap">
     <h2>Esse Natal vai ser igual ao do ano passado?</h2>
-    <div class="grid g4">
-      <article class="card"><span class="ico" aria-hidden="true">✉</span><h3>Cartão comprado, sem graça</h3><p>Mais um cartão de papelaria que ninguém guarda.</p></article>
-      <article class="card"><span class="ico" aria-hidden="true">⏳</span><h3>Correria de última hora</h3><p>Dezembro passa e os presentes ficam para a véspera.</p></article>
-      <article class="card"><span class="ico" aria-hidden="true">🍽</span><h3>Mesa sem personalidade</h3><p>A ceia é linda, mas a mesa parece igual a qualquer outra.</p></article>
-      <article class="card"><span class="ico" aria-hidden="true">🧒</span><h3>Nada para fazer com as crianças</h3><p>Elas querem participar, e você não tem uma atividade pronta.</p></article>
-    </div>
+    <div class="carousel car-cards" data-autoplay="1" role="region" aria-roledescription="carrossel" aria-label="Por que este Natal pode ser diferente"><div class="track">
+      <article class="card slide"><h3>Cartão comprado, sem graça</h3><p>Mais um cartão de papelaria que ninguém guarda.</p></article>
+      <article class="card slide"><h3>Correria de última hora</h3><p>Dezembro passa e os presentes ficam para a véspera.</p></article>
+      <article class="card slide"><h3>Mesa sem personalidade</h3><p>A ceia é linda, mas a mesa parece igual a qualquer outra.</p></article>
+      <article class="card slide"><h3>Nada para fazer com as crianças</h3><p>Elas querem participar, e você não tem uma atividade pronta.</p></article>
+    </div><div class="car-ctl"><button type="button" class="car-btn prev" aria-label="Anterior">&#8249;</button><div class="dots"></div><button type="button" class="car-btn next" aria-label="Próximo">&#8250;</button></div></div>
   </div>
 </section>
 
@@ -71,7 +71,7 @@
     <h2>As 4 sessões do kit</h2>
     <p class="section-sub">Moldes no valor de R$ 97</p>
 
-    <article class="sess">
+<div class="carousel car-sess" data-autoplay="1" role="region" aria-roledescription="carrossel" aria-label="As 4 sessões do kit"><div class="track">    <article class="sess slide">
       <figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/sessao-1.webp" width="1000" height="1000" alt="Ilustração de exemplo: cartão Feliz Natal e etiquetas de presente bordados" onerror="this.remove()"></figure>
       <div>
         <h3>Cartões e presentes <small>70 moldes · valor R$ 27</small></h3>
@@ -81,7 +81,7 @@
       </div>
     </article>
 
-    <article class="sess rev">
+    <article class="sess slide">
       <figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/sessao-2.webp" width="1000" height="1000" alt="Ilustração de exemplo: varal de moldes bordados sobre a lareira" onerror="this.remove()"></figure>
       <div>
         <h3>Árvore e casa <small>70 moldes · valor R$ 27</small></h3>
@@ -91,7 +91,7 @@
       </div>
     </article>
 
-    <article class="sess">
+    <article class="sess slide">
       <figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/sessao-3.webp" width="1000" height="1000" alt="Ilustração de exemplo: mesa de ceia com marcadores de lugar e porta-guardanapos bordados" onerror="this.remove()"></figure>
       <div>
         <h3>Mesa da ceia <small>50 moldes · valor R$ 19</small></h3>
@@ -101,7 +101,7 @@
       </div>
     </article>
 
-    <article class="sess rev">
+    <article class="sess slide">
       <figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/sessao-4.webp" width="1000" height="1000" alt="Ilustração de exemplo: calendário do advento com 24 cartões bordados" onerror="this.remove()"></figure>
       <div>
         <h3>Em família e crianças <small>60 moldes · valor R$ 24</small></h3>
@@ -110,6 +110,7 @@
         </ul>
       </div>
     </article>
+</div><div class="car-ctl"><button type="button" class="car-btn prev" aria-label="Anterior">&#8249;</button><div class="dots"></div><button type="button" class="car-btn next" aria-label="Próximo">&#8250;</button></div></div>
   </div>
 </section>
 
@@ -121,15 +122,77 @@
     <div class="tree-box">
       <div class="tree" id="tree">
         <svg class="tree-art" viewBox="0 0 400 500" aria-hidden="true" focusable="false">
-          <defs><linearGradient id="g1" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#2b6a50"/><stop offset="1" stop-color="#1F4D3A"/></linearGradient></defs>
-          <ellipse cx="200" cy="478" rx="170" ry="16" fill="#1F4D3A" opacity=".12"/>
-          <rect x="176" y="410" width="48" height="62" rx="4" fill="#7a5233"/>
-          <path d="M200 120 330 290H70z" fill="url(#g1)"/>
-          <path d="M200 40 310 190H90z" fill="url(#g1)"/>
-          <path d="M200 190 360 420H40z" fill="url(#g1)"/>
-          <path d="M200 8l9 20 22 2-17 15 5 22-19-12-19 12 5-22-17-15 22-2z" fill="#D9A441"/>
-          <g fill="#B3282D"><circle cx="170" cy="110" r="7"/><circle cx="232" cy="150" r="7"/><circle cx="150" cy="240" r="8"/><circle cx="250" cy="260" r="8"/><circle cx="110" cy="360" r="8"/><circle cx="290" cy="350" r="8"/><circle cx="200" cy="300" r="8"/></g>
-          <g fill="#D9A441"><circle cx="200" cy="90" r="5"/><circle cx="180" cy="180" r="5"/><circle cx="225" cy="215" r="5"/><circle cx="135" cy="310" r="5"/><circle cx="270" cy="310" r="5"/></g>
+          <defs>
+            <linearGradient id="pine" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3a8566"/><stop offset=".55" stop-color="#25624a"/><stop offset="1" stop-color="#1b4a38"/></linearGradient>
+            <linearGradient id="starg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#FFE08A"/><stop offset="1" stop-color="#D9A441"/></linearGradient>
+            <radialGradient id="glow"><stop offset="0" stop-color="#FFE9A8" stop-opacity=".9"/><stop offset="1" stop-color="#FFE9A8" stop-opacity="0"/></radialGradient>
+          </defs>
+          <circle cx="200" cy="30" r="46" fill="url(#glow)"/>
+          <rect x="178" y="420" width="44" height="50" fill="#6e4a2e"/>
+          <path d="M200,260 Q126,362 15,430 Q41.4,446 67.9,430 Q94.3,446 120.7,430 Q147.1,446 173.6,430 Q200.0,446 226.4,430 Q252.9,446 279.3,430 Q305.7,446 332.1,430 Q358.6,446 385.0,430 Q274,362 200,260Z" fill="url(#pine)" stroke="#143627" stroke-width="2" stroke-linejoin="round"/>
+<path d="M182,302 q14,-6 28,6" fill="none" stroke="#4a9a76" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+<path d="M165,326 q14,-6 28,6" fill="none" stroke="#4a9a76" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+<path d="M145,350 q14,-6 28,6" fill="none" stroke="#4a9a76" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+<path d="M121,374 q14,-6 28,6" fill="none" stroke="#4a9a76" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+<path d="M92,398 q14,-6 28,6" fill="none" stroke="#4a9a76" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+<path d="M67,348 Q200,390 333,348" fill="none" stroke="#D9A441" stroke-width="4" stroke-linecap="round" stroke-dasharray="0.1 8"/>
+<circle cx="41" cy="439" r="9" fill="#B3282D"/><circle cx="38" cy="436" r="2.6" fill="#fff" opacity=".7"/><rect x="39" y="426" width="4" height="5" fill="#8a6a1f"/>
+<circle cx="147" cy="439" r="9" fill="#D9A441"/><circle cx="144" cy="436" r="2.6" fill="#fff" opacity=".7"/><rect x="145" y="426" width="4" height="5" fill="#8a6a1f"/>
+<circle cx="253" cy="439" r="9" fill="#B3282D"/><circle cx="250" cy="436" r="2.6" fill="#fff" opacity=".7"/><rect x="251" y="426" width="4" height="5" fill="#8a6a1f"/>
+<circle cx="359" cy="439" r="9" fill="#D9A441"/><circle cx="356" cy="436" r="2.6" fill="#fff" opacity=".7"/><rect x="357" y="426" width="4" height="5" fill="#8a6a1f"/>
+<circle cx="68" cy="426" r="3.2" fill="#FFE9A8"/><circle cx="68" cy="426" r="7" fill="#FFE9A8" opacity=".25"/>
+<circle cx="121" cy="426" r="3.2" fill="#FFE9A8"/><circle cx="121" cy="426" r="7" fill="#FFE9A8" opacity=".25"/>
+<circle cx="174" cy="426" r="3.2" fill="#FFE9A8"/><circle cx="174" cy="426" r="7" fill="#FFE9A8" opacity=".25"/>
+<circle cx="226" cy="426" r="3.2" fill="#FFE9A8"/><circle cx="226" cy="426" r="7" fill="#FFE9A8" opacity=".25"/>
+<circle cx="279" cy="426" r="3.2" fill="#FFE9A8"/><circle cx="279" cy="426" r="7" fill="#FFE9A8" opacity=".25"/>
+<circle cx="332" cy="426" r="3.2" fill="#FFE9A8"/><circle cx="332" cy="426" r="7" fill="#FFE9A8" opacity=".25"/>
+<path d="M200,180 Q140,282 50,350 Q75.0,366 100.0,350 Q125.0,366 150.0,350 Q175.0,366 200.0,350 Q225.0,366 250.0,350 Q275.0,366 300.0,350 Q325.0,366 350.0,350 Q260,282 200,180Z" fill="url(#pine)" stroke="#143627" stroke-width="2" stroke-linejoin="round"/>
+<path d="M185,222 q14,-6 28,6" fill="none" stroke="#4a9a76" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+<path d="M172,246 q14,-6 28,6" fill="none" stroke="#4a9a76" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+<path d="M155,270 q14,-6 28,6" fill="none" stroke="#4a9a76" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+<path d="M136,294 q14,-6 28,6" fill="none" stroke="#4a9a76" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+<path d="M113,318 q14,-6 28,6" fill="none" stroke="#4a9a76" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+<path d="M92,268 Q200,310 308,268" fill="none" stroke="#D9A441" stroke-width="4" stroke-linecap="round" stroke-dasharray="0.1 8"/>
+<circle cx="75" cy="359" r="9" fill="#B3282D"/><circle cx="72" cy="356" r="2.6" fill="#fff" opacity=".7"/><rect x="73" y="346" width="4" height="5" fill="#8a6a1f"/>
+<circle cx="175" cy="359" r="9" fill="#D9A441"/><circle cx="172" cy="356" r="2.6" fill="#fff" opacity=".7"/><rect x="173" y="346" width="4" height="5" fill="#8a6a1f"/>
+<circle cx="275" cy="359" r="9" fill="#B3282D"/><circle cx="272" cy="356" r="2.6" fill="#fff" opacity=".7"/><rect x="273" y="346" width="4" height="5" fill="#8a6a1f"/>
+<circle cx="100" cy="346" r="3.2" fill="#FFE9A8"/><circle cx="100" cy="346" r="7" fill="#FFE9A8" opacity=".25"/>
+<circle cx="150" cy="346" r="3.2" fill="#FFE9A8"/><circle cx="150" cy="346" r="7" fill="#FFE9A8" opacity=".25"/>
+<circle cx="200" cy="346" r="3.2" fill="#FFE9A8"/><circle cx="200" cy="346" r="7" fill="#FFE9A8" opacity=".25"/>
+<circle cx="250" cy="346" r="3.2" fill="#FFE9A8"/><circle cx="250" cy="346" r="7" fill="#FFE9A8" opacity=".25"/>
+<circle cx="300" cy="346" r="3.2" fill="#FFE9A8"/><circle cx="300" cy="346" r="7" fill="#FFE9A8" opacity=".25"/>
+<path d="M200,100 Q154,197 85,262 Q108.0,278 131.0,262 Q154.0,278 177.0,262 Q200.0,278 223.0,262 Q246.0,278 269.0,262 Q292.0,278 315.0,262 Q246,197 200,100Z" fill="url(#pine)" stroke="#143627" stroke-width="2" stroke-linejoin="round"/>
+<path d="M188,140 q14,-6 28,6" fill="none" stroke="#4a9a76" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+<path d="M178,163 q14,-6 28,6" fill="none" stroke="#4a9a76" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+<path d="M166,186 q14,-6 28,6" fill="none" stroke="#4a9a76" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+<path d="M151,209 q14,-6 28,6" fill="none" stroke="#4a9a76" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+<path d="M133,231 q14,-6 28,6" fill="none" stroke="#4a9a76" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+<path d="M117,184 Q200,226 283,184" fill="none" stroke="#D9A441" stroke-width="4" stroke-linecap="round" stroke-dasharray="0.1 8"/>
+<circle cx="108" cy="271" r="9" fill="#D9A441"/><circle cx="105" cy="268" r="2.6" fill="#fff" opacity=".7"/><rect x="106" y="258" width="4" height="5" fill="#8a6a1f"/>
+<circle cx="200" cy="271" r="9" fill="#B3282D"/><circle cx="197" cy="268" r="2.6" fill="#fff" opacity=".7"/><rect x="198" y="258" width="4" height="5" fill="#8a6a1f"/>
+<circle cx="292" cy="271" r="9" fill="#D9A441"/><circle cx="289" cy="268" r="2.6" fill="#fff" opacity=".7"/><rect x="290" y="258" width="4" height="5" fill="#8a6a1f"/>
+<circle cx="131" cy="258" r="3.2" fill="#FFE9A8"/><circle cx="131" cy="258" r="7" fill="#FFE9A8" opacity=".25"/>
+<circle cx="177" cy="258" r="3.2" fill="#FFE9A8"/><circle cx="177" cy="258" r="7" fill="#FFE9A8" opacity=".25"/>
+<circle cx="223" cy="258" r="3.2" fill="#FFE9A8"/><circle cx="223" cy="258" r="7" fill="#FFE9A8" opacity=".25"/>
+<circle cx="269" cy="258" r="3.2" fill="#FFE9A8"/><circle cx="269" cy="258" r="7" fill="#FFE9A8" opacity=".25"/>
+<path d="M200,36 Q168,116 120,170 Q140.0,186 160.0,170 Q180.0,186 200.0,170 Q220.0,186 240.0,170 Q260.0,186 280.0,170 Q232,116 200,36Z" fill="url(#pine)" stroke="#143627" stroke-width="2" stroke-linejoin="round"/>
+<path d="M192,70 q14,-6 28,6" fill="none" stroke="#4a9a76" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+<path d="M185,88 q14,-6 28,6" fill="none" stroke="#4a9a76" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+<path d="M176,107 q14,-6 28,6" fill="none" stroke="#4a9a76" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+<path d="M166,126 q14,-6 28,6" fill="none" stroke="#4a9a76" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+<path d="M153,145 q14,-6 28,6" fill="none" stroke="#4a9a76" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+<path d="M142,106 Q200,148 258,106" fill="none" stroke="#D9A441" stroke-width="4" stroke-linecap="round" stroke-dasharray="0.1 8"/>
+<circle cx="140" cy="179" r="9" fill="#B3282D"/><circle cx="137" cy="176" r="2.6" fill="#fff" opacity=".7"/><rect x="138" y="166" width="4" height="5" fill="#8a6a1f"/>
+<circle cx="180" cy="179" r="9" fill="#D9A441"/><circle cx="177" cy="176" r="2.6" fill="#fff" opacity=".7"/><rect x="178" y="166" width="4" height="5" fill="#8a6a1f"/>
+<circle cx="220" cy="179" r="9" fill="#B3282D"/><circle cx="217" cy="176" r="2.6" fill="#fff" opacity=".7"/><rect x="218" y="166" width="4" height="5" fill="#8a6a1f"/>
+<circle cx="260" cy="179" r="9" fill="#D9A441"/><circle cx="257" cy="176" r="2.6" fill="#fff" opacity=".7"/><rect x="258" y="166" width="4" height="5" fill="#8a6a1f"/>
+<circle cx="160" cy="166" r="3.2" fill="#FFE9A8"/><circle cx="160" cy="166" r="7" fill="#FFE9A8" opacity=".25"/>
+<circle cx="200" cy="166" r="3.2" fill="#FFE9A8"/><circle cx="200" cy="166" r="7" fill="#FFE9A8" opacity=".25"/>
+<circle cx="240" cy="166" r="3.2" fill="#FFE9A8"/><circle cx="240" cy="166" r="7" fill="#FFE9A8" opacity=".25"/>
+          <polygon points="200.0,2.0 205.9,17.9 222.8,18.6 209.5,29.1 214.1,45.4 200.0,36.0 185.9,45.4 190.5,29.1 177.2,18.6 194.1,17.9" fill="url(#starg)" stroke="#b98622" stroke-width="1.5" stroke-linejoin="round"/>
+          <ellipse cx="200" cy="474" rx="188" ry="22" fill="#B3282D"/>
+          <ellipse cx="200" cy="470" rx="188" ry="20" fill="#c93a3f"/>
+          <ellipse cx="200" cy="470" rx="170" ry="16" fill="none" stroke="#FFF8EC" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round" opacity=".8"/>
         </svg>
         <div id="gifts"></div>
       </div>
@@ -147,11 +210,11 @@
 <section class="sec" id="paraquem">
   <div class="wrap">
     <h2>Para quem é</h2>
-    <div class="grid g3">
-      <article class="card"><h3>Quem quer presentear</h3><p>Cartões, etiquetas e lembranças bordadas à mão, com muito mais carinho do que um cartão comprado.</p></article>
-      <article class="card"><h3>Quem quer decorar</h3><p>Enfeites de árvore, guirlandas, varais e uma mesa de ceia com personalidade.</p></article>
-      <article class="card"><h3>Quem quer fazer em família</h3><p>Moldes fáceis, calendário do advento e atividades em grupo para todas as idades.</p></article>
-    </div>
+    <div class="carousel car-cards3" data-autoplay="1" role="region" aria-roledescription="carrossel" aria-label="Para quem é"><div class="track">
+      <article class="card slide"><h3>Quem quer presentear</h3><p>Cartões, etiquetas e lembranças bordadas à mão, com muito mais carinho do que um cartão comprado.</p></article>
+      <article class="card slide"><h3>Quem quer decorar</h3><p>Enfeites de árvore, guirlandas, varais e uma mesa de ceia com personalidade.</p></article>
+      <article class="card slide"><h3>Quem quer fazer em família</h3><p>Moldes fáceis, calendário do advento e atividades em grupo para todas as idades.</p></article>
+    </div><div class="car-ctl"><button type="button" class="car-btn prev" aria-label="Anterior">&#8249;</button><div class="dots"></div><button type="button" class="car-btn next" aria-label="Próximo">&#8250;</button></div></div>
   </div>
 </section>
 
@@ -159,13 +222,13 @@
   <div class="wrap">
     <h2>5 bônus para você começar sem medo</h2>
     <p class="section-sub">Bônus no valor de R$ 70</p>
-    <div class="grid g-bonus">
-      <article class="bonus"><figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/bonus-1.webp" width="900" height="900" alt="Capa do bônus Primeiros Pontos" onerror="this.remove()"></figure><h3>Primeiros Pontos</h3><p class="desc">Guia dos 6 pontos básicos</p><p class="pain">“Tenho vontade de bordar, mas acho que vai ficar torto.”</p><p class="val">Valor R$ 14</p></article>
-      <article class="bonus"><figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/bonus-2.webp" width="900" height="900" alt="Capa do bônus Caixinha do Natal" onerror="this.remove()"></figure><h3>Caixinha do Natal</h3><p class="desc">Kit de materiais</p><p class="pain">“Comprei material errado e gastei mais que o necessário.”</p><p class="val">Valor R$ 12</p></article>
-      <article class="bonus"><figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/bonus-3.webp" width="900" height="900" alt="Capa do bônus 50 Recadinhos de Natal" onerror="this.remove()"></figure><h3>50 Recadinhos de Natal</h3><p class="desc">Mensagens para cartões</p><p class="pain">“Fico olhando o cartão em branco sem saber o que escrever.”</p><p class="val">Valor R$ 12</p></article>
-      <article class="bonus"><figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/bonus-4.webp" width="900" height="900" alt="Capa do bônus Semana do Natal" onerror="this.remove()"></figure><h3>Semana do Natal</h3><p class="desc">Plano de 7 dias</p><p class="pain">“Deixo tudo para a última hora e o Natal chega antes.”</p><p class="val">Valor R$ 14</p></article>
-      <article class="bonus"><figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/bonus-5.webp" width="900" height="900" alt="Capa do bônus Brinde Bordado" onerror="this.remove()"></figure><h3>Brinde Bordado</h3><p class="desc">20 moldes de Ano-Novo</p><p class="pain">“Depois do dia 25 parece que o kit perde a graça.”</p><p class="val">Valor R$ 18</p></article>
-    </div>
+    <div class="carousel car-bonus" data-autoplay="1" role="region" aria-roledescription="carrossel" aria-label="Bônus do kit"><div class="track">
+      <article class="bonus slide"><figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/bonus-1.webp" width="900" height="900" alt="Capa do bônus Primeiros Pontos" onerror="this.remove()"></figure><h3>Primeiros Pontos</h3><p class="desc">Guia dos 6 pontos básicos</p><p class="pain">“Tenho vontade de bordar, mas acho que vai ficar torto.”</p><p class="val">Valor R$ 14</p></article>
+      <article class="bonus slide"><figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/bonus-2.webp" width="900" height="900" alt="Capa do bônus Caixinha do Natal" onerror="this.remove()"></figure><h3>Caixinha do Natal</h3><p class="desc">Kit de materiais</p><p class="pain">“Comprei material errado e gastei mais que o necessário.”</p><p class="val">Valor R$ 12</p></article>
+      <article class="bonus slide"><figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/bonus-3.webp" width="900" height="900" alt="Capa do bônus 50 Recadinhos de Natal" onerror="this.remove()"></figure><h3>50 Recadinhos de Natal</h3><p class="desc">Mensagens para cartões</p><p class="pain">“Fico olhando o cartão em branco sem saber o que escrever.”</p><p class="val">Valor R$ 12</p></article>
+      <article class="bonus slide"><figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/bonus-4.webp" width="900" height="900" alt="Capa do bônus Semana do Natal" onerror="this.remove()"></figure><h3>Semana do Natal</h3><p class="desc">Plano de 7 dias</p><p class="pain">“Deixo tudo para a última hora e o Natal chega antes.”</p><p class="val">Valor R$ 14</p></article>
+      <article class="bonus slide"><figure class="ph" style="--ar:1/1"><img loading="lazy" src="assets/img/bonus-5.webp" width="900" height="900" alt="Capa do bônus Brinde Bordado" onerror="this.remove()"></figure><h3>Brinde Bordado</h3><p class="desc">20 moldes de Ano-Novo</p><p class="pain">“Depois do dia 25 parece que o kit perde a graça.”</p><p class="val">Valor R$ 18</p></article>
+    </div><div class="car-ctl"><button type="button" class="car-btn prev" aria-label="Anterior">&#8249;</button><div class="dots"></div><button type="button" class="car-btn next" aria-label="Próximo">&#8250;</button></div></div>
     <p class="note">Imagens desta página são ilustrações de exemplo.</p>
   </div>
 </section>

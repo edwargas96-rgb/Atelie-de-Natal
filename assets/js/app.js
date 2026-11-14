@@ -114,6 +114,44 @@
   } else { sticky.hidden = true; viewContent(); }
   $("#sticky-btn").addEventListener("click", function () { if (promoActive && !unlocked()) { var t = $("#arvore"); if (t) { /* leva à árvore para escolher o presente */ this.setAttribute("href", "#arvore"); } } else this.setAttribute("href", "#oferta"); });
 
+
+  /* ---------- carrosséis ---------- */
+  function carousel(el) {
+    var track = $(".track", el), slides = track.children, dotsBox = $(".dots", el);
+    var prev = $(".prev", el), next = $(".next", el), timer = null, paused = false, visible = false;
+    var interval = el.classList.contains("car-sess") ? 6500 : 4200;
+    function step() { var s = slides[1] || slides[0]; return s ? (slides[1] ? slides[1].offsetLeft - slides[0].offsetLeft : s.offsetWidth) : 0; }
+    function atEnd() { return track.scrollLeft + track.clientWidth >= track.scrollWidth - 4; }
+    function go(i) { track.scrollTo({ left: i * step(), behavior: reduce ? "auto" : "smooth" }); }
+    function index() { var st = step(); return st ? Math.round(track.scrollLeft / st) : 0; }
+    function move(dir) { if (dir > 0 && atEnd()) go(0); else if (dir < 0 && track.scrollLeft <= 4) go(slides.length - 1); else track.scrollBy({ left: dir * step(), behavior: reduce ? "auto" : "smooth" }); }
+    function measure() { el.classList.toggle("no-scroll", track.scrollWidth <= track.clientWidth + 4); }
+    function dots() {
+      dotsBox.innerHTML = "";
+      for (var i = 0; i < slides.length; i++) (function (i) {
+        var b = document.createElement("button"); b.type = "button"; b.setAttribute("aria-label", "Ir para o item " + (i + 1));
+        b.addEventListener("click", function () { go(i); }); dotsBox.appendChild(b);
+      })(i);
+      mark();
+    }
+    function mark() { var cur = atEnd() ? slides.length - 1 : index(); [].forEach.call(dotsBox.children, function (b, i) { b.setAttribute("aria-current", i === cur ? "true" : "false"); }); }
+    function stop() { clearInterval(timer); timer = null; }
+    function play() { stop(); if (reduce || paused || !visible || el.classList.contains("no-scroll")) return; timer = setInterval(function () { move(1); }, interval); }
+    var resume;
+    function pause() { paused = true; stop(); clearTimeout(resume); }
+    function later() { clearTimeout(resume); resume = setTimeout(function () { paused = false; play(); }, 7000); }
+    prev.addEventListener("click", function () { move(-1); pause(); later(); });
+    next.addEventListener("click", function () { move(1); pause(); later(); });
+    el.addEventListener("mouseenter", pause); el.addEventListener("mouseleave", later);
+    el.addEventListener("focusin", pause); el.addEventListener("focusout", later);
+    track.addEventListener("touchstart", pause, { passive: true }); track.addEventListener("touchend", later, { passive: true });
+    track.addEventListener("scroll", mark, { passive: true });
+    window.addEventListener("resize", function () { measure(); play(); });
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (en) { visible = en[0].isIntersecting; play(); }, { threshold: 0.3 }).observe(el);
+    dots(); measure(); setTimeout(function () { measure(); play(); }, 600);
+  }
+  [].forEach.call(document.querySelectorAll(".carousel"), carousel);
+
   $("#year").textContent = new Date().getFullYear();
   buildTree();
   render();
