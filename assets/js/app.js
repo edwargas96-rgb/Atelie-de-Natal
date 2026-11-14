@@ -120,13 +120,35 @@
 
 
 
-  /* ---------- mini VSL (vídeo trocável em config.js; só carrega ao dar play) ---------- */
+  /* ---------- mini VSL: prévia muda; botão ativa o áudio e toca do início; no fim pausa ---------- */
   (function vsl() {
-    var sec = $("#vsl"), v = $("#vsl-video"); if (!sec || !v || !C.vslVideo) return;
+    var sec = $("#vsl"), v = $("#vsl-video"), btn = $("#vsl-btn"), txt = $("#vsl-btn-txt"), frame = $("#vsl-frame");
+    if (!sec || !v || !C.vslVideo) return;
     if (C.vslPoster) v.poster = C.vslPoster;
-    v.src = C.vslVideo; sec.hidden = false;
-    var played = false;
-    v.addEventListener("play", function () { if (!played && window.AtelieTrack) { played = true; AtelieTrack.track("VideoPlay", {}, true); } });
+    sec.hidden = false;
+    var loaded = false, withSound = false, tracked = false;
+    function load() { if (!loaded) { loaded = true; v.src = C.vslVideo; } }
+    function preview() { if (withSound || reduce) return; load(); v.muted = true; var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (en) {
+      if (en[0].isIntersecting) preview(); else if (!withSound) v.pause();
+    }, { threshold: 0.35 }).observe(frame);
+    function setBtn(mode) {
+      frame.classList.toggle("playing", mode === "hide");
+      btn.hidden = mode === "hide";
+      if (mode === "sound") { btn.querySelector(".vsl-ico").textContent = "🔊"; txt.textContent = "Toque para ativar o áudio"; btn.classList.add("pulse"); }
+      if (mode === "again") { btn.querySelector(".vsl-ico").textContent = "↻"; txt.textContent = "Assistir novamente"; btn.classList.remove("pulse"); }
+    }
+    function playWithSound() {
+      load(); withSound = true; v.loop = false; v.muted = false; v.controls = true;
+      try { v.currentTime = 0; } catch (e) {}
+      var p = v.play(); if (p && p.catch) p.catch(function () { v.controls = true; });
+      setBtn("hide");
+      if (!tracked && window.AtelieTrack) { tracked = true; AtelieTrack.track("VideoPlay", {}, true); }
+    }
+    btn.addEventListener("click", playWithSound);
+    v.addEventListener("click", function () { if (!withSound) playWithSound(); });
+    v.addEventListener("ended", function () { if (withSound) { v.pause(); v.controls = false; setBtn("again"); } });
+    setBtn("sound");
   })();
 
   /* ---------- prova social (só com itens reais em config.proofs) ---------- */

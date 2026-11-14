@@ -65,7 +65,10 @@
     <h2>Veja como é gostoso criar seu próprio bordado de Natal ❤️</h2>
     <p class="section-sub">Descubra como alguns pontos podem transformar uma ideia simples em uma lembrança especial.</p>
     <!-- Para trocar o vídeo: mude vslVideo e vslPoster em assets/js/config.js -->
-    <div class="vsl-frame"><video id="vsl-video" controls playsinline preload="none" aria-label="Vídeo: bordado de Natal em papel"></video></div>
+    <div class="vsl-frame" id="vsl-frame">
+      <video id="vsl-video" muted playsinline loop preload="none" aria-label="Vídeo: bordado de Natal em papel, com narração"></video>
+      <button type="button" class="vsl-btn" id="vsl-btn"><span class="vsl-ico" aria-hidden="true">🔊</span><span id="vsl-btn-txt">Toque para ativar o áudio</span></button>
+    </div>
     <p class="center"><a class="btn btn-primary btn-xl" href="#arvore" data-cta>🎁 Quero descobrir meu presente de Natal</a></p>
   </div>
 </section>
