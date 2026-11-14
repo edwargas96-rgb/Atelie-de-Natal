@@ -12,13 +12,13 @@ img{max-width:100%;height:auto;display:block}
 a{color:var(--cherry)}
 h1,h2,h3{font-family:var(--serif);color:var(--pine);line-height:1.15;margin:0 0 .5em}
 h1{font-size:clamp(2.4rem,9vw,4.2rem);font-weight:700}
-h2{font-size:clamp(1.7rem,6vw,2.5rem);text-align:center}
+h2{font-size:clamp(1.5rem,5.2vw,2.2rem);text-align:center;margin-bottom:.35em}
 h3{font-size:1.2rem}
 .wrap{width:min(1100px,100% - 32px);margin-inline:auto}
 .narrow{width:min(760px,100% - 32px)}
-.sec{padding:56px 0}
+.sec{padding:32px 0}
 .sec-alt{background:rgba(247,234,210,.7)}
-.section-sub{text-align:center;color:var(--muted);margin:-.2em auto 2em;max-width:560px}
+.section-sub{text-align:center;color:var(--muted);margin:0 auto 1.1em;max-width:560px;font-size:.98rem}
 .note,.fine{font-size:.85rem;color:var(--muted)}
 .note{text-align:center;margin-top:1.5em}
 .eyebrow{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--cherry);font-weight:700;margin:0 0 .6em}
@@ -38,7 +38,7 @@ h3{font-size:1.2rem}
 .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 
 /* hero */
-.hero{padding:32px 0 48px;background:linear-gradient(180deg,var(--cream-2),var(--cream))}
+.hero{padding:20px 0 28px;background:linear-gradient(180deg,var(--cream-2),var(--cream))}
 .hero-grid{display:grid;gap:28px;align-items:center}
 .hero-text{text-align:center}
 .lead{font-family:var(--serif);font-style:italic;font-size:1.35rem;color:var(--pine);margin:0 0 .6em}
@@ -104,7 +104,7 @@ h3{font-size:1.2rem}
 
 /* oferta */
 .offer{background:linear-gradient(180deg,var(--cream),#f3e3c3)}
-.sum{width:100%;border-collapse:collapse;margin:0 0 24px;background:#fffdf7;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
+.sum{width:100%;border-collapse:collapse;margin:0 0 16px;background:#fffdf7;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
 .sum td{padding:12px 16px;border-bottom:1px solid var(--cream-2)}
 .sum td:last-child{text-align:right;white-space:nowrap;font-weight:700}
 .sum .tot td{background:var(--pine);color:#fff;border:0}
@@ -123,7 +123,7 @@ summary{cursor:pointer;font-weight:700;padding:16px 0;color:var(--pine);list-sty
 details p{margin:0 0 16px;color:var(--muted)}
 
 /* rodapé */
-.foot{background:var(--pine);color:#e9efe9;text-align:center;padding:36px 0 96px}
+.foot{background:var(--pine);color:#e9efe9;text-align:center;padding:26px 0 90px}
 .foot a{color:#fff}.foot .brand{font:700 1.4rem var(--serif);margin:0 0 8px}.foot .fine{color:#b9cabf;margin-top:14px}
 
 /* barra fixa mobile */
@@ -146,7 +146,7 @@ details p{margin:0 0 16px;color:var(--muted)}
 
 /* carrossel */
 .carousel{position:relative}
-.track{position:relative;display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:6px 2px 14px;-webkit-overflow-scrolling:touch}
+.track{position:relative;display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:4px 2px 8px;-webkit-overflow-scrolling:touch}
 .track::-webkit-scrollbar{display:none}
 .slide{flex:0 0 var(--w,82%);scroll-snap-align:start;min-width:0}
 .car-ctl{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:6px}
@@ -221,3 +221,5 @@ details p{margin:0 0 16px;color:var(--muted)}
 .tl-badge{text-align:center;margin-bottom:.8em}
 .tl-badge::before,.tl-badge::after{content:"";display:inline-block;width:28px;height:1px;background:var(--gold);vertical-align:middle;margin:0 10px}
 @media(prefers-reduced-motion:reduce){.santa{display:none}}
+
+.hero-text .lead{margin-bottom:.4em}.hero-grid{gap:18px}.tl-badge{margin-bottom:.4em}.guarantee{padding:12px 4px}
