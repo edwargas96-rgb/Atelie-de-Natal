@@ -133,6 +133,15 @@ class Design:
         bx0, bx1, by0, by1 = xs.min(), xs.max(), ys.min(), ys.max()
         ox = center[0] - (bx0 + bx1) / 2 / ppm
         oy = center[1] - (by0 + by1) / 2 / ppm
+        self._trace_text(sk, ppm, ox, oy, color, sp)
+        lab = label(a)                       # pingos (i, j, pontuação) viram nó francês
+        for k in range(1, lab.max() + 1):
+            yy, xx = np.nonzero(lab == k)
+            if max(xx.max() - xx.min(), yy.max() - yy.min()) / ppm < 2.4:
+                self.knot(xx.mean() / ppm + ox, yy.mean() / ppm + oy, color, 1.0)
+
+    def _trace_text(self, sk, ppm, ox, oy, color, sp):
+        """Letras: segue cada traço entre pontas e junções (fica mais suave em letra cursiva)."""
         chains, cid, cent = trace(sk)
         tomm = lambda q: (q[1] / ppm + ox, q[0] / ppm + oy)
         node_hole = {}
@@ -167,6 +176,109 @@ class Design:
                 if ids[k] != ids[k + 1]:
                     self.stitches.append((ids[k], ids[k + 1], color))
         self._merge(sp * 0.4)
+
+
+    def _skeleton(self, sk, ppm, ox, oy, color, sp):
+        """Esqueleto -> furos espaçados -> liga furos vizinhos pelo caminho do próprio traço."""
+        from collections import deque
+        S = set(zip(*np.nonzero(sk)))
+        if not S:
+            return
+        step = sp * ppm
+        pts = pick_holes(sk, step)                      # (x, y) em pixels
+        hid = {(y, x): i for i, (x, y) in enumerate(pts)}
+        base = len(self.holes)
+        self.holes += [(x / ppm + ox, y / ppm + oy, color) for x, y in pts]
+        lim = step * 2.2
+        edges = set()
+        for i, (x, y) in enumerate(pts):
+            start = (y, x); seen = {start: 0.0}; q = deque([start])
+            while q:
+                p = q.popleft(); dp = seen[p]
+                for a in (-1, 0, 1):
+                    for b in (-1, 0, 1):
+                        if not (a or b):
+                            continue
+                        r = (p[0] + a, p[1] + b)
+                        if r not in S or r in seen:
+                            continue
+                        dr = dp + (1.414 if a and b else 1.0)
+                        if dr > lim:
+                            continue
+                        seen[r] = dr
+                        j = hid.get(r)
+                        if j is not None and j != i:
+                            edges.add((min(i, j), max(i, j)))   # chegou em outro furo: liga e não passa dele
+                            continue
+                        q.append(r)
+        for i, j in edges:
+            self.stitches.append((base + i, base + j, color))
+
+    def from_image(self, path, box, palette, sp=2.6, knot_mm=3.2):
+        """Arte em linha (PNG do ChatGPT) -> furos. box=(x, y, w, h) em mm dentro do cartão.
+        Cada traço vira furos na cor mais próxima da paleta; bolinhas pequenas viram nó francês."""
+        im = Image.open(path).convert("RGB")
+        im.thumbnail((1400, 1400))
+        a = np.asarray(im).astype(int)
+        bg = np.median(np.concatenate([a[0], a[-1], a[:, 0], a[:, -1]]), axis=0)
+        ink = np.abs(a - bg).sum(2) > 90
+        ys, xs = np.nonzero(ink)
+        if not len(xs):
+            raise ValueError("imagem sem desenho")
+        x0, x1, y0, y1 = xs.min(), xs.max(), ys.min(), ys.max()
+        s = min(box[2] / (x1 - x0 + 1), box[3] / (y1 - y0 + 1))  # mm por pixel
+        ppm = 1 / s
+        ox = box[0] + (box[2] - (x1 - x0) * s) / 2 - x0 * s
+        oy = box[1] + (box[3] - (y1 - y0) * s) / 2 - y0 * s
+        names = list(palette)
+        ref = np.array([[int(palette[n][i:i + 2], 16) for i in (1, 3, 5)] for n in names])
+        # cor de cada pixel pela "direção" a partir do fundo: rosa claro = vermelho misturado com o papel
+        v = (a - bg).astype(float); vr = (ref - bg).astype(float)
+        v /= np.linalg.norm(v, axis=2, keepdims=True) + 1e-6; vr /= np.linalg.norm(vr, axis=1, keepdims=True) + 1e-6
+        cls = (v[:, :, None, :] * vr[None, None]).sum(3).argmax(2)
+        # bordas suavizadas herdam a cor do miolo do traço vizinho
+        diff = np.abs(a - bg).sum(2)
+        strong = ink & (diff > 0.6 * np.percentile(diff[ink], 90))
+        lab_c = np.where(strong, cls, -1)
+        for _ in range(8):
+            todo = ink & (lab_c < 0)
+            if not todo.any():
+                break
+            P = np.pad(lab_c, 1, constant_values=-1)
+            nbmax = np.max([P[1 + dy:P.shape[0] - 1 + dy, 1 + dx:P.shape[1] - 1 + dx] for dy in (-1, 0, 1) for dx in (-1, 0, 1)], axis=0)
+            lab_c[todo & (nbmax >= 0)] = nbmax[todo & (nbmax >= 0)]
+        cls = np.where(lab_c >= 0, lab_c, cls)
+        dep_all = depth(ink)
+        stroke = float(np.median(dep_all[thin(ink)]))     # meia espessura típica do traço
+        Y, X = np.ogrid[:ink.shape[0], :ink.shape[1]]
+        for ci, col in enumerate(names):
+            m = ink & (cls == ci)
+            if m.sum() < 12:
+                continue
+            dep = depth(m).astype(float)
+            # 1) bolinhas cheias -> nó francês (e somem da máscara antes de traçar linhas)
+            cand = np.where(dep > stroke * 2.0, dep, 0)
+            while cand.max() > 0:
+                cy, cx = np.unravel_index(cand.argmax(), cand.shape); r = dep[cy, cx]
+                disk = (Y - cy) ** 2 + (X - cx) ** 2 <= (r * 1.3) ** 2
+                if r * 2 * s <= 9.5:
+                    self.knot(cx * s + ox, cy * s + oy, col, max(1.1, min(1.8, r * s)))
+                    m = m & ~disk
+                cand[disk] = 0
+            # 2) o resto são traços
+            lab = label(m)
+            for k in range(1, lab.max() + 1):
+                comp = lab == k
+                yy, xx = np.nonzero(comp)
+                big, small = max(xx.max() - xx.min(), yy.max() - yy.min()) * s, min(xx.max() - xx.min(), yy.max() - yy.min()) * s
+                if big < 2.6:                     # pingo do "i" vira nó; resto de bolinha é descartado
+                    cx, cy = xx.mean() * s + ox, yy.mean() * s + oy
+                    if not any(k[2] == col and (k[0] - cx) ** 2 + (k[1] - cy) ** 2 < 25 for k in self.knots):
+                        self.knot(cx, cy, col, 1.1)
+                    continue
+                spc = sp * 0.75 if small < 10 else sp   # peças finas (letras) pedem furos mais próximos
+                self._skeleton(thin(comp), ppm, ox, oy, col, spc)
+        return self
 
     def _merge(self, tol):
         keep, remap = [], {}
@@ -235,6 +347,34 @@ def trace(sk):
             prev, cur = cur, nxt[0]; ch.append(cur)
         ch.append(st); chains.append(ch); rest -= set(ch)
     return chains, cid, cent
+
+
+def depth(m):
+    """Quantas erosões cada pixel aguenta (aprox. da distância até a borda)."""
+    d = np.zeros(m.shape, np.int32); cur = m.copy(); k = 0
+    while cur.any():
+        k += 1; d[cur] = k
+        P = np.pad(cur, 1)
+        cur = cur & P[:-2, 1:-1] & P[2:, 1:-1] & P[1:-1, :-2] & P[1:-1, 2:]
+    return d
+
+
+def label(mask):
+    """Componentes conectados (8 vizinhos), sem scipy."""
+    H, W = mask.shape
+    lab = np.zeros((H, W), np.int32); k = 0
+    for y, x in zip(*np.nonzero(mask)):
+        if lab[y, x]:
+            continue
+        k += 1; stack = [(y, x)]; lab[y, x] = k
+        while stack:
+            cy, cx = stack.pop()
+            for dy in (-1, 0, 1):
+                for dx in (-1, 0, 1):
+                    ny, nx = cy + dy, cx + dx
+                    if 0 <= ny < H and 0 <= nx < W and mask[ny, nx] and not lab[ny, nx]:
+                        lab[ny, nx] = k; stack.append((ny, nx))
+    return lab
 
 
 def thin(img):

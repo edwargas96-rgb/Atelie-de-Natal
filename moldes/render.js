@@ -3,7 +3,7 @@
 const { chromium } = require('playwright');
 const fs = require('fs'), path = require('path');
 (async () => {
-  const build = path.join(__dirname, 'build'), out = path.join(__dirname, 'previas');
+  const build = path.join(__dirname, 'build'), out = path.join(__dirname, process.argv[2] || 'previas');
   fs.mkdirSync(out, { recursive: true });
   const b = await chromium.launch();
   const p = await b.newPage({ viewport: { width: 794, height: 1123 }, deviceScaleFactor: 2 });
