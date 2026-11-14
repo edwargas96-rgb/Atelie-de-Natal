@@ -1,6 +1,6 @@
 # Ateliê de Natal — página de vendas
 
-Site estático (HTML + CSS + JS, sem build). Publique em qualquer hospedagem estática; a pasta `api/` é uma função serverless (Vercel) para a API de Conversões.
+Site estático (HTML + CSS + JS, sem build). Fontes hospedadas em `assets/fonts` (sem Google Fonts); cache dos arquivos em `vercel.json`. Publique em qualquer hospedagem estática; a pasta `api/` é uma função serverless (Vercel) para a API de Conversões.
 
 ## Configuração
 Tudo em `assets/js/config.js` (inclui o vídeo da mini VSL, `vslVideo`/`vslPoster`, e os prints de prova social): data de fim da promo, preços, links dos 2 checkouts, ID do Pixel.

@@ -201,7 +201,7 @@
   countdown(); setInterval(countdown, 600000);
 
   /* ---------- neve ---------- */
-  (function snow() {
+  function snow() {
     var box = $("#snow"); if (!box || reduce) return;
     var count = window.innerWidth < 600 ? 22 : 40;
     for (var i = 0; i < count; i++) {
@@ -212,7 +212,9 @@
       f.style.animationDuration = (9 + Math.random() * 10) + "s"; f.style.animationDelay = (-Math.random() * 18) + "s";
       box.appendChild(f);
     }
-  })();
+  }
+  // a neve só começa depois que a página carregou, para não atrasar a primeira tela
+  window.addEventListener("load", function () { setTimeout(snow, 1200); });
 
   /* ---------- tela de parabéns ao abrir o presente ---------- */
   var modal = $("#modal"), lastFocus = null;

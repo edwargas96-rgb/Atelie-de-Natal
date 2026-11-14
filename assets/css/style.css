@@ -1,3 +1,10 @@
+/* fontes hospedadas no próprio site (SIL Open Font License) */
+@font-face{font-family:"Playfair Display";font-style:normal;font-weight:700;font-display:swap;src:url(../fonts/playfair-display-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Playfair Display";font-style:normal;font-weight:800;font-display:swap;src:url(../fonts/playfair-display-latin-800-normal.woff2) format("woff2")}
+@font-face{font-family:"Nunito Sans";font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/nunito-sans-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Nunito Sans";font-style:italic;font-weight:400;font-display:swap;src:url(../fonts/nunito-sans-latin-400-italic.woff2) format("woff2")}
+@font-face{font-family:"Nunito Sans";font-style:normal;font-weight:600;font-display:swap;src:url(../fonts/nunito-sans-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Nunito Sans";font-style:normal;font-weight:700;font-display:swap;src:url(../fonts/nunito-sans-latin-700-normal.woff2) format("woff2")}
 :root{
   --cream:#FFF8EC; --cream-2:#F7EAD2; --pine:#1F4D3A; --pine-2:#2b6a50; --cherry:#B3282D; --gold:#D9A441; --ink:#2a2a26; --muted:#5d5a4f;
   --serif:"Playfair Display",Georgia,"Times New Roman",serif; --sans:"Nunito Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
@@ -7,7 +14,7 @@
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{margin:0;font-family:var(--sans);font-size:17px;line-height:1.55;color:var(--ink);background:var(--cream);
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .55  0 0 0 0 .45  0 0 0 0 .3  0 0 0 .07 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+  background-image:url(../img/paper.webp)}
 img{max-width:100%;height:auto;display:block}
 a{color:var(--cherry)}
 h1,h2,h3{font-family:var(--serif);color:var(--pine);line-height:1.15;margin:0 0 .5em}
@@ -257,7 +264,7 @@ details p{margin:0 0 16px;color:var(--muted)}
 .hero h1{font-weight:800;font-size:clamp(1.85rem,7.4vw,3rem);line-height:1.12;text-align:center;margin:0 0 .5em;letter-spacing:-.01em}
 .hl{color:var(--cherry);background:linear-gradient(transparent 64%,rgba(217,164,65,.6) 64%);padding:0 .12em}
 .hero-media{width:min(500px,100%);margin:0 auto 6px;border:0;border-radius:0;box-shadow:none;background:none;aspect-ratio:auto;overflow:visible}
-.hero-media img{width:100%;height:auto;display:block;filter:drop-shadow(0 12px 22px rgba(31,77,58,.22))}
+.hero-media img{width:100%;height:auto;display:block}
 .hero .sub{text-align:center;margin:0 auto 14px;max-width:520px;font-size:1.05rem;color:var(--ink)}
 .hero-cta{max-width:none;text-align:center}
 .gains{display:inline-grid;text-align:left;max-width:440px;margin:0 auto 18px;font-size:.95rem}
@@ -340,8 +347,10 @@ details p{margin:0 0 16px;color:var(--muted)}
 /* presentes piscando até a pessoa abrir um */
 .gift-pending .gift svg{animation:giftpulse 1.5s ease-in-out infinite}
 .gift-pending .gift:nth-child(2n) svg{animation-delay:.3s}.gift-pending .gift:nth-child(3n) svg{animation-delay:.6s}
-@keyframes giftpulse{0%,100%{transform:scale(1);filter:drop-shadow(0 0 0 rgba(255,224,138,0))}50%{transform:scale(1.14);filter:drop-shadow(0 0 9px #ffe08a)}}
-@media(prefers-reduced-motion:reduce){.gift-pending .gift svg{animation:none;filter:drop-shadow(0 0 6px #ffe08a)}}
+@keyframes giftpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
+.gift-pending .gift::before{content:"";position:absolute;inset:-6px;border-radius:50%;background:radial-gradient(circle,rgba(255,224,138,.75),rgba(255,224,138,0) 70%);animation:glow 1.5s ease-in-out infinite;pointer-events:none}
+@keyframes glow{0%,100%{opacity:.15}50%{opacity:.9}}
+@media(prefers-reduced-motion:reduce){.gift-pending .gift svg,.gift-pending .gift::before{animation:none}}
 
 /* árvore: uma frase só, grande e verde */
 .tree-title{color:var(--pine);font-size:clamp(1.55rem,6.2vw,2.3rem);line-height:1.18;max-width:640px;margin:0 auto .6em}
