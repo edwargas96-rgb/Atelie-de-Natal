@@ -20,16 +20,17 @@ Trabalhe em lotes de 10. Revise cada imagem antes de seguir.
 2. ANTES DE COMEÇAR (sem Drive por enquanto)
 ==================================================================
 - NÃO use o Google Drive nem planilha. Tudo fica no ChatGPT.
-- No ChatGPT, crie um Projeto chamado "Ateliê de Natal - Moldes" (se a conta tiver Projetos;
-  se não tiver, use conversas soltas com o nome do lote).
-- Primeira conversa, chamada "Lista dos 250": mande o PEDIDO DA LISTA (seção 4).
-  Essa conversa é a sua memória: no fim de cada lote, volte nela e mande
+- Use UMA conversa só no ChatGPT, para tudo (lista e moldes). Não crie conversas extras:
+  isso bagunça o ChatGPT do dono. Renomeie essa conversa para "Ateliê de Natal - Moldes".
+- Nela, mande primeiro o PROMPT FIXO (seção 3) e depois o PEDIDO DA LISTA (seção 4).
+  A lista fica no começo da conversa e serve de memória.
+- No fim de cada lote de 10, mande na mesma conversa uma nota curta de controle:
   "Lote XX concluído: moldes NNN a NNN. Refazer: [números e motivo, ou nenhum]".
-- Cada lote de 10 é UMA conversa nova chamada "Lote 01 (001-010)", "Lote 02 (011-020)"...
-  As imagens ficam nessas conversas. O envio para o Drive será feito depois.
+  (Peça para o ChatGPT só responder "ok" a essas notas, sem gerar imagem.)
+- As imagens ficam na conversa. O envio para o Drive será feito depois.
 
 ==================================================================
-3. PROMPT FIXO (cole no início de TODA conversa nova de geração no ChatGPT)
+3. PROMPT FIXO (cole no início da conversa, e de novo se precisar abrir a Parte 2)
 ==================================================================
 Você é o designer dos moldes do "Ateliê de Natal", um kit de moldes de bordado em papel para imprimir.
 Em TODA esta conversa, cada pedido meu é um molde. Gere sempre UMA imagem vertical (proporção 2:3),
@@ -51,7 +52,7 @@ ESTILO "CLÁSSICO"
 Responda só com a imagem.
 
 ==================================================================
-4. PEDIDO DA LISTA (só uma vez, numa conversa separada)
+4. PEDIDO DA LISTA (só uma vez, logo depois do prompt fixo)
 ==================================================================
 Liste 250 ideias de moldes simples para bordado em papel com tema de Natal, numeradas de 001 a 250,
 nesta divisão e nesta ordem:
@@ -65,7 +66,7 @@ Formato de cada linha: número · categoria · nome · texto (ou "sem texto").
 ==================================================================
 5. COMO PEDIR CADA MOLDE
 ==================================================================
-Uma mensagem por molde, curta, copiando a linha da conversa "Lista dos 250":
+Uma mensagem por molde, curta, copiando a linha da lista do começo da conversa:
   Molde 001 · Cartões e presentes · "Cartão sino de Natal" · texto: Feliz Natal
 
 ==================================================================
@@ -94,18 +95,22 @@ TEXTO
 
 Se falhar: peça para refazer citando o erro em 1 frase e lembrando a referência
 (ex.: "Refaça: a estrela está torta, com pontas de tamanhos diferentes. Mantenha o estilo do molde 001").
-Até 3 tentativas. Se ainda falhar, anote o número e o motivo para a conversa "Lista dos 250" e siga.
+Até 3 tentativas. Se ainda falhar, anote o número e o motivo na nota de fim de lote e siga.
 
 SINAL DE QUE A ESTÉTICA ESTÁ SE PERDENDO: 2 reprovações seguidas pelo mesmo motivo,
 ou o estilo mudando aos poucos de um molde para o outro. Nesse caso:
-abra uma conversa nova, cole o PROMPT FIXO de novo, anexe a imagem do molde 001 aprovado
-e diga "Use esta imagem como referência exata de estilo para todos os moldes desta conversa".
+1º tente corrigir na própria conversa: anexe de novo a imagem do molde 001 aprovado e diga
+   "Volte exatamente para o estilo desta imagem de referência em todos os próximos moldes".
+2º só se mesmo assim continuar desconexo (esquecendo regras, estilo mudando sempre, respostas confusas):
+   abra UMA conversa nova, renomeie para "Ateliê de Natal - Moldes - Parte 2" (depois Parte 3...),
+   cole o PROMPT FIXO, anexe a imagem do 001 aprovado como referência exata de estilo,
+   cole a lista dos moldes que ainda faltam e continue de onde parou.
 
 ==================================================================
 7. SALVAR
 ==================================================================
-- Por enquanto, NÃO baixe nem suba nada. As imagens aprovadas ficam nas conversas de cada lote.
-- Em cada conversa de lote, a última imagem de cada número é a versão aprovada.
+- Por enquanto, NÃO baixe nem suba nada. As imagens aprovadas ficam na conversa.
+- A última imagem de cada número é a versão aprovada.
   Se você refez um molde, deixe claro na conversa: "Versão final do molde NNN".
 
 ==================================================================
@@ -116,13 +121,13 @@ e diga "Use esta imagem como referência exata de estilo para todos os moldes de
   Depois disso, siga sozinho até o 250, sem pedir confirmação.
 - Trabalhe em lotes de 10 (001-010, 011-020...). Ao fim de cada lote, confira as 10 lado a lado:
   se o estilo mudou em relação ao Lote 01, refaça as que destoam.
-- Cada lote começa numa CONVERSA NOVA: cole o PROMPT FIXO (seção 3) e anexe a imagem do 001 aprovado
-  como referência de estilo. Faça o mesmo no meio de um lote se a estética começar a se perder.
+- Continue sempre na MESMA conversa, quanto mais longe der: ela guarda o contexto do estilo.
+  Só abra a Parte 2 se a conversa ficar desconexa (veja a seção 6).
 - Se o ChatGPT avisar limite de geração de imagens, espere o tempo indicado e continue.
-- Se travar de verdade (login expirado, erro que não resolve), anote na conversa "Lista dos 250"
+- Se travar de verdade (login expirado, erro que não resolve), anote na conversa
   onde parou e pare, para o dono retomar.
 
 ==================================================================
 9. AO TERMINAR
 ==================================================================
-Na conversa "Lista dos 250", deixe um resumo: quantos aprovados, quantos para refazer e o motivo de cada um.
+Na conversa (ou na última Parte), deixe um resumo: quantos aprovados, quantos para refazer e o motivo de cada um.
