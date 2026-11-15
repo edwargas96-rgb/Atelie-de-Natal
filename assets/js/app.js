@@ -27,6 +27,7 @@
     $("#price-note").textContent = un ? "Pagamento único · promoção até " + C.promoEndLabel : (locked ? "Abra o seu presente para revelar o preço de Natal" : "Pagamento único");
     $("#promo-hint").hidden = true;
     document.documentElement.classList.toggle("gift-pending", locked);
+    var np = $(".note-paper"); if (np) np.classList.toggle("note-won", un);
     if (locked) {
       buy.dataset.kind = "gift"; buy.href = "#arvore"; buy.textContent = "🎁 Abrir meu presente";
     } else {
