@@ -5,11 +5,11 @@
 window.ATELIE_CONFIG = {
   // Fim da promoção, igual para todos os visitantes (formato ISO com fuso de Brasília).
   // Depois dessa data a página mostra só o preço cheio e a árvore some.
-  promoEnd: "2026-12-26T23:59:00-03:00",
-  promoEndLabel: "26/12 às 23:59",
+  promoEnd: "2026-12-24T23:59:59-03:00",
+  promoEndLabel: "24/12 às 23:59",
 
   // Contagem regressiva do topo e do botão de compra: até a véspera de Natal (data real e igual para todos).
-  countdownEnd: "2026-12-24T23:59:59-03:00",
+  countdownEnd: "2026-12-24T23:59:59-03:00", // mesma data do fim da promoção (promoEnd)
 
   // Árvore: segundos com a seção visível, sem toque, até um presente abrir sozinho (0 desliga).
   autoOpenSeconds: 6,
