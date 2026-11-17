@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=405">
+<title>Motion</title>
+<style>
+@font-face{font-family:Inter;font-weight:500;src:url(../criativo/fonts/inter-latin-500-normal.woff2)}
+@font-face{font-family:Inter;font-weight:700;src:url(../criativo/fonts/inter-latin-700-normal.woff2)}
+@font-face{font-family:Play;font-weight:800;src:url(../assets/fonts/playfair-display-latin-800-normal.woff2)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:405px;height:720px;overflow:hidden;background:#000}
+#s{position:relative;width:405px;height:720px;overflow:hidden;background:#000;font-family:Inter,sans-serif}
+.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#img{transform-origin:50% 50%}
+.em{display:inline-block;width:1.15em;height:1.15em;vertical-align:-.2em;margin:0 .03em}
+#cap{position:absolute;left:22px;right:22px;top:88px;min-height:78px;display:flex;align-items:center;justify-content:center;z-index:5;background:#fff;border-radius:16px;padding:12px 16px;font:700 19px/1.25 Inter;color:#1b1b1b;text-align:center;box-shadow:0 8px 22px rgba(0,0,0,.28)}
+#cap.hook{font-size:22px;padding:15px 18px}
+#cap.bottom{top:auto;bottom:70px;min-height:0}
+#ilu{position:absolute;right:12px;bottom:14px;z-index:6;font:500 9.5px Inter;color:#fff;background:rgba(0,0,0,.42);border-radius:6px;padding:3px 7px;letter-spacing:.2px}
+#cta{position:absolute;inset:0;z-index:20;display:grid;place-items:center;background:rgba(17,27,33,.6)}
+#cbg{position:absolute;inset:-20px;width:445px;height:760px;object-fit:cover;filter:blur(10px) brightness(.55);z-index:19}
+#card{position:relative;width:330px;background:#fff8ec;border:3px solid #d9a441;border-radius:24px;padding:18px 18px 20px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.45)}
+#card>img{width:250px;display:block;margin:0 auto 6px}
+#card h2{font:800 26px/1.15 Play;color:#1f4d3a;margin-bottom:6px}
+#card p{font:500 15px/1.3 Inter;color:#333;margin-bottom:10px}
+#selo{display:inline-block;background:#b3282d;color:#fff;font:700 14px Inter;border-radius:999px;padding:5px 14px;margin-bottom:12px}
+#btn{display:block;background:#1f4d3a;color:#fff;font:700 18px Inter;border-radius:999px;padding:13px 10px}
+</style>
+</head>
+<body>
+<div id="s">
+  <img id="vid" class="bg" alt="">
+  <img id="img" class="bg" alt="">
+  <div id="cap"></div>
+  <div id="ilu">Imagem ilustrativa</div>
+  <img id="cbg" alt="">
+  <div id="cta"><div id="card"><img alt=""><h2></h2><p></p><span id="selo"></span><span id="btn"></span></div></div>
+</div>
+<script src="videos.js"></script>
+<script>
+(function () {
+  var name = new URLSearchParams(location.search).get("v") || "asmr";
+  var V = VIDEOS[name], C = CTA, $ = function (s) { return document.querySelector(s); };
+  var SEG = new Intl.Segmenter("pt-BR", { granularity: "grapheme" });
+  function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+  function emo(s) { return Array.from(SEG.segment(s), function (x) { var g = x.segment; return /\p{Extended_Pictographic}/u.test(g) ? '<img class="em" alt="" src="../criativo/emoji/' + Array.from(g, function (c) { return c.codePointAt(0).toString(16); }).join("-") + '.png">' : esc(g); }).join(""); }
+  var t0 = 0; V.cenas.forEach(function (c) { c.t0 = t0; t0 += c.dur; });
+  var ctaAt = t0, total = t0 + C.dur;
+  var last = V.cenas[V.cenas.length - 1];
+  window.TIMELINE = { total: total, ctaAt: ctaAt, clips: V.cenas.filter(function (c) { return c.clip; }).map(function (c) { return { clip: c.clip, from: c.from, at: c.t0, dur: c.dur }; }) };
+  var cimg = $("#card>img"); cimg.src = C.img; $("#card h2").innerHTML = emo(C.titulo); $("#card p").innerHTML = emo(C.sub); $("#selo").innerHTML = emo(C.selo); $("#btn").innerHTML = emo(C.botao);
+  $("#cbg").src = last.img || C.img;
+  function ease(x) { x = Math.max(0, Math.min(1, x)); return x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; }
+  function out3(x) { x = Math.max(0, Math.min(1, x)); return 1 - Math.pow(1 - x, 3); }
+  function load(el, src) { return new Promise(function (r) { if (el.getAttribute("src") === src) return r(); el.onload = el.onerror = function () { r(); }; el.src = src; }); }
+  var lastCap = null;
+  window.renderAt = async function (t) {
+    var c = null; for (var i = 0; i < V.cenas.length; i++) if (t >= V.cenas[i].t0 && t < V.cenas[i].t0 + V.cenas[i].dur) c = V.cenas[i];
+    var inCta = t >= ctaAt;
+    if (!c) c = last;
+    var local = Math.min(t, ctaAt - 0.001) - c.t0, p = local / c.dur;
+    if (c.clip) {
+      var f = Math.min(Math.floor((c.from + local) * 30) + 1, 99999);
+      await load($("#vid"), "frames/" + c.clip + "/" + String(f).padStart(5, "0") + ".jpg");
+      $("#vid").style.display = "block"; $("#img").style.display = "none";
+    } else {
+      await load($("#img"), c.img);
+      var e = ease(p), z = c.de[0] + (c.para[0] - c.de[0]) * e, x = c.de[1] + (c.para[1] - c.de[1]) * e, y = c.de[2] + (c.para[2] - c.de[2]) * e;
+      var im = $("#img"); im.style.display = "block"; $("#vid").style.display = "none";
+      im.style.objectPosition = x + "% " + y + "%"; im.style.transformOrigin = x + "% " + y + "%"; im.style.transform = "scale(" + z + ")";
+    }
+    // legenda: entra com leve subida; troca suave entre cenas
+    var cap = $("#cap");
+    if (lastCap !== c) { cap.innerHTML = emo(c.cap || ""); cap.className = (c.hook ? "hook " : "") + (c.capPos === "bottom" ? "bottom" : ""); lastCap = c; }
+    var a = out3(local / 0.35), b = c === last ? 1 : 1 - out3((local - (c.dur - 0.18)) / 0.18);
+    var op = Math.min(a, b); cap.style.opacity = c.cap ? op : 0; cap.style.transform = "translateY(" + (1 - a) * 10 + "px) scale(" + (0.96 + 0.04 * a) + ")";
+    $("#ilu").style.display = c.ilustrativa && !inCta ? "block" : "none";
+    // CTA
+    var k = out3((t - ctaAt) / 0.45);
+    $("#cta").style.display = $("#cbg").style.display = inCta ? "grid" : "none"; $("#cbg").style.display = inCta ? "block" : "none";
+    $("#cta").style.opacity = k; $("#cbg").style.opacity = k; $("#card").style.transform = "scale(" + (0.86 + 0.14 * k) + ")";
+  };
+})();
+</script>
+</body>
+</html>
