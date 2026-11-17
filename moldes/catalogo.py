@@ -7,7 +7,13 @@ FRASES = ["Feliz Natal", "Boas Festas", "Paz e Amor", "Com carinho", "Noite Feli
 cat = []
 
 def add(categoria, tipo, forma, formato="card", texto="", swap=False, simple=False, extra=None):
-    nome = f"{tipo} " + ((extra or {}).get("rotulo") or forma) + (" verde" if swap else "") + (f" · {texto}" if texto and tipo in ("Cartão", "Convite") else "")
+    rot = (extra or {}).get("rotulo") or forma
+    if tipo == "Guirlanda": rot = {"guirlanda": "de azevinho", "rosácea": "rosácea"}[forma]
+    elif rot.lower() in tipo.lower(): rot = ""
+    mostra_texto = tipo in ("Cartão", "Convite", "Guirlanda", "Meia da lareira", "Lareira", "Presépio", "Cena de Natal")
+    nome = f"{tipo} {rot}".strip() + (" verde" if swap else "") + (f" · {texto}" if texto and mostra_texto else "")
+    if extra and extra.get("titulo"):
+        nome = extra["titulo"]
     cat.append(dict(categoria=categoria, tipo=tipo, forma=forma, formato=formato, texto=texto, swap=swap, simple=simple, extra=extra or {}, nome=nome))
 
 C1 = "Cartões e presentes"; C2 = "Árvore e casa"; C3 = "Mesa da ceia"; C4 = "Em família e crianças"
@@ -59,16 +65,11 @@ for i in range(30):
     f = ["árvore", "estrela", "coração", "luva", "boneco de neve", "sino", "presente", "biscoito de gengibre", "meia", "bengala doce", "bolinha", "vela", "azevinho", "floco de neve", "lua e estrelas"][i % 15]
     add(C4, "Molde fácil", f, "card", "", swap=(i >= 15), simple=True)
 for i in range(25):
-    add(C4, "Calendário do advento", ["estrela", "azevinho", "bolinha", "floco de neve", "coração"][i % 5], "advento", str(i + 1), swap=(i % 2 == 1), simple=True)
+    add(C4, "Calendário do advento", ["estrela", "azevinho", "bolinha", "floco de neve", "coração"][i % 5], "advento", str(i + 1), swap=(i % 2 == 1), simple=True, extra={"titulo": f"Calendário do advento · dia {i + 1}"})
 for i, f in enumerate(["árvore", "estrela", "guirlanda", "boneco de neve", "presente"]):
-    add(C4, "Atividade em grupo", f, "grupo", "", swap=(i % 2 == 1), simple=True, extra={"rotulo": f"{f} em 4 pedaços"})
+    add(C4, "Atividade em grupo", f, "grupo", "", swap=(i % 2 == 1), simple=True, extra={"titulo": f"Atividade em grupo · {f}"})
 for n, c in enumerate(cat, 1):
     c["numero"] = n
 assert len(cat) == 250, len(cat)
-seen = {}
-for c in cat:
-    seen[c["nome"]] = seen.get(c["nome"], 0) + 1
-    if seen[c["nome"]] > 1:
-        c["nome"] += f" (versão {seen[c['nome']]})"
 json.dump(cat, open(os.path.join(ROOT, "catalogo.json"), "w"), ensure_ascii=False, indent=1)
 print(len(cat), "moldes;", len({c["nome"] for c in cat}), "nomes distintos")

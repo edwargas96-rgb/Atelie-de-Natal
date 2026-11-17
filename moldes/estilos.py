@@ -165,6 +165,9 @@ def page(key, d=None, title=None, tagline=None, nivel="Fácil", tamanho="A6 · 1
     title = title or ("CARTÃO FELIZ NATAL" if upper else "Cartão Feliz Natal")
     tagline = tagline or st["tagline"]
     tsize = "15mm" if tf == "Caveat" else ("9mm" if upper else "11mm")
+    if tf != "Caveat":   # nomes compridos: reduz o título para caber em uma linha
+        mm = max(6.2, min(11.0 if not upper else 9.0, 166.0 / (len(title) * 0.6)))
+        tsize = f"{mm:.1f}mm"
     used = sorted({c for *_, c in d.holes} | {k[2] for k in d.knots}, key=list(st["pal"]).index)
     sw = "".join(f'<li><i style="background:{st["pal"][c]}"></i>{st["names"][c]}</li>' for c in used)
     pts = "".join(f"<li><b>{a}</b> {b}</li>" for a, b in STITCHES)

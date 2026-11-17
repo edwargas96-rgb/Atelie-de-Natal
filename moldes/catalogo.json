@@ -1240,7 +1240,7 @@
   "extra": {
    "n": 8
   },
-  "nome": "Guirlanda guirlanda",
+  "nome": "Guirlanda de azevinho · Feliz Natal",
   "numero": 101
  },
  {
@@ -1268,7 +1268,7 @@
   "extra": {
    "n": 12
   },
-  "nome": "Guirlanda guirlanda verde",
+  "nome": "Guirlanda de azevinho verde",
   "numero": 103
  },
  {
@@ -1282,7 +1282,7 @@
   "extra": {
    "n": 8
   },
-  "nome": "Guirlanda rosácea verde",
+  "nome": "Guirlanda rosácea verde · Com carinho",
   "numero": 104
  },
  {
@@ -1296,7 +1296,7 @@
   "extra": {
    "n": 10
   },
-  "nome": "Guirlanda guirlanda (versão 2)",
+  "nome": "Guirlanda de azevinho",
   "numero": 105
  },
  {
@@ -1310,7 +1310,7 @@
   "extra": {
    "n": 12
   },
-  "nome": "Guirlanda rosácea (versão 2)",
+  "nome": "Guirlanda rosácea",
   "numero": 106
  },
  {
@@ -1324,7 +1324,7 @@
   "extra": {
    "n": 8
   },
-  "nome": "Guirlanda guirlanda verde (versão 2)",
+  "nome": "Guirlanda de azevinho verde · Natal em família",
   "numero": 107
  },
  {
@@ -1338,7 +1338,7 @@
   "extra": {
    "n": 10
   },
-  "nome": "Guirlanda rosácea verde (versão 2)",
+  "nome": "Guirlanda rosácea verde",
   "numero": 108
  },
  {
@@ -1499,7 +1499,7 @@
   "extra": {
    "v": 0
   },
-  "nome": "Meia da lareira meia",
+  "nome": "Meia da lareira · Boas Festas",
   "numero": 116
  },
  {
@@ -1513,7 +1513,7 @@
   "extra": {
    "v": 1
   },
-  "nome": "Meia da lareira meia verde",
+  "nome": "Meia da lareira verde · Feliz Natal",
   "numero": 117
  },
  {
@@ -1527,7 +1527,7 @@
   "extra": {
    "v": 2
   },
-  "nome": "Meia da lareira meia (versão 2)",
+  "nome": "Meia da lareira · Natal em família",
   "numero": 118
  },
  {
@@ -1541,7 +1541,7 @@
   "extra": {
    "v": 3
   },
-  "nome": "Meia da lareira meia verde (versão 2)",
+  "nome": "Meia da lareira verde · Com carinho",
   "numero": 119
  },
  {
@@ -1555,7 +1555,7 @@
   "extra": {
    "v": 0
   },
-  "nome": "Meia da lareira meia (versão 3)",
+  "nome": "Meia da lareira · Paz e Amor",
   "numero": 120
  },
  {
@@ -1567,7 +1567,7 @@
   "swap": false,
   "simple": false,
   "extra": {},
-  "nome": "Lareira lareira",
+  "nome": "Lareira · Lar doce lar",
   "numero": 121
  },
  {
@@ -1579,7 +1579,7 @@
   "swap": true,
   "simple": false,
   "extra": {},
-  "nome": "Lareira lareira verde",
+  "nome": "Lareira verde · Natal em casa",
   "numero": 122
  },
  {
@@ -1591,7 +1591,7 @@
   "swap": false,
   "simple": false,
   "extra": {},
-  "nome": "Lareira lareira (versão 2)",
+  "nome": "Lareira · Feliz Natal",
   "numero": 123
  },
  {
@@ -1603,7 +1603,7 @@
   "swap": true,
   "simple": false,
   "extra": {},
-  "nome": "Lareira lareira verde (versão 2)",
+  "nome": "Lareira verde · Calor de Natal",
   "numero": 124
  },
  {
@@ -1615,7 +1615,7 @@
   "swap": false,
   "simple": false,
   "extra": {},
-  "nome": "Lareira lareira (versão 3)",
+  "nome": "Lareira",
   "numero": 125
  },
  {
@@ -1627,7 +1627,7 @@
   "swap": false,
   "simple": false,
   "extra": {},
-  "nome": "Presépio presépio",
+  "nome": "Presépio · Noite Feliz",
   "numero": 126
  },
  {
@@ -1639,7 +1639,7 @@
   "swap": true,
   "simple": false,
   "extra": {},
-  "nome": "Presépio presépio verde",
+  "nome": "Presépio verde · Paz na Terra",
   "numero": 127
  },
  {
@@ -1651,7 +1651,7 @@
   "swap": false,
   "simple": false,
   "extra": {},
-  "nome": "Presépio presépio (versão 2)",
+  "nome": "Presépio · Jesus nasceu",
   "numero": 128
  },
  {
@@ -1663,7 +1663,7 @@
   "swap": true,
   "simple": false,
   "extra": {},
-  "nome": "Presépio reis magos verde",
+  "nome": "Presépio reis magos verde · Reis Magos",
   "numero": 129
  },
  {
@@ -1675,7 +1675,7 @@
   "swap": false,
   "simple": false,
   "extra": {},
-  "nome": "Presépio reis magos",
+  "nome": "Presépio reis magos · Guiados pela estrela",
   "numero": 130
  },
  {
@@ -1687,7 +1687,7 @@
   "swap": true,
   "simple": false,
   "extra": {},
-  "nome": "Presépio anjo verde",
+  "nome": "Presépio anjo verde · Glória a Deus",
   "numero": 131
  },
  {
@@ -1699,7 +1699,7 @@
   "swap": false,
   "simple": false,
   "extra": {},
-  "nome": "Presépio anjo",
+  "nome": "Presépio anjo · Anjo da paz",
   "numero": 132
  },
  {
@@ -1711,7 +1711,7 @@
   "swap": true,
   "simple": false,
   "extra": {},
-  "nome": "Presépio ovelha verde",
+  "nome": "Presépio ovelha verde · Pastores",
   "numero": 133
  },
  {
@@ -1723,7 +1723,7 @@
   "swap": false,
   "simple": false,
   "extra": {},
-  "nome": "Cena de Natal lua e estrelas",
+  "nome": "Cena de Natal lua e estrelas · Noite Feliz",
   "numero": 134
  },
  {
@@ -1735,7 +1735,7 @@
   "swap": false,
   "simple": false,
   "extra": {},
-  "nome": "Cena de Natal boneco de neve",
+  "nome": "Cena de Natal boneco de neve · Hora de brincar",
   "numero": 135
  },
  {
@@ -1747,7 +1747,7 @@
   "swap": false,
   "simple": false,
   "extra": {},
-  "nome": "Cena de Natal árvore",
+  "nome": "Cena de Natal árvore · Feliz Natal",
   "numero": 136
  },
  {
@@ -1759,7 +1759,7 @@
   "swap": false,
   "simple": false,
   "extra": {},
-  "nome": "Cena de Natal estrela",
+  "nome": "Cena de Natal estrela · Estrela de Belém",
   "numero": 137
  },
  {
@@ -1771,7 +1771,7 @@
   "swap": false,
   "simple": false,
   "extra": {},
-  "nome": "Cena de Natal vela",
+  "nome": "Cena de Natal vela · Luz do Natal",
   "numero": 138
  },
  {
@@ -1783,7 +1783,7 @@
   "swap": false,
   "simple": false,
   "extra": {},
-  "nome": "Cena de Natal sino",
+  "nome": "Cena de Natal sino · Boas Festas",
   "numero": 139
  },
  {
@@ -1795,7 +1795,7 @@
   "swap": false,
   "simple": false,
   "extra": {},
-  "nome": "Cena de Natal azevinho",
+  "nome": "Cena de Natal azevinho · Paz e Amor",
   "numero": 140
  },
  {
@@ -2033,7 +2033,7 @@
   "extra": {
    "nome": true
   },
-  "nome": "Marcador de lugar azevinho (versão 2)",
+  "nome": "Marcador de lugar azevinho",
   "numero": 157
  },
  {
@@ -2826,8 +2826,10 @@
   "texto": "1",
   "swap": false,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento estrela",
+  "extra": {
+   "titulo": "Calendário do advento · dia 1"
+  },
+  "nome": "Calendário do advento · dia 1",
   "numero": 221
  },
  {
@@ -2838,8 +2840,10 @@
   "texto": "2",
   "swap": true,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento azevinho verde",
+  "extra": {
+   "titulo": "Calendário do advento · dia 2"
+  },
+  "nome": "Calendário do advento · dia 2",
   "numero": 222
  },
  {
@@ -2850,8 +2854,10 @@
   "texto": "3",
   "swap": false,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento bolinha",
+  "extra": {
+   "titulo": "Calendário do advento · dia 3"
+  },
+  "nome": "Calendário do advento · dia 3",
   "numero": 223
  },
  {
@@ -2862,8 +2868,10 @@
   "texto": "4",
   "swap": true,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento floco de neve verde",
+  "extra": {
+   "titulo": "Calendário do advento · dia 4"
+  },
+  "nome": "Calendário do advento · dia 4",
   "numero": 224
  },
  {
@@ -2874,8 +2882,10 @@
   "texto": "5",
   "swap": false,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento coração",
+  "extra": {
+   "titulo": "Calendário do advento · dia 5"
+  },
+  "nome": "Calendário do advento · dia 5",
   "numero": 225
  },
  {
@@ -2886,8 +2896,10 @@
   "texto": "6",
   "swap": true,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento estrela verde",
+  "extra": {
+   "titulo": "Calendário do advento · dia 6"
+  },
+  "nome": "Calendário do advento · dia 6",
   "numero": 226
  },
  {
@@ -2898,8 +2910,10 @@
   "texto": "7",
   "swap": false,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento azevinho",
+  "extra": {
+   "titulo": "Calendário do advento · dia 7"
+  },
+  "nome": "Calendário do advento · dia 7",
   "numero": 227
  },
  {
@@ -2910,8 +2924,10 @@
   "texto": "8",
   "swap": true,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento bolinha verde",
+  "extra": {
+   "titulo": "Calendário do advento · dia 8"
+  },
+  "nome": "Calendário do advento · dia 8",
   "numero": 228
  },
  {
@@ -2922,8 +2938,10 @@
   "texto": "9",
   "swap": false,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento floco de neve",
+  "extra": {
+   "titulo": "Calendário do advento · dia 9"
+  },
+  "nome": "Calendário do advento · dia 9",
   "numero": 229
  },
  {
@@ -2934,8 +2952,10 @@
   "texto": "10",
   "swap": true,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento coração verde",
+  "extra": {
+   "titulo": "Calendário do advento · dia 10"
+  },
+  "nome": "Calendário do advento · dia 10",
   "numero": 230
  },
  {
@@ -2946,8 +2966,10 @@
   "texto": "11",
   "swap": false,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento estrela (versão 2)",
+  "extra": {
+   "titulo": "Calendário do advento · dia 11"
+  },
+  "nome": "Calendário do advento · dia 11",
   "numero": 231
  },
  {
@@ -2958,8 +2980,10 @@
   "texto": "12",
   "swap": true,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento azevinho verde (versão 2)",
+  "extra": {
+   "titulo": "Calendário do advento · dia 12"
+  },
+  "nome": "Calendário do advento · dia 12",
   "numero": 232
  },
  {
@@ -2970,8 +2994,10 @@
   "texto": "13",
   "swap": false,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento bolinha (versão 2)",
+  "extra": {
+   "titulo": "Calendário do advento · dia 13"
+  },
+  "nome": "Calendário do advento · dia 13",
   "numero": 233
  },
  {
@@ -2982,8 +3008,10 @@
   "texto": "14",
   "swap": true,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento floco de neve verde (versão 2)",
+  "extra": {
+   "titulo": "Calendário do advento · dia 14"
+  },
+  "nome": "Calendário do advento · dia 14",
   "numero": 234
  },
  {
@@ -2994,8 +3022,10 @@
   "texto": "15",
   "swap": false,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento coração (versão 2)",
+  "extra": {
+   "titulo": "Calendário do advento · dia 15"
+  },
+  "nome": "Calendário do advento · dia 15",
   "numero": 235
  },
  {
@@ -3006,8 +3036,10 @@
   "texto": "16",
   "swap": true,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento estrela verde (versão 2)",
+  "extra": {
+   "titulo": "Calendário do advento · dia 16"
+  },
+  "nome": "Calendário do advento · dia 16",
   "numero": 236
  },
  {
@@ -3018,8 +3050,10 @@
   "texto": "17",
   "swap": false,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento azevinho (versão 2)",
+  "extra": {
+   "titulo": "Calendário do advento · dia 17"
+  },
+  "nome": "Calendário do advento · dia 17",
   "numero": 237
  },
  {
@@ -3030,8 +3064,10 @@
   "texto": "18",
   "swap": true,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento bolinha verde (versão 2)",
+  "extra": {
+   "titulo": "Calendário do advento · dia 18"
+  },
+  "nome": "Calendário do advento · dia 18",
   "numero": 238
  },
  {
@@ -3042,8 +3078,10 @@
   "texto": "19",
   "swap": false,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento floco de neve (versão 2)",
+  "extra": {
+   "titulo": "Calendário do advento · dia 19"
+  },
+  "nome": "Calendário do advento · dia 19",
   "numero": 239
  },
  {
@@ -3054,8 +3092,10 @@
   "texto": "20",
   "swap": true,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento coração verde (versão 2)",
+  "extra": {
+   "titulo": "Calendário do advento · dia 20"
+  },
+  "nome": "Calendário do advento · dia 20",
   "numero": 240
  },
  {
@@ -3066,8 +3106,10 @@
   "texto": "21",
   "swap": false,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento estrela (versão 3)",
+  "extra": {
+   "titulo": "Calendário do advento · dia 21"
+  },
+  "nome": "Calendário do advento · dia 21",
   "numero": 241
  },
  {
@@ -3078,8 +3120,10 @@
   "texto": "22",
   "swap": true,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento azevinho verde (versão 3)",
+  "extra": {
+   "titulo": "Calendário do advento · dia 22"
+  },
+  "nome": "Calendário do advento · dia 22",
   "numero": 242
  },
  {
@@ -3090,8 +3134,10 @@
   "texto": "23",
   "swap": false,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento bolinha (versão 3)",
+  "extra": {
+   "titulo": "Calendário do advento · dia 23"
+  },
+  "nome": "Calendário do advento · dia 23",
   "numero": 243
  },
  {
@@ -3102,8 +3148,10 @@
   "texto": "24",
   "swap": true,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento floco de neve verde (versão 3)",
+  "extra": {
+   "titulo": "Calendário do advento · dia 24"
+  },
+  "nome": "Calendário do advento · dia 24",
   "numero": 244
  },
  {
@@ -3114,8 +3162,10 @@
   "texto": "25",
   "swap": false,
   "simple": true,
-  "extra": {},
-  "nome": "Calendário do advento coração (versão 3)",
+  "extra": {
+   "titulo": "Calendário do advento · dia 25"
+  },
+  "nome": "Calendário do advento · dia 25",
   "numero": 245
  },
  {
@@ -3127,9 +3177,9 @@
   "swap": false,
   "simple": true,
   "extra": {
-   "rotulo": "árvore em 4 pedaços"
+   "titulo": "Atividade em grupo · árvore"
   },
-  "nome": "Atividade em grupo árvore em 4 pedaços",
+  "nome": "Atividade em grupo · árvore",
   "numero": 246
  },
  {
@@ -3141,9 +3191,9 @@
   "swap": true,
   "simple": true,
   "extra": {
-   "rotulo": "estrela em 4 pedaços"
+   "titulo": "Atividade em grupo · estrela"
   },
-  "nome": "Atividade em grupo estrela em 4 pedaços verde",
+  "nome": "Atividade em grupo · estrela",
   "numero": 247
  },
  {
@@ -3155,9 +3205,9 @@
   "swap": false,
   "simple": true,
   "extra": {
-   "rotulo": "guirlanda em 4 pedaços"
+   "titulo": "Atividade em grupo · guirlanda"
   },
-  "nome": "Atividade em grupo guirlanda em 4 pedaços",
+  "nome": "Atividade em grupo · guirlanda",
   "numero": 248
  },
  {
@@ -3169,9 +3219,9 @@
   "swap": true,
   "simple": true,
   "extra": {
-   "rotulo": "boneco de neve em 4 pedaços"
+   "titulo": "Atividade em grupo · boneco de neve"
   },
-  "nome": "Atividade em grupo boneco de neve em 4 pedaços verde",
+  "nome": "Atividade em grupo · boneco de neve",
   "numero": 249
  },
  {
@@ -3183,9 +3233,9 @@
   "swap": false,
   "simple": true,
   "extra": {
-   "rotulo": "presente em 4 pedaços"
+   "titulo": "Atividade em grupo · presente"
   },
-  "nome": "Atividade em grupo presente em 4 pedaços",
+  "nome": "Atividade em grupo · presente",
   "numero": 250
  }
 ]
