@@ -8,25 +8,19 @@ window.ATELIE_CONFIG = {
   promoEnd: "2026-12-26T23:59:00-03:00",
   promoEndLabel: "26/12 às 23:59",
 
-  // Preços (em reais). O valor cheio só deve aparecer se o preço realmente voltar a ele após a data.
-  fullPrice: 167,
-  promoPrice: 37.9,
-  // Valores de referência mostrados na tabela da oferta (a soma deve dar o fullPrice).
-  kitValue: 97,
-  bonusValue: 70,
-
-  // Natal: a oferta mostra "Faltam X dias para o Natal" até esta data e depois esconde a contagem.
-  christmasDate: "2026-12-25T00:00:00-03:00",
-
-  // Links dos checkouts externos (Cakto, Hotmart ou Kiwify). Qualquer extra de checkout é configurado na plataforma.
-  checkoutFullUrl: "", // checkout com preço cheio (R$ 167)
-  checkoutPromoUrl: "", // checkout com preço promo (R$ 37,90)
+  // Contagem regressiva do topo e do botão de compra: até a véspera de Natal (data real e igual para todos).
+  countdownEnd: "2026-12-24T23:59:59-03:00",
 
   // Árvore: segundos com a seção visível, sem toque, até um presente abrir sozinho (0 desliga).
   autoOpenSeconds: 6,
 
-  // Parâmetros da URL repassados ao checkout (ficam guardados durante a visita).
-  trackingParams: ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid", "src", "sck"],
+  // Preços (em reais). O valor cheio só deve aparecer se o preço realmente voltar a ele após a data.
+  fullPrice: 167,
+  promoPrice: 37.9,
+
+  // Links dos checkouts externos (Cakto, Hotmart ou Kiwify). Qualquer extra de checkout é configurado na plataforma.
+  checkoutFullUrl: "", // checkout com preço cheio (R$ 167)
+  checkoutPromoUrl: "", // checkout com preço promo (R$ 37,90)
 
 
   // Vídeo da mini VSL (vertical 9:16). Para trocar, substitua os arquivos ou aponte para outros. Vazio = seção escondida.
@@ -43,13 +37,7 @@ window.ATELIE_CONFIG = {
     { img: "assets/prova/5.webp", alt: "Conversa: Marcelo mostrando as etiquetas e o cartão que está bordando" }
   ],
 
-  // Suporte por WhatsApp: número com DDI e DDD, só dígitos (ex.: "5511999999999"). Vazio = botão não aparece.
-  whatsappNumber: "",
-  whatsappMessage: "Olá! Tenho uma dúvida sobre o Ateliê de Natal.",
-
   // Meta Pixel (ID numérico). Vazio = nenhum rastreamento é carregado.
-  // Eventos: PageView, ViewContent (oferta na tela), InitiateCheckout (clique de compra),
-  // e os próprios GiftOpened, VSLPlay, VSL50 e VSLComplete. O mesmo event_id vai para o capiEndpoint.
   pixelId: "",
   // Endpoint da API de Conversões (função em /api/capi). Vazio = só Pixel no navegador.
   capiEndpoint: "/api/capi"

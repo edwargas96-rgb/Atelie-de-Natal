@@ -10,33 +10,9 @@
   var opened = [];       // ids de presentes abertos
   try { opened = JSON.parse(localStorage.getItem(KEY) || "[]"); if (!Array.isArray(opened)) opened = []; } catch (e) { opened = []; }
 
-  // preço revelado sem abrir presente (quem chega direto na oferta)
-  var revealed = false;
-  try { revealed = localStorage.getItem(KEY + "_revelado") === "1"; } catch (e) {}
-
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(opened)); if (revealed) localStorage.setItem(KEY + "_revelado", "1"); } catch (e) {} }
-  function unlocked() { return promoActive && (opened.length > 0 || revealed); }
-  function reveal() { if (!promoActive || unlocked()) return; revealed = true; save(); render(); }
-
-  /* ---------- parâmetros de campanha: guardados na visita e repassados ao checkout ---------- */
-  var PKEY = "atelie_params";
-  function params() {
-    var keep = C.trackingParams || [], saved = {};
-    try { saved = JSON.parse(sessionStorage.getItem(PKEY) || "{}") || {}; } catch (e) { saved = {}; }
-    try {
-      var q = new URLSearchParams(location.search);
-      keep.forEach(function (k) { var v = q.get(k); if (v) saved[k] = v; });
-      sessionStorage.setItem(PKEY, JSON.stringify(saved));
-    } catch (e) {}
-    return saved;
-  }
-  params();
-  function url(u) {
-    if (!u) return "";
-    var p = params(), parts = [];
-    for (var k in p) if (Object.prototype.hasOwnProperty.call(p, k)) parts.push(encodeURIComponent(k) + "=" + encodeURIComponent(p[k]));
-    return parts.length ? u + (u.indexOf("?") > -1 ? "&" : "?") + parts.join("&") : u;
-  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(opened)); } catch (e) {} }
+  function unlocked() { return promoActive && opened.length > 0; }
+  function url(u) { return u ? u + (u.indexOf("?") > -1 ? "&" : "?") + location.search.slice(1) : ""; }
 
   /* ---------- preço / botões ---------- */
   function render() {
@@ -49,22 +25,21 @@
     old.hidden = !un; if (un) old.textContent = "De " + fmt.format(C.fullPrice);
     $("#sum-disc").hidden = !un; if (un) $("#sum-disc-val").textContent = "− " + fmt.format(C.fullPrice - C.promoPrice);
     $("#price-note").textContent = un ? "Pagamento único · promoção até " + C.promoEndLabel : (locked ? "Abra o seu presente para revelar o preço de Natal" : "Pagamento único");
+    $("#promo-hint").hidden = true;
     document.documentElement.classList.toggle("gift-pending", locked);
-    // botões de compra: abrem o checkout (promo, ou cheio depois de promoEnd); sem link configurado, ficam na âncora
-    var link = un ? C.checkoutPromoUrl : C.checkoutFullUrl;
-    function setBuy(a, lockedText, text) {
-      if (!a) return;
-      if (locked) { a.dataset.kind = "gift"; a.href = "#arvore"; a.textContent = lockedText; }
-      else { a.dataset.kind = un ? "promo" : "full"; a.href = link ? url(link) : "#oferta"; a.textContent = text; }
+    if (locked) {
+      buy.dataset.kind = "gift"; buy.href = "#arvore"; buy.textContent = "🎁 Abrir meu presente";
+    } else {
+      buy.dataset.kind = un ? "promo" : "full";
+      var link = un ? C.checkoutPromoUrl : C.checkoutFullUrl;
+      buy.href = link ? url(link) : "#oferta";
+      buy.textContent = "Quero o Ateliê de Natal por " + fmt.format(price);
     }
-    setBuy(buy, "🎁 Abrir meu presente", "Quero o Ateliê de Natal por " + fmt.format(price));
-    setBuy($("#sticky-btn"), "🎁 Abrir meu presente", "Quero por " + fmt.format(price));
-    setBuy($("#cta-final"), "🎁 Quero descobrir meu presente de Natal", "Quero meu kit por " + fmt.format(price));
-    setBuy($("#tree-buy"), "", "Quero o meu por " + fmt.format(price));
+    $("#sticky-price").textContent = locked ? "Seu presente" : fmt.format(price);
+    $("#sticky-btn").textContent = locked ? "🎁 Abrir presente" : "Quero o kit";
     var dis = document.querySelectorAll("[data-full-int]"); for (var i = 0; i < dis.length; i++) dis[i].textContent = C.fullPrice;
-    var kv = $("[data-kit-value]"), bv = $("[data-bonus-value]"); if (kv) kv.textContent = C.kitValue; if (bv) bv.textContent = C.bonusValue;
     // CTAs da página: levam à árvore até o presente ser aberto; depois, à oferta
-    [].forEach.call(document.querySelectorAll("[data-cta]:not([data-buy])"), function (a) {
+    [].forEach.call(document.querySelectorAll("[data-cta]"), function (a) {
       if (locked) { a.href = "#arvore"; a.textContent = "🎁 Quero descobrir meu presente de Natal"; }
       else { a.href = "#oferta"; a.textContent = "Quero meu kit por " + fmt.format(price); }
     });
@@ -85,7 +60,7 @@
   function showOpened() {
     $("#sample").innerHTML = '<p class="unlocked">Presente aberto! Hora de decorar o seu Natal.</p>' +
       '<p class="sample-empty">Preço especial liberado, com os 5 brindes.</p>' +
-      '<a class="btn btn-primary" href="#oferta" id="tree-buy" data-buy>Quero o meu por ' + fmt.format(C.promoPrice) + '</a>';
+      '<a class="btn btn-primary" href="#oferta">Quero o meu por ' + fmt.format(C.promoPrice) + '</a>';
   }
 
   function lockOthers() {
@@ -100,13 +75,13 @@
     btn.setAttribute("aria-label", "Presente " + (i + 1) + " de " + POS.length + ", aberto");
     lockOthers(); showOpened(); render();
     setTimeout(function () { showModal(i); }, reduce ? 0 : 650);
-    if (window.AtelieTrack) AtelieTrack.track("GiftOpened", { numero: i + 1, auto: !!auto }, true);
+    if (window.AtelieTrack) AtelieTrack.track("PresenteAberto", { numero: i + 1, auto: !!auto }, true);
   }
 
   /* se a árvore ficar visível por autoOpenSeconds sem ninguém tocar, um presente balança e abre sozinho */
   var autoTimer = 0;
   function autoOpen() {
-    if (!promoActive || opened.length || revealed || !modal.hidden) return;
+    if (!promoActive || opened.length || !modal.hidden) return;
     var gifts = document.querySelectorAll(".gift"); if (!gifts.length) return;
     var i = Math.floor(Math.random() * gifts.length), btn = gifts[i];
     if (reduce) { openGift(i, btn, true); return; }
@@ -116,7 +91,7 @@
   function watchTree(visible) {
     clearTimeout(autoTimer);
     var secs = C.autoOpenSeconds;
-    if (visible && secs > 0 && promoActive && !opened.length && !revealed) autoTimer = setTimeout(autoOpen, secs * 1000);
+    if (visible && secs > 0 && promoActive && !opened.length) autoTimer = setTimeout(autoOpen, secs * 1000);
   }
 
   function buildTree() {
@@ -135,13 +110,12 @@
   }
 
   /* ---------- eventos ---------- */
-  document.addEventListener("click", function (e) {
-    var a = e.target.closest ? e.target.closest("[data-buy]") : null;
-    if (!a || a.dataset.kind === "gift") return; // presente ainda fechado: só rola até a árvore
-    var href = a.getAttribute("href") || "";
-    if (href.charAt(0) === "#") { console.warn("Ateliê: link de checkout vazio. Preencha checkoutPromoUrl e checkoutFullUrl em assets/js/config.js"); return; }
-    var un = a.dataset.kind === "promo";
-    if (window.AtelieTrack) AtelieTrack.track("InitiateCheckout", { value: un ? C.promoPrice : C.fullPrice, currency: "BRL", content_name: "Ateliê de Natal", content_type: "product", num_items: 1 });
+  $("#buy").addEventListener("click", function (e) {
+    if (this.dataset.kind === "gift") return; // ainda não abriu o presente: só rola até a árvore
+    var href = this.getAttribute("href");
+    if (!href || href === "#oferta") { e.preventDefault(); console.warn("Link de checkout não configurado em assets/js/config.js"); return; }
+    var un = this.dataset.kind === "promo";
+    if (window.AtelieTrack) AtelieTrack.track("InitiateCheckout", { value: un ? C.promoPrice : C.fullPrice, currency: "BRL", content_name: "Ateliê de Natal", num_items: 1 });
   });
 
   var vc = false;
@@ -151,16 +125,15 @@
   }
 
   /* ---------- barra fixa (celular) ---------- */
-  // aparece depois do hero e some enquanto a oferta está na tela
-  var sticky = $("#sticky"), heroOn = true, offerOn = false;
-  function stickyUpdate() { sticky.hidden = heroOn || offerOn; document.documentElement.classList.toggle("has-sticky", !sticky.hidden); }
+  var sticky = $("#sticky"), heroOn = true, offerOn = false, treeOn = false, bonusOn = false;
+  function stickyUpdate() { sticky.hidden = heroOn || offerOn || treeOn || bonusOn; }
   if ("IntersectionObserver" in window) {
     var io = function (sel, cb, th) { var el = $(sel); if (!el) return; new IntersectionObserver(function (en) { cb(en[0].isIntersecting); }, { threshold: th || 0.15 }).observe(el); };
     io("#topo", function (v) { heroOn = v; stickyUpdate(); }, 0.05);
     io("#oferta", function (v) { offerOn = v; stickyUpdate(); if (v) viewContent(); }, 0.25);
-    io("#oferta .price-card", function (v) { if (v) reveal(); }, 0.5); // chegou no preço sem abrir presente: mostra o promocional
-    io("#arvore", function (v) { watchTree(v); }, 0.4);
-  } else { sticky.hidden = true; viewContent(); reveal(); }
+    io("#arvore", function (v) { treeOn = v; stickyUpdate(); watchTree(v); }, 0.4);
+  } else { sticky.hidden = true; viewContent(); }
+  $("#sticky-btn").addEventListener("click", function () { if (promoActive && !unlocked()) { var t = $("#arvore"); if (t) { /* leva à árvore para escolher o presente */ this.setAttribute("href", "#arvore"); } } else this.setAttribute("href", "#oferta"); });
 
 
 
@@ -189,7 +162,7 @@
       try { v.currentTime = 0; } catch (e) {}
       var p = v.play(); if (p && p.catch) p.catch(function () {});
       setBtn("hide");
-      if (!tracked && window.AtelieTrack) { tracked = true; AtelieTrack.track("VSLPlay", {}, true); }
+      if (!tracked && window.AtelieTrack) { tracked = true; AtelieTrack.track("VideoPlay", {}, true); }
     }
     btn.addEventListener("click", playWithSound);
     v.addEventListener("click", function () { if (!withSound) playWithSound(); });
@@ -209,15 +182,12 @@
     document.addEventListener("visibilitychange", function () {
       if (!document.hidden && withSound && !finished && v.paused) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
     });
-    var half = false, done = false;
     v.addEventListener("timeupdate", function () {
       if (withSound && !allowSeek && v.currentTime >= lastT && v.currentTime - lastT < 1.5) lastT = v.currentTime;
-      if (withSound && !half && v.duration && v.currentTime / v.duration >= 0.5) { half = true; if (window.AtelieTrack) AtelieTrack.track("VSL50", {}, true); }
     });
     v.addEventListener("ended", function () {
       if (!withSound) return;
       finished = true; v.pause(); v.controls = false; setBtn("again");
-      if (!done && window.AtelieTrack) { done = true; AtelieTrack.track("VSLComplete", {}, true); }
     });
     setBtn("sound");
   })();
@@ -226,7 +196,7 @@
   (function proofs() {
     var list = C.proofs || [], sec = $("#prova"); if (!sec || !list.length) return;
     var track = $("#proof-car .track");
-    list.forEach(function (p) { var a = document.createElement("article"); a.className = "slide proof-card"; var im = document.createElement("img"); im.loading = "lazy"; im.decoding = "async"; im.width = 500; im.height = 562; im.src = p.img; im.alt = p.alt || "Depoimento"; a.appendChild(im); track.appendChild(a); });
+    list.forEach(function (p) { var a = document.createElement("article"); a.className = "slide proof-card"; var im = document.createElement("img"); im.loading = "lazy"; im.src = p.img; im.alt = p.alt || "Depoimento"; a.appendChild(im); track.appendChild(a); });
     sec.hidden = false;
   })();
 
@@ -269,21 +239,28 @@
   }
   [].forEach.call(document.querySelectorAll(".carousel[data-loop]"), function (c) { if ($(".track", c).children.length) loopCarousel(c); });
 
-  /* ---------- oferta: contagem real de dias até o Natal (some depois de christmasDate) ---------- */
-  function xmasCount() {
-    var el = $("#xmas-count"); if (!el) return;
-    var ms = new Date(C.christmasDate).getTime() - Date.now();
-    if (!(ms > 0)) { el.hidden = true; return; }
-    var d = Math.ceil(ms / 86400000);
-    el.textContent = (d === 1 ? "Falta 1 dia" : "Faltam " + d + " dias") + " para o Natal. " + (d > 3 ? "Dá tempo de bordar tudo." : "Ainda dá tempo com os moldes fáceis.");
-    el.hidden = false;
+  /* ---------- contagem regressiva real até o dia 24 (topo da página e abaixo do botão de compra) ---------- */
+  var eveEnd = new Date(C.countdownEnd).getTime();
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function countdown() {
+    var top = $("#xmas-top"), low = $("#xmas-count"), ms = eveEnd - Date.now();
+    if (!(ms > 0)) { if (top) top.hidden = true; if (low) low.hidden = true; return; }
+    var s = Math.floor(ms / 1000), d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60), sec = s % 60;
+    if (top) {
+      top.hidden = false;
+      var v = top.querySelectorAll("b"); v[0].textContent = d; v[1].textContent = pad(h); v[2].textContent = pad(m); v[3].textContent = pad(sec);
+    }
+    if (low) {
+      low.hidden = false;
+      low.textContent = "Faltam " + d + (d === 1 ? " dia" : " dias") + ", " + pad(h) + "h" + pad(m) + "min para o dia 24. " + (d > 3 ? "Dá tempo de bordar tudo." : "Ainda dá tempo com os moldes fáceis.");
+    }
   }
-  xmasCount(); setInterval(xmasCount, 600000);
+  countdown(); setInterval(countdown, 1000);
 
   /* ---------- neve ---------- */
   function snow() {
     var box = $("#snow"); if (!box || reduce) return;
-    var count = window.innerWidth < 600 ? 11 : 40;
+    var count = window.innerWidth < 600 ? 22 : 40;
     for (var i = 0; i < count; i++) {
       var f = document.createElement("i"), s = 3 + Math.random() * 5;
       f.className = "flake"; f.style.width = f.style.height = s + "px"; f.style.left = Math.random() * 100 + "%";
@@ -358,18 +335,6 @@
     dots(); measure(); setTimeout(function () { measure(); play(); }, 600);
   }
   [].forEach.call(document.querySelectorAll(".carousel:not([data-loop])"), carousel);
-
-  /* ---------- suporte por WhatsApp (só aparece com whatsappNumber preenchido) ---------- */
-  (function whatsapp() {
-    var n = String(C.whatsappNumber || "").replace(/\D/g, ""); if (!n) return;
-    var a = document.createElement("a");
-    a.className = "wa"; a.target = "_blank"; a.rel = "noopener";
-    a.href = "https://wa.me/" + n + (C.whatsappMessage ? "?text=" + encodeURIComponent(C.whatsappMessage) : "");
-    a.setAttribute("aria-label", "Falar com o suporte no WhatsApp");
-    a.innerHTML = '<svg viewBox="0 0 32 32" aria-hidden="true"><path fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round" d="M16 5.5a10.5 10.5 0 0 0-9 15.9L5.5 26.5l5.3-1.4A10.5 10.5 0 1 0 16 5.5z"/><path fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" d="M12.4 12.6c0 3.9 3.1 7 7 7"/></svg>';
-    document.body.appendChild(a);
-    a.addEventListener("click", function () { if (window.AtelieTrack) AtelieTrack.track("Contact", {}, false); });
-  })();
 
   $("#year").textContent = new Date().getFullYear();
   buildTree();
