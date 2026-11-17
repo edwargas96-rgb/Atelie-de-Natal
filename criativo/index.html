@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=405">
+<title>Criativo · grupo das amigas</title>
+<style>
+@font-face{font-family:Inter;font-weight:400;src:url(fonts/inter-latin-400-normal.woff2)}
+@font-face{font-family:Inter;font-weight:500;src:url(fonts/inter-latin-500-normal.woff2)}
+@font-face{font-family:Inter;font-weight:600;src:url(fonts/inter-latin-600-normal.woff2)}
+@font-face{font-family:Inter;font-weight:700;src:url(fonts/inter-latin-700-normal.woff2)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:405px;height:720px;overflow:hidden;background:#000}
+body{font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased;color:#111b21}
+.em{display:inline-block;width:1.25em;height:1.25em;vertical-align:-.25em;margin:0 .03em}
+#screen{position:relative;width:405px;height:720px;overflow:hidden;background:#efeae2}
+
+/* papel de parede do chat */
+#wall{position:absolute;inset:0;opacity:.55;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><g fill='none' stroke='%23d8cfc4' stroke-width='1.4' stroke-linecap='round'><path d='M14 20l6 6M20 20l-6 6'/><circle cx='70' cy='22' r='6'/><path d='M100 60c6-8 14 0 6 8l-6 6-6-6c-8-8 0-16 6-8z'/><path d='M20 90h14M27 83v14'/><path d='M60 95l8-14 8 14z'/><circle cx='100' cy='105' r='3'/></g></svg>")}
+
+/* barra de status + dynamic island */
+#status{position:absolute;top:0;left:0;right:0;height:46px;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:0 26px 0 30px;font:600 15px Inter}
+#rec{background:#ff3b30;color:#fff;border-radius:12px;padding:2px 9px;letter-spacing:.2px}
+#island{position:absolute;left:50%;top:10px;width:120px;height:34px;margin-left:-60px;border-radius:20px;background:#000}
+.sicons{display:flex;gap:6px;align-items:center}
+.batt{width:25px;height:12px;border:1.2px solid #111;border-radius:4px;padding:1.5px;position:relative}
+.batt::after{content:"";position:absolute;right:-3.5px;top:3.5px;width:2px;height:4px;background:#111;border-radius:0 1px 1px 0}
+.batt i{display:block;width:72%;height:100%;background:#111;border-radius:2px}
+
+/* cabeçalho do grupo */
+#head{position:absolute;top:46px;left:0;right:0;height:56px;z-index:25;background:rgba(246,246,246,.96);border-bottom:.5px solid #d1d1d6;display:flex;align-items:center;gap:8px;padding:0 12px 0 6px}
+#back{display:flex;align-items:center;color:#007aff;font:400 17px Inter}
+#back svg{width:13px;height:22px;margin-right:2px}
+#gav{width:36px;height:36px;border-radius:50%;background:#dfe9e3;display:grid;place-items:center;font-size:20px}
+#gtxt{flex:1;min-width:0}
+#gname{font:600 16px Inter;white-space:nowrap}
+#gsub{font:400 12.5px Inter;color:#667781;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#gsub.typing{color:#1c9e58}
+.hicons{display:flex;gap:20px;color:#007aff}
+.hicons svg{width:24px;height:24px}
+
+/* área do chat */
+#chat{position:absolute;left:0;right:0;top:102px;bottom:96px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:0 10px 6px}
+.day{align-self:center;margin:8px 0 6px;background:#fff;border-radius:8px;padding:3px 10px;font:500 12px Inter;color:#54656f;box-shadow:0 1px .5px rgba(0,0,0,.13)}
+.row{display:flex;flex-direction:column;overflow:hidden;flex:none}
+.bub{position:relative;max-width:80%;margin:2px 0 3px;padding:6px 8px 7px;border-radius:9px;font:400 15.2px/1.32 Inter;box-shadow:0 1px .6px rgba(0,0,0,.13);transform-origin:left bottom}
+.in .bub{align-self:flex-start;background:#fff;border-top-left-radius:2px}
+.out .bub{align-self:flex-end;background:#d9fdd3;border-top-right-radius:2px;transform-origin:right bottom}
+.who{font:600 13px Inter;margin-bottom:1px}
+.meta{float:right;margin:6px 0 -5px 10px;font:400 11px Inter;color:#667781;display:inline-flex;gap:3px;align-items:center}
+.tick{width:16px;height:11px}
+.pic{padding:3px}
+.pic img{display:block;width:232px;height:300px;object-fit:cover;border-radius:7px}
+.pic .who{padding:3px 6px 3px}
+.pic .meta{position:absolute;right:10px;bottom:9px;margin:0;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6)}
+.lnk{width:270px}
+.card{display:flex;background:#f0f2f5;border-radius:7px;overflow:hidden;margin:2px 0 5px}
+.card img{width:82px;height:82px;object-fit:cover;background:#fff8ec}
+.card div{padding:7px 8px}
+.card b{display:block;font:600 13px/1.25 Inter}
+.card span{display:block;font:400 12px/1.25 Inter;color:#54656f;margin-top:2px}
+.card small{display:block;font:400 11px Inter;color:#8696a0;margin-top:3px}
+.url{color:#027eb5;text-decoration:underline;font-size:14px}
+
+/* barra de digitação */
+#bar{position:absolute;left:0;right:0;bottom:0;z-index:20;background:#f6f6f6;border-top:.5px solid #d1d1d6;padding:7px 10px 30px;display:flex;align-items:center;gap:10px}
+#bar svg{width:26px;height:26px;color:#007aff;flex:none}
+#field{flex:1;min-height:34px;border-radius:18px;background:#fff;border:.5px solid #d1d1d6;padding:7px 12px;font:400 15.5px/1.3 Inter;color:#111b21;white-space:pre-wrap;word-break:break-word}
+#caret{display:inline-block;width:2px;height:18px;background:#007aff;vertical-align:-3px;margin-left:1px}
+#send{width:34px;height:34px;border-radius:50%;background:#25d366;display:none;place-items:center;flex:none}
+#send svg{width:18px;height:18px;color:#fff}
+#home{position:absolute;bottom:8px;left:50%;width:134px;height:5px;margin-left:-67px;border-radius:3px;background:#111;z-index:60}
+
+/* teclado iOS */
+#kb{position:absolute;left:0;right:0;bottom:0;height:296px;z-index:40;background:#d1d4d9;padding:6px 3px 0;transform:translateY(100%)}
+#sugg{height:38px;display:flex;align-items:center;justify-content:space-around;font:400 16px Inter;color:#111;border-bottom:.5px solid rgba(0,0,0,.08);margin:0 6px 8px}
+#sugg span{flex:1;text-align:center}
+#sugg span+span{border-left:1px solid #b5b8bd}
+.krow{display:flex;justify-content:center;gap:6px;margin-bottom:11px}
+.k{position:relative;width:34px;height:43px;border-radius:6px;background:#fff;box-shadow:0 1px 0 #898a8d;display:grid;place-items:center;font:400 22px Inter;color:#111}
+.k.f{background:#abb0ba;font-size:15px}
+.k.w{width:44px}
+.k.sp{width:190px;font-size:15px}
+.k.rt{width:88px;font-size:15px}
+.k.down{background:#abb0ba}
+.k.f.down{background:#fff}
+.pop{position:absolute;left:50%;bottom:-2px;width:56px;height:100px;margin-left:-28px;border-radius:10px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.25);display:none;justify-content:center;padding-top:8px;font:400 34px Inter;z-index:2}
+.k.down .pop{display:flex}
+.k.sp .pop,.k.f .pop,.k.rt .pop{display:none!important}
+
+/* hook e CTA */
+#hook{position:absolute;left:18px;right:18px;top:118px;z-index:50;background:#fff;border-radius:18px;padding:16px 18px;font:700 23px/1.22 Inter;color:#111;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.28)}
+#cta{position:absolute;inset:0;z-index:70;background:rgba(17,27,33,.72);display:grid;place-items:center;opacity:0}
+#ctacard{width:330px;background:#fff8ec;border:3px solid #d9a441;border-radius:24px;padding:18px 18px 20px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.45)}
+#ctacard>img{width:250px;display:block;margin:0 auto 6px}
+#ctacard h2{font:700 27px/1.15 Inter;color:#1f4d3a;margin-bottom:6px}
+#ctacard p{font:500 15px/1.3 Inter;color:#333;margin-bottom:10px}
+#ctaselo{display:inline-block;background:#b3282d;color:#fff;font:700 14px Inter;border-radius:999px;padding:5px 14px;margin-bottom:12px}
+#ctabtn{display:block;background:#1f4d3a;color:#fff;font:700 18px Inter;border-radius:999px;padding:13px 10px}
+</style>
+</head>
+<body>
+<div id="screen">
+  <div id="wall"></div>
+  <div id="status"><span id="rec">20:41</span><div id="island"></div>
+    <div class="sicons">
+      <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+      <svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.5 5.6 9a3.4 3.4 0 0 1 4.8 0z"/><path d="M3.5 6.9a6.4 6.4 0 0 1 9 0l-1.4 1.4a4.4 4.4 0 0 0-6.2 0z"/><path d="M1.3 4.7a9.5 9.5 0 0 1 13.4 0L13.3 6.1a7.5 7.5 0 0 0-10.6 0z"/></svg>
+      <div class="batt"><i></i></div>
+    </div>
+  </div>
+  <div id="head">
+    <div id="back"><svg viewBox="0 0 13 22"><path d="M11 2 2 11l9 9" fill="none" stroke="#007aff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>12</div>
+    <div id="gav"></div>
+    <div id="gtxt"><div id="gname"></div><div id="gsub"></div></div>
+    <div class="hicons">
+      <svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 10 6-3.5v11L16 14z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M6.6 3.5h3l1.5 4.2-2 1.5a12 12 0 0 0 5.7 5.7l1.5-2 4.2 1.5v3c0 1-.8 1.8-1.8 1.8C10.3 19.2 4.8 13.7 4.8 5.3c0-1 .8-1.8 1.8-1.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+  <div id="chat"><div class="day">Hoje</div></div>
+  <div id="bar">
+    <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    <div id="field"></div>
+    <svg id="cam" viewBox="0 0 24 24"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+    <svg id="mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <div id="send"><svg viewBox="0 0 24 24"><path d="M3 20.5 21 12 3 3.5 5.5 12zM5.5 12H13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/></svg></div>
+  </div>
+  <div id="kb">
+    <div id="sugg"><span>"eu"</span><span>que</span><span>é</span></div>
+    <div class="krow" data-r="qwertyuiop"></div>
+    <div class="krow" data-r="asdfghjkl"></div>
+    <div class="krow" id="r3"></div>
+    <div class="krow" id="r4"></div>
+  </div>
+  <div id="home"></div>
+  <div id="hook"></div>
+  <div id="cta"><div id="ctacard"><img alt=""><h2></h2><p></p><span id="ctaselo"></span><span id="ctabtn"></span></div></div>
+</div>
+<script src="roteiro.js"></script>
+<script>
+(function () {
+  var R = window.ROTEIRO, $ = function (s) { return document.querySelector(s); };
+  var TICK = '<svg class="tick" viewBox="0 0 16 11"><path d="M1 6l3 3 6-7M6 9l1 1 7-8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+  var SEG = new Intl.Segmenter("pt-BR", { granularity: "grapheme" });
+  function emoImg(g) { return '<img class="em" alt="' + g + '" src="emoji/' + Array.from(g, function (c) { return c.codePointAt(0).toString(16); }).join("-") + '.png">'; }
+  function emo(s) { return Array.from(SEG.segment(s), function (x) { var g = x.segment; return /\p{Extended_Pictographic}/u.test(g) ? emoImg(g) : esc(g); }).join(""); }
+
+  /* ---------- teclado ---------- */
+  function key(ch, cls, label) { return '<div class="k ' + (cls || "") + '" data-k="' + ch + '">' + (label || ch) + (cls ? "" : '<span class="pop">' + ch + '</span>') + '</div>'; }
+  [].forEach.call(document.querySelectorAll(".krow[data-r]"), function (r) { r.innerHTML = r.dataset.r.split("").map(function (c) { return key(c); }).join(""); });
+  $("#r3").innerHTML = key("shift", "f w", "⇧") + "zxcvbnm".split("").map(function (c) { return key(c); }).join("") + key("del", "f w", "⌫");
+  $("#r4").innerHTML = key("123", "f w", "123") + key("emoji", "f w", emo("🙂")) + key(" ", "sp", "espaço") + key("ret", "f rt", "retorno");
+  var KEYS = {}; [].forEach.call(document.querySelectorAll(".k"), function (k) { KEYS[k.dataset.k] = k; });
+  function keyFor(g) {
+    if (g === " ") return " ";
+    var base = g.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+    if (/^[a-z]$/.test(base)) return base;
+    if (/\p{Extended_Pictographic}/u.test(g)) return "emoji";
+    return "123";
+  }
+
+  /* ---------- linha do tempo (determinística) ---------- */
+  var seed = 7; function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+  var seg = new Intl.Segmenter("pt-BR", { granularity: "grapheme" });
+  var T = 0.55, EVENTS = [], MSGS = [];
+  R.mensagens.forEach(function (m, i) {
+    var o = { m: m, i: i };
+    if (m.who === "ana") {
+      var gs = Array.from(seg.segment(m.text), function (x) { return x.segment; });
+      o.kbIn = T; T += 0.3; o.chars = [];
+      gs.forEach(function (g) {
+        T += 0.038 + rnd() * 0.03 + (g === " " ? 0.012 : 0) + (/[!?,.]/.test(g) ? 0.06 : 0);
+        o.chars.push({ g: g, t: T, k: keyFor(g), up: g !== g.toLowerCase() && /\p{L}/u.test(g) });
+        EVENTS.push({ t: T, type: "key" });
+      });
+      T += 0.22; o.at = T; o.kbOut = T + 0.35; EVENTS.push({ t: T, type: "send" });
+      T += 0.35 + Math.min(0.5, m.text.length * 0.005);
+    } else {
+      var len = m.text ? m.text.length : 30;
+      o.typeFrom = T; T += m.img ? 0.55 : m.link ? 0.5 : Math.min(0.85, 0.3 + len * 0.005);
+      o.at = T; EVENTS.push({ t: T, type: "recv" });
+      T += m.img ? 0.75 : m.link ? 0.8 : 0.25 + Math.min(1.0, len * 0.011);
+    }
+    MSGS.push(o);
+  });
+  var ctaAt = Math.max(T + 0.15, R.duracaoTotal - R.cta.duracao);
+  var TOTAL = Math.max(R.duracaoTotal, ctaAt + R.cta.duracao);
+  window.TIMELINE = { total: TOTAL, conversaAte: T, ctaAt: ctaAt, events: EVENTS };
+
+  /* ---------- montar mensagens ---------- */
+  $("#gav").innerHTML = emo("🎄"); $("#gname").innerHTML = emo(R.grupo); $("#rec").textContent = R.hora;
+  $("#hook").innerHTML = emo(R.hook);
+  var cc = $("#ctacard"); cc.querySelector("img").src = R.cta.img; cc.querySelector("h2").innerHTML = emo(R.cta.titulo);
+  cc.querySelector("p").innerHTML = emo(R.cta.sub); $("#ctaselo").innerHTML = emo(R.cta.selo); $("#ctabtn").innerHTML = emo(R.cta.botao);
+  var chat = $("#chat"), membros = ["Ana", "Bianca", "Carla", "Dani"];
+  MSGS.forEach(function (o) {
+    var m = o.m, p = R.pessoas[m.who], out = m.who === "ana", row = document.createElement("div");
+    row.className = "row " + (out ? "out" : "in");
+    var who = out ? "" : '<div class="who" style="color:' + p.cor + '">' + p.nome + "</div>";
+    var meta = '<span class="meta">' + R.hora + (out ? TICK : "") + "</span>";
+    var html;
+    if (m.img) html = '<div class="bub pic">' + who + '<img src="' + m.img + '" alt="">' + meta + "</div>";
+    else if (m.link) html = '<div class="bub lnk">' + who + '<div class="card"><img src="' + m.link.img + '" alt=""><div><b>' + emo(m.link.titulo) + "</b><span>" + emo(m.link.desc) + "</span><small>" + m.link.url + '</small></div></div><span class="url">https://' + m.link.url + "</span>" + meta + "</div>";
+    else html = '<div class="bub">' + who + emo(m.text) + meta + "</div>";
+    row.innerHTML = html; row.style.display = "none"; chat.appendChild(row); o.el = row;
+  });
+  window.measure = function () { MSGS.forEach(function (o) { o.el.style.display = "flex"; o.el.style.maxHeight = "none"; o.h = o.el.offsetHeight; o.el.style.display = "none"; }); };
+
+  /* ---------- desenhar o quadro no tempo t (segundos) ---------- */
+  function clamp(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
+  function ease(x) { x = clamp(x); return 1 - Math.pow(1 - x, 3); }
+  window.renderAt = function (t) {
+    var typing = null, kb = 0, field = "", downKey = null, shift = false;
+    MSGS.forEach(function (o) {
+      var vis = t >= o.at, el = o.el;
+      if (vis) {
+        var p = ease((t - o.at) / 0.24);
+        el.style.display = "flex"; el.style.maxHeight = (p < 1 ? o.h * p : o.h + 40) + "px";
+        var b = el.firstChild; b.style.transform = "scale(" + (0.86 + 0.14 * p) + ")"; b.style.opacity = Math.min(1, p * 1.6);
+        var tk = el.querySelector(".tick"); if (tk) tk.style.color = t - o.at > 1.1 ? "#53bdeb" : "#8696a0";
+      } else el.style.display = "none";
+      if (o.typeFrom !== undefined && t >= o.typeFrom && t < o.at) typing = o.m;
+      if (o.kbIn !== undefined) {
+        if (t >= o.kbIn && t < o.kbOut + 0.3) kb = Math.max(kb, t < o.at ? ease((t - o.kbIn) / 0.28) : 1 - ease((t - o.kbOut) / 0.28));
+        if (t >= o.kbIn && t < o.at) {
+          o.chars.forEach(function (c) {
+            if (c.t <= t) field += c.g;
+            if (t >= c.t - 0.075 && t < c.t + 0.01) { downKey = c.k; shift = c.up; }
+          });
+        }
+      }
+    });
+    // cabeçalho: digitando…
+    var sub = $("#gsub");
+    if (typing) { sub.className = "typing"; sub.textContent = R.pessoas[typing.who].nome + (typing.img ? " está enviando uma foto…" : " está digitando…"); }
+    else { sub.className = ""; sub.textContent = membros.join(", "); }
+    // teclado e barra
+    var kbEl = $("#kb"); kbEl.style.transform = "translateY(" + (1 - kb) * 100 + "%)";
+    $("#bar").style.transform = "translateY(" + (-kb * (296 - 30)) + "px)";
+    $("#chat").style.bottom = 96 + kb * (296 - 30) + "px";
+    $("#home").style.background = kb > 0.5 ? "#000" : "#111";
+    $("#field").innerHTML = emo(field) + (kb > 0.5 ? '<span id="caret" style="opacity:' + (Math.floor(t * 2) % 2 && !downKey ? 0 : 1) + '"></span>' : "");
+    var has = field.length > 0; $("#send").style.display = has ? "grid" : "none"; $("#cam").style.display = $("#mic").style.display = has ? "none" : "block";
+    for (var k in KEYS) KEYS[k].classList.toggle("down", k === downKey || (k === "shift" && shift));
+    // hook e CTA
+    var hk = $("#hook"), hp = t < R.hookAte ? ease(t / 0.35) : 1 - ease((t - R.hookAte) / 0.3);
+    hk.style.opacity = hp; hk.style.transform = "translateY(" + (1 - hp) * -16 + "px) scale(" + (0.94 + 0.06 * hp) + ")"; hk.style.display = hp <= 0.001 ? "none" : "block";
+    var cp = ease((t - ctaAt) / 0.4), ct = $("#cta"); ct.style.opacity = cp; ct.style.display = cp <= 0 ? "none" : "grid";
+    $("#ctacard").style.transform = "scale(" + (0.85 + 0.15 * cp) + ")";
+  };
+})();
+</script>
+</body>
+</html>
