@@ -171,6 +171,7 @@
     if (C.vslPoster) v.poster = C.vslPoster;
     sec.hidden = false;
     var loaded = false, withSound = false, tracked = false;
+    var lastT = 0, allowSeek = false, finished = false;   // player travado: sem pausar e sem pular
     function load() { if (!loaded) { loaded = true; v.src = C.vslVideo; } }
     function preview() { if (withSound || reduce) return; load(); v.muted = true; var p = v.play(); if (p && p.catch) p.catch(function () {}); }
     if ("IntersectionObserver" in window) new IntersectionObserver(function (en) {
@@ -183,21 +184,35 @@
       if (mode === "again") { btn.querySelector(".vsl-ico").textContent = "↻"; txt.textContent = "Assistir novamente"; btn.classList.remove("pulse"); }
     }
     function playWithSound() {
-      load(); withSound = true; v.loop = false; v.muted = false; v.controls = true;
+      finished = false; load(); withSound = true; v.loop = false; v.muted = false; v.controls = false;
+      allowSeek = true; lastT = 0;
       try { v.currentTime = 0; } catch (e) {}
-      var p = v.play(); if (p && p.catch) p.catch(function () { v.controls = true; });
+      var p = v.play(); if (p && p.catch) p.catch(function () {});
       setBtn("hide");
       if (!tracked && window.AtelieTrack) { tracked = true; AtelieTrack.track("VSLPlay", {}, true); }
     }
     btn.addEventListener("click", playWithSound);
     v.addEventListener("click", function () { if (!withSound) playWithSound(); });
+    // depois do play com som: não pausa, não adianta e não volta
+    v.addEventListener("pause", function () {
+      if (withSound && !finished && !v.ended && !document.hidden) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+    });
+    v.addEventListener("seeking", function () {
+      if (withSound && !allowSeek && !finished && Math.abs(v.currentTime - lastT) > 0.75) { try { v.currentTime = lastT; } catch (e) {} }
+    });
+    v.addEventListener("seeked", function () { allowSeek = false; });
+    v.addEventListener("ratechange", function () { if (withSound && v.playbackRate !== 1) v.playbackRate = 1; });
+    document.addEventListener("visibilitychange", function () {
+      if (!document.hidden && withSound && !finished && v.paused) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+    });
     var half = false, done = false;
     v.addEventListener("timeupdate", function () {
+      if (withSound && !allowSeek && v.currentTime >= lastT && v.currentTime - lastT < 1.5) lastT = v.currentTime;
       if (withSound && !half && v.duration && v.currentTime / v.duration >= 0.5) { half = true; if (window.AtelieTrack) AtelieTrack.track("VSL50", {}, true); }
     });
     v.addEventListener("ended", function () {
       if (!withSound) return;
-      v.pause(); v.controls = false; setBtn("again");
+      finished = true; v.pause(); v.controls = false; setBtn("again");
       if (!done && window.AtelieTrack) { done = true; AtelieTrack.track("VSLComplete", {}, true); }
     });
     setBtn("sound");

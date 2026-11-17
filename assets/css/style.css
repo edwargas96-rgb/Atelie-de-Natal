@@ -427,3 +427,7 @@ details p{margin:0 0 16px;color:var(--muted)}
 .wa svg{width:30px;height:30px}
 .has-sticky .wa{bottom:calc(84px + env(safe-area-inset-bottom))}
 @media(min-width:820px){.has-sticky .wa{bottom:16px}}
+
+/* player da VSL travado depois do play com som: sem cliques, sem menu de controles */
+.vsl-frame.playing video{pointer-events:none}
+.vsl-frame video::-webkit-media-controls{display:none!important}
