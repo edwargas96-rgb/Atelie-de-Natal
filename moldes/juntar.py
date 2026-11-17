@@ -25,11 +25,11 @@ def indice_html(titulo, n, grupos, inicio):
 @font-face{{font-family:N;font-weight:400;src:url({FONTS}/nunito-sans-latin-400-normal.woff2)}}
 @font-face{{font-family:N;font-weight:700;src:url({FONTS}/nunito-sans-latin-700-normal.woff2)}}
 @page{{size:A4;margin:0}}*{{box-sizing:border-box}}body{{margin:0;background:#FFF8EC;font-family:N;color:#1F4D3A}}
-.pg{{width:210mm;padding:22mm 20mm 16mm;margin:0}}@page{{size:A4;margin:0}}
+.pg{{width:210mm;padding:16mm 18mm 10mm;margin:0}}@page{{size:A4;margin:0}}
 .k{{font:700 3mm N;letter-spacing:.9mm;text-transform:uppercase;color:#B3282D;text-align:center;margin:0 0 3mm}}
-h1{{font:800 12mm/1.05 P;text-align:center;margin:0 0 2mm}}.s{{text-align:center;font-size:4.2mm;color:#6b6355;margin:0 0 7mm}}
-section.g{{break-inside:avoid}}h3{{font:800 4.4mm N;color:#B3282D;margin:5mm 0 1.5mm;border-bottom:.3mm solid #C9962E;padding-bottom:1mm}}h3 small{{font:400 3mm N;color:#6b6355;margin-left:2mm}}
-ul{{list-style:none;margin:0;padding:0;columns:2;column-gap:8mm}}li{{display:flex;gap:2mm;align-items:baseline;font-size:3mm;line-height:1.55;break-inside:avoid}}
+h1{{font:800 12mm/1.05 P;text-align:center;margin:0 0 2mm}}.s{{text-align:center;font-size:4.2mm;color:#6b6355;margin:0 0 4mm}}
+section.g{{break-inside:avoid}}h3{{font:800 4.4mm N;color:#B3282D;margin:3.4mm 0 1mm;border-bottom:.3mm solid #C9962E;padding-bottom:1mm}}h3 small{{font:400 3mm N;color:#6b6355;margin-left:2mm}}
+ul{{list-style:none;margin:0;padding:0;columns:2;column-gap:8mm}}li{{display:flex;gap:2mm;align-items:baseline;font-size:2.7mm;line-height:1.38;break-inside:avoid}}
 .n{{font-weight:700;color:#B3282D;width:7mm}}.t{{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:50mm}}li i{{flex:1;border-bottom:.2mm dotted #bba}}.p{{color:#6b6355;font-size:2.7mm}}
 .fr{{position:fixed;inset:4mm;border:1.4mm double #C9962E}}</style></head><body><div class="fr"></div><div class="pg"><p class="k">Ateliê de Natal · Moldes de bordado em papel</p><h1>{titulo}</h1><p class="s">{n} moldes · imprima em A4, tamanho real (100%)</p>{linhas}</div></body></html>"""
 
