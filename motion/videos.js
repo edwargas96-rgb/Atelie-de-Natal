@@ -13,6 +13,17 @@ window.VIDEOS = {
       { dur: 3.6, img: "src/foto3-arvore-bordada.jpg", de: [1.0, 50, 45], para: [1.12, 50, 40], cap: "E a casa ainda fica linda 🎄", capPos: "bottom" }
     ]
   },
+  moldes: {
+    ctaDur: 1.4,
+    cenas: [
+      { dur: 0.85, img: "src/moldes/102.jpg", de: [1.0, 50, 45], para: [1.08, 50, 45], cap: "250 moldes de Natal pra bordar no papel ✨", hook: true },
+      { dur: 0.75, img: "src/moldes/101.jpg", de: [1.0, 50, 45], para: [1.08, 50, 45], cap: "Guirlandas" },
+      { dur: 0.75, img: "src/moldes/001.jpg", de: [1.0, 50, 50], para: [1.08, 50, 50], cap: "Cartões" },
+      { dur: 0.75, img: "src/moldes/121.jpg", de: [1.0, 50, 50], para: [1.08, 50, 50], cap: "Lareira" },
+      { dur: 0.75, img: "src/moldes/109.jpg", de: [1.0, 50, 50], para: [1.08, 50, 50], cap: "Varais" },
+      { dur: 0.75, img: "src/moldes/116.jpg", de: [1.0, 50, 50], para: [1.08, 50, 50], cap: "E muito mais 🎄" }
+    ]
+  },
   presepio: {
     cenas: [
       { dur: 4.0, img: "src/presepio.jpg", de: [1.0, 50, 50], para: [1.1, 50, 50], ilustrativa: true, cap: "Esse ano meu presépio foi feito à mão, ponto por ponto 🙏", hook: true },

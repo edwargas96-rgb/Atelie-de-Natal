@@ -46,7 +46,7 @@ html,body{width:405px;height:720px;overflow:hidden;background:#000}
   function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
   function emo(s) { return Array.from(SEG.segment(s), function (x) { var g = x.segment; return /\p{Extended_Pictographic}/u.test(g) ? '<img class="em" alt="" src="../criativo/emoji/' + Array.from(g, function (c) { return c.codePointAt(0).toString(16); }).join("-") + '.png">' : esc(g); }).join(""); }
   var t0 = 0; V.cenas.forEach(function (c) { c.t0 = t0; t0 += c.dur; });
-  var ctaAt = t0, total = t0 + C.dur;
+  var ctaAt = t0, total = t0 + (V.ctaDur || C.dur);
   var last = V.cenas[V.cenas.length - 1];
   window.TIMELINE = { total: total, ctaAt: ctaAt, clips: V.cenas.filter(function (c) { return c.clip; }).map(function (c) { return { clip: c.clip, from: c.from, at: c.t0, dur: c.dur }; }) };
   var cimg = $("#card>img"); cimg.src = C.img; $("#card h2").innerHTML = emo(C.titulo); $("#card p").innerHTML = emo(C.sub); $("#selo").innerHTML = emo(C.selo); $("#btn").innerHTML = emo(C.botao);
@@ -73,7 +73,7 @@ html,body{width:405px;height:720px;overflow:hidden;background:#000}
     // legenda: entra com leve subida; troca suave entre cenas
     var cap = $("#cap");
     if (lastCap !== c) { cap.innerHTML = emo(c.cap || ""); cap.className = (c.hook ? "hook " : "") + (c.capPos === "bottom" ? "bottom" : ""); lastCap = c; }
-    var a = out3(local / 0.35), b = c === last ? 1 : 1 - out3((local - (c.dur - 0.18)) / 0.18);
+    var fi = Math.min(0.35, c.dur * 0.25), a = out3(local / fi), b = c === last ? 1 : 1 - out3((local - (c.dur - 0.1)) / 0.1);
     var op = Math.min(a, b); cap.style.opacity = c.cap ? op : 0; cap.style.transform = "translateY(" + (1 - a) * 10 + "px) scale(" + (0.96 + 0.04 * a) + ")";
     $("#ilu").style.display = c.ilustrativa && !inCta ? "block" : "none";
     // CTA
