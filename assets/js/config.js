@@ -16,6 +16,9 @@ window.ATELIE_CONFIG = {
   checkoutFullUrl: "", // checkout com preço cheio (R$ 167)
   checkoutPromoUrl: "", // checkout com preço promo (R$ 37,90)
 
+  // Árvore: segundos com a seção visível, sem toque, até um presente abrir sozinho (0 desliga).
+  autoOpenSeconds: 6,
+
   // Parâmetros da URL repassados ao checkout (ficam guardados durante a visita).
   trackingParams: ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid", "src", "sck"],
 

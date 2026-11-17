@@ -401,3 +401,8 @@ details p{margin:0 0 16px;color:var(--muted)}
 .need-list li{background:#fffdf7;border:1px solid rgba(31,77,58,.2);border-radius:999px;padding:5px 12px;font-weight:700;font-size:.9rem;color:var(--pine)}
 .need p{margin:0;font-size:.95rem;color:var(--ink)}
 @media(min-width:820px){.need{max-width:760px}}
+
+/* presente que balança antes de abrir sozinho */
+.gift.wiggle svg,.gift-pending .gift.wiggle svg{animation:wiggle 1.1s ease-in-out;transform-origin:50% 90%}
+.gift-pending .gift.wiggle::before{animation:none;opacity:.9}
+@keyframes wiggle{0%,100%{transform:rotate(0) scale(1.1)}15%{transform:rotate(-14deg) scale(1.18)}30%{transform:rotate(12deg) scale(1.18)}45%{transform:rotate(-10deg) scale(1.2)}60%{transform:rotate(8deg) scale(1.2)}80%{transform:rotate(-4deg) scale(1.15)}}

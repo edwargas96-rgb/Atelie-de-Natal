@@ -10,8 +10,13 @@
   var opened = [];       // ids de presentes abertos
   try { opened = JSON.parse(localStorage.getItem(KEY) || "[]"); if (!Array.isArray(opened)) opened = []; } catch (e) { opened = []; }
 
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(opened)); } catch (e) {} }
-  function unlocked() { return promoActive && opened.length > 0; }
+  // preço revelado sem abrir presente (quem chega direto na oferta)
+  var revealed = false;
+  try { revealed = localStorage.getItem(KEY + "_revelado") === "1"; } catch (e) {}
+
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(opened)); if (revealed) localStorage.setItem(KEY + "_revelado", "1"); } catch (e) {} }
+  function unlocked() { return promoActive && (opened.length > 0 || revealed); }
+  function reveal() { if (!promoActive || unlocked()) return; revealed = true; save(); render(); }
 
   /* ---------- parâmetros de campanha: guardados na visita e repassados ao checkout ---------- */
   var PKEY = "atelie_params";
@@ -87,14 +92,31 @@
     [].forEach.call(document.querySelectorAll(".gift:not(.open)"), function (g) { g.classList.add("locked"); g.setAttribute("aria-disabled", "true"); g.tabIndex = -1; });
   }
 
-  function openGift(i, btn) {
+  function openGift(i, btn, auto) {
     if (opened.length) return; // um presente por visitante; todos valem o mesmo
+    clearTimeout(autoTimer);
     opened.push(i); save();
     btn.classList.add("open", "current");
     btn.setAttribute("aria-label", "Presente " + (i + 1) + " de " + POS.length + ", aberto");
     lockOthers(); showOpened(); render();
     setTimeout(function () { showModal(i); }, reduce ? 0 : 650);
-    if (window.AtelieTrack) AtelieTrack.track("GiftOpened", { numero: i + 1, auto: false }, true);
+    if (window.AtelieTrack) AtelieTrack.track("GiftOpened", { numero: i + 1, auto: !!auto }, true);
+  }
+
+  /* se a árvore ficar visível por autoOpenSeconds sem ninguém tocar, um presente balança e abre sozinho */
+  var autoTimer = 0;
+  function autoOpen() {
+    if (!promoActive || opened.length || revealed || !modal.hidden) return;
+    var gifts = document.querySelectorAll(".gift"); if (!gifts.length) return;
+    var i = Math.floor(Math.random() * gifts.length), btn = gifts[i];
+    if (reduce) { openGift(i, btn, true); return; }
+    btn.classList.add("wiggle");
+    setTimeout(function () { btn.classList.remove("wiggle"); openGift(i, btn, true); }, 1100);
+  }
+  function watchTree(visible) {
+    clearTimeout(autoTimer);
+    var secs = C.autoOpenSeconds;
+    if (visible && secs > 0 && promoActive && !opened.length && !revealed) autoTimer = setTimeout(autoOpen, secs * 1000);
   }
 
   function buildTree() {
@@ -135,8 +157,9 @@
     var io = function (sel, cb, th) { var el = $(sel); if (!el) return; new IntersectionObserver(function (en) { cb(en[0].isIntersecting); }, { threshold: th || 0.15 }).observe(el); };
     io("#topo", function (v) { heroOn = v; stickyUpdate(); }, 0.05);
     io("#oferta", function (v) { offerOn = v; stickyUpdate(); if (v) viewContent(); }, 0.25);
-    io("#arvore", function (v) { treeOn = v; stickyUpdate(); }, 0.3);
-  } else { sticky.hidden = true; viewContent(); }
+    io("#oferta .price-card", function (v) { if (v) reveal(); }, 0.5); // chegou no preço sem abrir presente: mostra o promocional
+    io("#arvore", function (v) { treeOn = v; stickyUpdate(); watchTree(v); }, 0.4);
+  } else { sticky.hidden = true; viewContent(); reveal(); }
 
 
 
