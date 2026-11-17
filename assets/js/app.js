@@ -20,11 +20,10 @@
     var price = un ? C.promoPrice : C.fullPrice;
     var buy = $("#buy");
     $("#price").textContent = fmt.format(price);
-    $("#price-tag").textContent = un ? "Preço final com o seu presente" : (locked ? "Valor de referência" : "Preço final");
+    $("#price-tag").textContent = un ? "🎁 Seu preço de Natal" : (locked ? "Valor de referência" : "Preço do kit");
     var old = $("#price-old");
-    old.hidden = !un; if (un) old.textContent = "De " + fmt.format(C.fullPrice);
-    $("#sum-disc").hidden = !un; if (un) $("#sum-disc-val").textContent = "− " + fmt.format(C.fullPrice - C.promoPrice);
-    $("#price-note").textContent = un ? "Pagamento único · promoção até " + C.promoEndLabel : (locked ? "Abra o seu presente para revelar o preço de Natal" : "Pagamento único");
+    old.hidden = !un; if (un) old.innerHTML = "De <s>R$ " + C.fullPrice + "</s> por";
+    $("#price-note").textContent = locked ? "Abra o seu presente para revelar o preço de Natal" : "Pagamento único";
     $("#promo-hint").hidden = true;
     document.documentElement.classList.toggle("gift-pending", locked);
     if (locked) {
@@ -33,7 +32,7 @@
       buy.dataset.kind = un ? "promo" : "full";
       var link = un ? C.checkoutPromoUrl : C.checkoutFullUrl;
       buy.href = link ? url(link) : "#oferta";
-      buy.textContent = "Quero o Ateliê de Natal por " + fmt.format(price);
+      buy.textContent = "Quero o meu por " + fmt.format(price);
     }
     $("#sticky-price").textContent = locked ? "Seu presente" : fmt.format(price);
     $("#sticky-btn").textContent = locked ? "🎁 Abrir presente" : "Quero o kit";
@@ -246,14 +245,11 @@
     var top = $("#xmas-top"), low = $("#xmas-count"), ms = eveEnd - Date.now();
     if (!(ms > 0)) { if (top) top.hidden = true; if (low) low.hidden = true; return; }
     var s = Math.floor(ms / 1000), d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60), sec = s % 60;
-    if (top) {
-      top.hidden = false;
-      var v = top.querySelectorAll("b"); v[0].textContent = d; v[1].textContent = pad(h); v[2].textContent = pad(m); v[3].textContent = pad(sec);
-    }
-    if (low) {
-      low.hidden = false;
-      low.textContent = "Faltam " + d + (d === 1 ? " dia" : " dias") + ", " + pad(h) + "h" + pad(m) + "min para o dia 24. " + (d > 3 ? "Dá tempo de bordar tudo." : "Ainda dá tempo com os moldes fáceis.");
-    }
+    [top, low].forEach(function (el) {
+      if (!el) return;
+      el.hidden = false;
+      var v = el.querySelectorAll("b"); v[0].textContent = d; v[1].textContent = pad(h); v[2].textContent = pad(m); v[3].textContent = pad(sec);
+    });
   }
   countdown(); setInterval(countdown, 1000);
 

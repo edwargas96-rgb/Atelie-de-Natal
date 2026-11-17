@@ -413,3 +413,25 @@ details p{margin:0 0 16px;color:var(--muted)}
 .carousel[data-loop] .track.dragging{cursor:grabbing;user-select:none}
 .carousel[data-loop] img{-webkit-user-drag:none;user-select:none}
 .car-cats .cat{height:100%}
+
+/* ---------- oferta enxuta ---------- */
+.sum2{list-style:none;margin:0;padding:14px 18px 4px}
+.sum2 li{display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:6px 0;font-size:1rem;color:var(--ink)}
+.sum2 li+li{border-top:1px dashed rgba(217,164,65,.55)}
+.sum2 b{white-space:nowrap;color:var(--muted);font-weight:700}
+.offer-card .price-card{padding-top:10px}
+.price-tag{display:inline-block;background:#fbf1d6;border-radius:999px;padding:4px 12px;letter-spacing:.02em;text-transform:none;font-size:.9rem}
+.price-line{margin:6px 0 0;display:flex;align-items:baseline;justify-content:center;gap:10px;flex-wrap:wrap}
+.price-line .price-old{margin:0;font-size:1.05rem}
+.price-line .price{margin:0}
+.price-card .price-note{margin:2px 0 12px;font-size:.88rem}
+.xmas-low{margin:14px auto 0}
+.g-mini{display:flex;align-items:center;gap:10px;margin:14px 0 0;padding:10px 12px;border:1.5px solid var(--gold);border-radius:12px;background:#fffdf7;text-align:left}
+.g-mini svg{width:34px;flex:none}
+.g-mini p{margin:0;font-size:.9rem;line-height:1.35;color:var(--ink)}
+.price-card .fine{margin-top:10px}
+/* neve não passa por cima da oferta */
+#oferta{position:relative;z-index:16}
+.price-line{flex-direction:column;gap:0}
+.price-line .price-old{text-decoration:none;color:var(--muted)}
+.price-line{align-items:center}

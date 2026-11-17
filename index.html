@@ -225,26 +225,25 @@
   <div class="wrap narrow">
     <h2>Tudo o que você leva</h2>
     <div class="offer-card">
-      <table class="sum">
-        <tr><td>Ateliê de Natal: 250 moldes de bordado em papel</td><td>R$ 97</td></tr>
-        <tr><td>5 bônus especiais</td><td>R$ 70</td></tr>
-        <tr class="tot"><td>Valor total de referência</td><td>R$ <span data-full-int>167</span></td></tr>
-        <tr class="disc" id="sum-disc" hidden><td>Desconto desbloqueado</td><td id="sum-disc-val"></td></tr>
-      </table>
+      <ul class="sum2">
+        <li><span>250 moldes de bordado em papel</span><b>R$ 97</b></li>
+        <li><span>+ 5 bônus de presente</span><b>R$ 70</b></li>
+      </ul>
       <div class="price-card">
-        <p class="price-tag" id="price-tag">Preço final</p>
-        <p class="price-old" id="price-old" hidden></p>
-        <p class="price" id="price">R$ 167,00</p>
+        <p class="price-tag" id="price-tag">Preço do kit</p>
+        <p class="price-line"><span class="price-old" id="price-old" hidden></span><span class="price" id="price">R$ 167,00</span></p>
         <p class="price-note" id="price-note">Pagamento único</p>
-        <a class="btn btn-primary btn-xl" id="buy" href="#" data-buy>Quero o Ateliê de Natal</a>
-        <p class="xmas-count" id="xmas-count" role="timer" hidden></p>
-        <div class="guarantee guarantee-strong">
-          <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 3 7 9.5v12.8C7 34 14.4 41.6 24 45.5 33.6 41.6 41 34 41 22.3V9.5z" fill="#1F4D3A" stroke="#D9A441" stroke-width="2"/><path d="m15.5 24 6 6 11.5-12.5" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <div><h3>Garantia de 7 dias</h3><p>Baixou, não gostou? Devolvemos 100% do seu dinheiro, sem perguntas. <a href="termos.html">Condições</a></p></div>
+        <a class="btn btn-primary btn-xl" id="buy" href="#" data-buy>Quero o meu</a>
+        <div class="xmas-top xmas-low" id="xmas-count" role="timer" aria-label="Contagem regressiva até o dia 24 de dezembro" hidden>
+          <span class="xt-label">Termina no dia 24</span>
+          <div class="xt-boxes"><span><b>00</b><small>dias</small></span><span><b>00</b><small>horas</small></span><span><b>00</b><small>min</small></span><span><b>00</b><small>seg</small></span></div>
         </div>
-        <p class="fine" id="promo-hint" hidden>Abra um presente na <a href="#arvore">árvore</a> e libere o desconto.</p>
-        <p class="fine">Pagamento seguro · Acesso por e-mail</p>
-        <p class="digital">Produto 100% digital, em PDF. Materiais físicos (papel, linha e agulha) não estão incluídos.</p>
+        <div class="g-mini">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 3 7 9.5v12.8C7 34 14.4 41.6 24 45.5 33.6 41.6 41 34 41 22.3V9.5z" fill="#1F4D3A" stroke="#D9A441" stroke-width="2"/><path d="m15.5 24 6 6 11.5-12.5" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <p><b>Garantia de 7 dias:</b> não gostou, devolvemos 100% do seu dinheiro. <a href="termos.html">Condições</a></p>
+        </div>
+        <p class="fine">PDF para imprimir · Pagamento seguro · Acesso imediato por e-mail</p>
+        <p class="fine" id="promo-hint" hidden></p>
       </div>
     </div>
   </div>
