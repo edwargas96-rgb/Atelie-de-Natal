@@ -11,6 +11,12 @@ window.ATELIE_CONFIG = {
   // Preços (em reais). O valor cheio só deve aparecer se o preço realmente voltar a ele após a data.
   fullPrice: 167,
   promoPrice: 37.9,
+  // Valores de referência mostrados na tabela da oferta (a soma deve dar o fullPrice).
+  kitValue: 97,
+  bonusValue: 70,
+
+  // Natal: a oferta mostra "Faltam X dias para o Natal" até esta data e depois esconde a contagem.
+  christmasDate: "2026-12-25T00:00:00-03:00",
 
   // Links dos checkouts externos (Cakto, Hotmart ou Kiwify). Qualquer extra de checkout é configurado na plataforma.
   checkoutFullUrl: "", // checkout com preço cheio (R$ 167)

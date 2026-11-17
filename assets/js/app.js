@@ -49,7 +49,6 @@
     old.hidden = !un; if (un) old.textContent = "De " + fmt.format(C.fullPrice);
     $("#sum-disc").hidden = !un; if (un) $("#sum-disc-val").textContent = "− " + fmt.format(C.fullPrice - C.promoPrice);
     $("#price-note").textContent = un ? "Pagamento único · promoção até " + C.promoEndLabel : (locked ? "Abra o seu presente para revelar o preço de Natal" : "Pagamento único");
-    $("#promo-hint").hidden = true;
     document.documentElement.classList.toggle("gift-pending", locked);
     // botões de compra: abrem o checkout (promo, ou cheio depois de promoEnd); sem link configurado, ficam na âncora
     var link = un ? C.checkoutPromoUrl : C.checkoutFullUrl;
@@ -63,6 +62,7 @@
     setBuy($("#cta-final"), "🎁 Quero descobrir meu presente de Natal", "Quero meu kit por " + fmt.format(price));
     setBuy($("#tree-buy"), "", "Quero o meu por " + fmt.format(price));
     var dis = document.querySelectorAll("[data-full-int]"); for (var i = 0; i < dis.length; i++) dis[i].textContent = C.fullPrice;
+    var kv = $("[data-kit-value]"), bv = $("[data-bonus-value]"); if (kv) kv.textContent = C.kitValue; if (bv) bv.textContent = C.bonusValue;
     // CTAs da página: levam à árvore até o presente ser aberto; depois, à oferta
     [].forEach.call(document.querySelectorAll("[data-cta]:not([data-buy])"), function (a) {
       if (locked) { a.href = "#arvore"; a.textContent = "🎁 Quero descobrir meu presente de Natal"; }
@@ -243,13 +243,16 @@
   }
   [].forEach.call(document.querySelectorAll(".carousel[data-loop]"), function (c) { if ($(".track", c).children.length) loopCarousel(c); });
 
-  /* ---------- barra de promoção: contagem em dias para a data fixa ---------- */
-  function countdown() {
-    var el = $("#pb-count"); if (!el || !promoActive) return;
-    var ms = end - Date.now(), d = Math.ceil(ms / 86400000);
-    el.textContent = ms < 86400000 ? "último dia" : "faltam " + d + " dias";
+  /* ---------- oferta: contagem real de dias até o Natal (some depois de christmasDate) ---------- */
+  function xmasCount() {
+    var el = $("#xmas-count"); if (!el) return;
+    var ms = new Date(C.christmasDate).getTime() - Date.now();
+    if (!(ms > 0)) { el.hidden = true; return; }
+    var d = Math.ceil(ms / 86400000);
+    el.textContent = (d === 1 ? "Falta 1 dia" : "Faltam " + d + " dias") + " para o Natal. " + (d > 3 ? "Dá tempo de bordar tudo." : "Ainda dá tempo com os moldes fáceis.");
+    el.hidden = false;
   }
-  countdown(); setInterval(countdown, 600000);
+  xmasCount(); setInterval(xmasCount, 600000);
 
   /* ---------- neve ---------- */
   function snow() {
