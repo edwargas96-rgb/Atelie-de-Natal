@@ -107,8 +107,8 @@ def snowflake_icon(x, y, r, col):
 STYLES = {
     "classico": dict(
         name="Clássico", design=classico,
-        pal={"red": "#B3282D", "green": "#2E6B4A", "gold": "#C9962E"},
-        names={"red": "Vermelho cereja", "green": "Verde pinheiro", "gold": "Dourado"},
+        pal={"red": "#B3282D", "green": "#2E6B4A", "gold": "#C9962E", "snow": "#8E9AA6", "brown": "#7A5233"},
+        names={"red": "Vermelho cereja", "green": "Verde pinheiro", "gold": "Dourado", "snow": "Cinza neve", "brown": "Marrom"},
         page_bg="#FFF8EC", ink="#1F4D3A", accent="#B3282D", muted="#6b6355",
         title_font="Playfair", title_weight=800, body_font="Nunito",
         card_bg="#FFFDF8", result_bg="#F8EEDB", frame="#c9b48a", twine={"red"}, wobble=0,
