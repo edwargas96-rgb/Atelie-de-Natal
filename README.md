@@ -15,3 +15,6 @@ Links dos checkouts, data real da promo, textos finais de garantia, licença e r
 
 ## Comportamento da promo
 Depois de `promoEnd` a página recarrega sozinha, a árvore some e só aparece o preço cheio.
+
+## Campos para preencher em `assets/js/config.js`
+`checkoutPromoUrl`, `checkoutFullUrl`, `pixelId`, `whatsappNumber` (com DDI e DDD, só números). Opcionais: `autoOpenSeconds` (0 desliga o presente automático), `christmasDate`, `kitValue`/`bonusValue`.

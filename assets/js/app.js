@@ -151,14 +151,15 @@
   }
 
   /* ---------- barra fixa (celular) ---------- */
-  var sticky = $("#sticky"), heroOn = true, offerOn = false, treeOn = false, bonusOn = false;
-  function stickyUpdate() { sticky.hidden = heroOn || offerOn || treeOn || bonusOn; }
+  // aparece depois do hero e some enquanto a oferta está na tela
+  var sticky = $("#sticky"), heroOn = true, offerOn = false;
+  function stickyUpdate() { sticky.hidden = heroOn || offerOn; document.documentElement.classList.toggle("has-sticky", !sticky.hidden); }
   if ("IntersectionObserver" in window) {
     var io = function (sel, cb, th) { var el = $(sel); if (!el) return; new IntersectionObserver(function (en) { cb(en[0].isIntersecting); }, { threshold: th || 0.15 }).observe(el); };
     io("#topo", function (v) { heroOn = v; stickyUpdate(); }, 0.05);
     io("#oferta", function (v) { offerOn = v; stickyUpdate(); if (v) viewContent(); }, 0.25);
     io("#oferta .price-card", function (v) { if (v) reveal(); }, 0.5); // chegou no preço sem abrir presente: mostra o promocional
-    io("#arvore", function (v) { treeOn = v; stickyUpdate(); watchTree(v); }, 0.4);
+    io("#arvore", function (v) { watchTree(v); }, 0.4);
   } else { sticky.hidden = true; viewContent(); reveal(); }
 
 
@@ -206,14 +207,14 @@
   (function proofs() {
     var list = C.proofs || [], sec = $("#prova"); if (!sec || !list.length) return;
     var track = $("#proof-car .track");
-    list.forEach(function (p) { var a = document.createElement("article"); a.className = "slide proof-card"; var im = document.createElement("img"); im.loading = "lazy"; im.src = p.img; im.alt = p.alt || "Depoimento"; a.appendChild(im); track.appendChild(a); });
+    list.forEach(function (p) { var a = document.createElement("article"); a.className = "slide proof-card"; var im = document.createElement("img"); im.loading = "lazy"; im.decoding = "async"; im.width = 500; im.height = 562; im.src = p.img; im.alt = p.alt || "Depoimento"; a.appendChild(im); track.appendChild(a); });
     sec.hidden = false;
   })();
 
   /* ---------- carrossel infinito: gira sozinho e responde ao dedo ---------- */
   function loopCarousel(el) {
     var track = $(".track", el), orig = [].slice.call(track.children), n = orig.length;
-    function clones() { var f = document.createDocumentFragment(); orig.forEach(function (s) { var c = s.cloneNode(true); c.setAttribute("aria-hidden", "true"); f.appendChild(c); }); return f; }
+    function clones() { var f = document.createDocumentFragment(); orig.forEach(function (s) { var c = s.cloneNode(true); c.setAttribute("aria-hidden", "true"); c.setAttribute("inert", ""); f.appendChild(c); }); return f; }
     track.insertBefore(clones(), track.firstChild); track.appendChild(clones());
     var setW = 0, pos = 0, visible = false, touching = false, last = 0, raf = 0, resume = 0, idleUntil = 0;
     var speed = el.classList.contains("car-sess") ? 38 : 34; // pixels por segundo
@@ -257,7 +258,7 @@
   /* ---------- neve ---------- */
   function snow() {
     var box = $("#snow"); if (!box || reduce) return;
-    var count = window.innerWidth < 600 ? 22 : 40;
+    var count = window.innerWidth < 600 ? 11 : 40;
     for (var i = 0; i < count; i++) {
       var f = document.createElement("i"), s = 3 + Math.random() * 5;
       f.className = "flake"; f.style.width = f.style.height = s + "px"; f.style.left = Math.random() * 100 + "%";
@@ -332,6 +333,18 @@
     dots(); measure(); setTimeout(function () { measure(); play(); }, 600);
   }
   [].forEach.call(document.querySelectorAll(".carousel:not([data-loop])"), carousel);
+
+  /* ---------- suporte por WhatsApp (só aparece com whatsappNumber preenchido) ---------- */
+  (function whatsapp() {
+    var n = String(C.whatsappNumber || "").replace(/\D/g, ""); if (!n) return;
+    var a = document.createElement("a");
+    a.className = "wa"; a.target = "_blank"; a.rel = "noopener";
+    a.href = "https://wa.me/" + n + (C.whatsappMessage ? "?text=" + encodeURIComponent(C.whatsappMessage) : "");
+    a.setAttribute("aria-label", "Falar com o suporte no WhatsApp");
+    a.innerHTML = '<svg viewBox="0 0 32 32" aria-hidden="true"><path fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round" d="M16 5.5a10.5 10.5 0 0 0-9 15.9L5.5 26.5l5.3-1.4A10.5 10.5 0 1 0 16 5.5z"/><path fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" d="M12.4 12.6c0 3.9 3.1 7 7 7"/></svg>';
+    document.body.appendChild(a);
+    a.addEventListener("click", function () { if (window.AtelieTrack) AtelieTrack.track("Contact", {}, false); });
+  })();
 
   $("#year").textContent = new Date().getFullYear();
   buildTree();

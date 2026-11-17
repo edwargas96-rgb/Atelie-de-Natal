@@ -417,3 +417,13 @@ details p{margin:0 0 16px;color:var(--muted)}
 .price-card .guarantee svg{width:72px;flex:none}
 .price-card .guarantee h3{margin:0 0 2px;font-size:1.15rem}
 .price-card .guarantee p{margin:0;font-size:.98rem;line-height:1.4}
+
+/* ---------- neve atrás do conteúdo (passa por trás de textos, cartões e botões) ---------- */
+.snow{z-index:1}
+.wrap,.hero .wrap{position:relative;z-index:2}
+
+/* ---------- botão flutuante de WhatsApp ---------- */
+.wa{position:fixed;right:14px;bottom:16px;z-index:19;width:54px;height:54px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 6px 16px rgba(0,0,0,.28)}
+.wa svg{width:30px;height:30px}
+.has-sticky .wa{bottom:calc(84px + env(safe-area-inset-bottom))}
+@media(min-width:820px){.has-sticky .wa{bottom:16px}}

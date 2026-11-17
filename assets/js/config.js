@@ -43,6 +43,10 @@ window.ATELIE_CONFIG = {
     { img: "assets/prova/5.webp", alt: "Conversa: Marcelo mostrando as etiquetas e o cartão que está bordando" }
   ],
 
+  // Suporte por WhatsApp: número com DDI e DDD, só dígitos (ex.: "5511999999999"). Vazio = botão não aparece.
+  whatsappNumber: "",
+  whatsappMessage: "Olá! Tenho uma dúvida sobre o Ateliê de Natal.",
+
   // Meta Pixel (ID numérico). Vazio = nenhum rastreamento é carregado.
   // Eventos: PageView, ViewContent (oferta na tela), InitiateCheckout (clique de compra),
   // e os próprios GiftOpened, VSLPlay, VSL50 e VSLComplete. O mesmo event_id vai para o capiEndpoint.
