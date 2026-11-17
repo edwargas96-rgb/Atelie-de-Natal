@@ -6,7 +6,7 @@ Site estático (HTML + CSS + JS, sem build). Fontes hospedadas em `assets/fonts`
 Tudo em `assets/js/config.js` (inclui o vídeo da mini VSL, `vslVideo`/`vslPoster`, e os prints de prova social): data de fim da promo, preços, links dos 2 checkouts, ID do Pixel.
 
 ## Meta Pixel e CAPI
-- `PageView`, `ViewContent` (ao ver a oferta), `InitiateCheckout` (clique em comprar) e o evento próprio `PresenteAberto`, com `event_id` igual no navegador e no servidor (deduplicação).
+- `PageView`, `ViewContent` (ao ver a oferta), `InitiateCheckout` (clique em comprar) e os eventos próprios `GiftOpened`, `VSLPlay`, `VSL50` e `VSLComplete`, com `event_id` igual no navegador e no servidor (deduplicação).
 - Servidor: defina `META_PIXEL_ID`, `META_CAPI_TOKEN` (e `META_TEST_EVENT_CODE` para testes) nas variáveis de ambiente.
 - `Purchase`: ative a integração de Pixel/CAPI da própria plataforma de checkout (Cakto/Hotmart/Kiwify), que envia a compra com o valor correto.
 

@@ -376,3 +376,6 @@ details p{margin:0 0 16px;color:var(--muted)}
 .vsl-btn.pulse{animation:vslpulse 1.4s ease-in-out infinite}
 @keyframes vslpulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.08)}}
 @media(prefers-reduced-motion:reduce){.vsl-btn.pulse{animation:none}}
+
+/* barra fixa: um botão só */
+.sticky .btn{width:100%}

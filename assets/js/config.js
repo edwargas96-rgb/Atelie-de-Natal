@@ -16,6 +16,9 @@ window.ATELIE_CONFIG = {
   checkoutFullUrl: "", // checkout com preço cheio (R$ 167)
   checkoutPromoUrl: "", // checkout com preço promo (R$ 37,90)
 
+  // Parâmetros da URL repassados ao checkout (ficam guardados durante a visita).
+  trackingParams: ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid", "src", "sck"],
+
 
   // Vídeo da mini VSL (vertical 9:16). Para trocar, substitua os arquivos ou aponte para outros. Vazio = seção escondida.
   vslVideo: "assets/video/vsl.mp4",
@@ -32,6 +35,8 @@ window.ATELIE_CONFIG = {
   ],
 
   // Meta Pixel (ID numérico). Vazio = nenhum rastreamento é carregado.
+  // Eventos: PageView, ViewContent (oferta na tela), InitiateCheckout (clique de compra),
+  // e os próprios GiftOpened, VSLPlay, VSL50 e VSLComplete. O mesmo event_id vai para o capiEndpoint.
   pixelId: "",
   // Endpoint da API de Conversões (função em /api/capi). Vazio = só Pixel no navegador.
   capiEndpoint: "/api/capi"

@@ -12,7 +12,26 @@
 
   function save() { try { localStorage.setItem(KEY, JSON.stringify(opened)); } catch (e) {} }
   function unlocked() { return promoActive && opened.length > 0; }
-  function url(u) { return u ? u + (u.indexOf("?") > -1 ? "&" : "?") + location.search.slice(1) : ""; }
+
+  /* ---------- parâmetros de campanha: guardados na visita e repassados ao checkout ---------- */
+  var PKEY = "atelie_params";
+  function params() {
+    var keep = C.trackingParams || [], saved = {};
+    try { saved = JSON.parse(sessionStorage.getItem(PKEY) || "{}") || {}; } catch (e) { saved = {}; }
+    try {
+      var q = new URLSearchParams(location.search);
+      keep.forEach(function (k) { var v = q.get(k); if (v) saved[k] = v; });
+      sessionStorage.setItem(PKEY, JSON.stringify(saved));
+    } catch (e) {}
+    return saved;
+  }
+  params();
+  function url(u) {
+    if (!u) return "";
+    var p = params(), parts = [];
+    for (var k in p) if (Object.prototype.hasOwnProperty.call(p, k)) parts.push(encodeURIComponent(k) + "=" + encodeURIComponent(p[k]));
+    return parts.length ? u + (u.indexOf("?") > -1 ? "&" : "?") + parts.join("&") : u;
+  }
 
   /* ---------- preço / botões ---------- */
   function render() {
@@ -27,19 +46,20 @@
     $("#price-note").textContent = un ? "Pagamento único · promoção até " + C.promoEndLabel : (locked ? "Abra o seu presente para revelar o preço de Natal" : "Pagamento único");
     $("#promo-hint").hidden = true;
     document.documentElement.classList.toggle("gift-pending", locked);
-    if (locked) {
-      buy.dataset.kind = "gift"; buy.href = "#arvore"; buy.textContent = "🎁 Abrir meu presente";
-    } else {
-      buy.dataset.kind = un ? "promo" : "full";
-      var link = un ? C.checkoutPromoUrl : C.checkoutFullUrl;
-      buy.href = link ? url(link) : "#oferta";
-      buy.textContent = "Quero o Ateliê de Natal por " + fmt.format(price);
+    // botões de compra: abrem o checkout (promo, ou cheio depois de promoEnd); sem link configurado, ficam na âncora
+    var link = un ? C.checkoutPromoUrl : C.checkoutFullUrl;
+    function setBuy(a, lockedText, text) {
+      if (!a) return;
+      if (locked) { a.dataset.kind = "gift"; a.href = "#arvore"; a.textContent = lockedText; }
+      else { a.dataset.kind = un ? "promo" : "full"; a.href = link ? url(link) : "#oferta"; a.textContent = text; }
     }
-    $("#sticky-price").textContent = locked ? "Seu presente" : fmt.format(price);
-    $("#sticky-btn").textContent = locked ? "🎁 Abrir presente" : "Quero o kit";
+    setBuy(buy, "🎁 Abrir meu presente", "Quero o Ateliê de Natal por " + fmt.format(price));
+    setBuy($("#sticky-btn"), "🎁 Abrir meu presente", "Quero por " + fmt.format(price));
+    setBuy($("#cta-final"), "🎁 Quero descobrir meu presente de Natal", "Quero meu kit por " + fmt.format(price));
+    setBuy($("#tree-buy"), "", "Quero o meu por " + fmt.format(price));
     var dis = document.querySelectorAll("[data-full-int]"); for (var i = 0; i < dis.length; i++) dis[i].textContent = C.fullPrice;
     // CTAs da página: levam à árvore até o presente ser aberto; depois, à oferta
-    [].forEach.call(document.querySelectorAll("[data-cta]"), function (a) {
+    [].forEach.call(document.querySelectorAll("[data-cta]:not([data-buy])"), function (a) {
       if (locked) { a.href = "#arvore"; a.textContent = "🎁 Quero descobrir meu presente de Natal"; }
       else { a.href = "#oferta"; a.textContent = "Quero meu kit por " + fmt.format(price); }
     });
@@ -60,7 +80,7 @@
   function showOpened() {
     $("#sample").innerHTML = '<p class="unlocked">Presente aberto! Hora de decorar o seu Natal.</p>' +
       '<p class="sample-empty">Preço especial liberado, com os 5 brindes.</p>' +
-      '<a class="btn btn-primary" href="#oferta">Quero o meu por ' + fmt.format(C.promoPrice) + '</a>';
+      '<a class="btn btn-primary" href="#oferta" id="tree-buy" data-buy>Quero o meu por ' + fmt.format(C.promoPrice) + '</a>';
   }
 
   function lockOthers() {
@@ -74,7 +94,7 @@
     btn.setAttribute("aria-label", "Presente " + (i + 1) + " de " + POS.length + ", aberto");
     lockOthers(); showOpened(); render();
     setTimeout(function () { showModal(i); }, reduce ? 0 : 650);
-    if (window.AtelieTrack) AtelieTrack.track("PresenteAberto", { numero: i + 1 }, true);
+    if (window.AtelieTrack) AtelieTrack.track("GiftOpened", { numero: i + 1, auto: false }, true);
   }
 
   function buildTree() {
@@ -93,12 +113,13 @@
   }
 
   /* ---------- eventos ---------- */
-  $("#buy").addEventListener("click", function (e) {
-    if (this.dataset.kind === "gift") return; // ainda não abriu o presente: só rola até a árvore
-    var href = this.getAttribute("href");
-    if (!href || href === "#oferta") { e.preventDefault(); console.warn("Link de checkout não configurado em assets/js/config.js"); return; }
-    var un = this.dataset.kind === "promo";
-    if (window.AtelieTrack) AtelieTrack.track("InitiateCheckout", { value: un ? C.promoPrice : C.fullPrice, currency: "BRL", content_name: "Ateliê de Natal", num_items: 1 });
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest ? e.target.closest("[data-buy]") : null;
+    if (!a || a.dataset.kind === "gift") return; // presente ainda fechado: só rola até a árvore
+    var href = a.getAttribute("href") || "";
+    if (href.charAt(0) === "#") { console.warn("Ateliê: link de checkout vazio. Preencha checkoutPromoUrl e checkoutFullUrl em assets/js/config.js"); return; }
+    var un = a.dataset.kind === "promo";
+    if (window.AtelieTrack) AtelieTrack.track("InitiateCheckout", { value: un ? C.promoPrice : C.fullPrice, currency: "BRL", content_name: "Ateliê de Natal", content_type: "product", num_items: 1 });
   });
 
   var vc = false;
@@ -116,7 +137,6 @@
     io("#oferta", function (v) { offerOn = v; stickyUpdate(); if (v) viewContent(); }, 0.25);
     io("#arvore", function (v) { treeOn = v; stickyUpdate(); }, 0.3);
   } else { sticky.hidden = true; viewContent(); }
-  $("#sticky-btn").addEventListener("click", function () { if (promoActive && !unlocked()) { var t = $("#arvore"); if (t) { /* leva à árvore para escolher o presente */ this.setAttribute("href", "#arvore"); } } else this.setAttribute("href", "#oferta"); });
 
 
 
@@ -143,11 +163,19 @@
       try { v.currentTime = 0; } catch (e) {}
       var p = v.play(); if (p && p.catch) p.catch(function () { v.controls = true; });
       setBtn("hide");
-      if (!tracked && window.AtelieTrack) { tracked = true; AtelieTrack.track("VideoPlay", {}, true); }
+      if (!tracked && window.AtelieTrack) { tracked = true; AtelieTrack.track("VSLPlay", {}, true); }
     }
     btn.addEventListener("click", playWithSound);
     v.addEventListener("click", function () { if (!withSound) playWithSound(); });
-    v.addEventListener("ended", function () { if (withSound) { v.pause(); v.controls = false; setBtn("again"); } });
+    var half = false, done = false;
+    v.addEventListener("timeupdate", function () {
+      if (withSound && !half && v.duration && v.currentTime / v.duration >= 0.5) { half = true; if (window.AtelieTrack) AtelieTrack.track("VSL50", {}, true); }
+    });
+    v.addEventListener("ended", function () {
+      if (!withSound) return;
+      v.pause(); v.controls = false; setBtn("again");
+      if (!done && window.AtelieTrack) { done = true; AtelieTrack.track("VSLComplete", {}, true); }
+    });
     setBtn("sound");
   })();
 

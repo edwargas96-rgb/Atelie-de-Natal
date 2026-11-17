@@ -1,6 +1,6 @@
 // Função serverless (Vercel/Netlify-compatível) para a API de Conversões da Meta.
 // Variáveis de ambiente: META_PIXEL_ID, META_CAPI_TOKEN, (opcional) META_TEST_EVENT_CODE
-const ALLOWED = ["PageView", "ViewContent", "InitiateCheckout", "Purchase", "PresenteAberto"];
+const ALLOWED = ["PageView", "ViewContent", "InitiateCheckout", "Purchase", "GiftOpened", "VSLPlay", "VSL50", "VSLComplete"];
 
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).end();
