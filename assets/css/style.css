@@ -431,3 +431,14 @@ details p{margin:0 0 16px;color:var(--muted)}
 /* player da VSL travado depois do play com som: sem cliques, sem menu de controles */
 .vsl-frame.playing video{pointer-events:none}
 .vsl-frame video::-webkit-media-controls{display:none!important}
+
+/* imagens em carrossel contínuo: passam sozinhas e respondem ao dedo (ou arrastar com o mouse) */
+.car-mosaic{--w:64%;margin-top:14px}
+.car-cats{--w:90%}
+.car-mosaic .tile{height:auto}
+@media(min-width:620px){.car-mosaic{--w:calc((100% - 28px)/3)}.car-cats{--w:calc((100% - 14px)/2)}}
+@media(min-width:980px){.car-mosaic{--w:calc((100% - 42px)/4)}}
+.carousel[data-loop] .track{cursor:grab}
+.carousel[data-loop] .track.dragging{cursor:grabbing;user-select:none}
+.carousel[data-loop] img{-webkit-user-drag:none;user-select:none}
+.car-cats .cat{height:100%}

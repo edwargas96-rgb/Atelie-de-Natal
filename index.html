@@ -73,7 +73,7 @@
     <p class="section-sub">Descubra como alguns pontos podem transformar uma ideia simples em uma lembrança especial.</p>
     <!-- Para trocar o vídeo: mude vslVideo e vslPoster em assets/js/config.js -->
     <div class="vsl-frame" id="vsl-frame">
-      <video id="vsl-video" muted playsinline loop preload="none" aria-label="Vídeo: bordado de Natal em papel, com narração"></video>
+      <video id="vsl-video" muted playsinline loop preload="none" disablepictureinpicture disableremoteplayback controlslist="nodownload noplaybackrate noremoteplayback nofullscreen" aria-label="Vídeo: bordado de Natal em papel, com narração"></video>
       <button type="button" class="vsl-btn" id="vsl-btn"><span class="vsl-ico" aria-hidden="true">🔊</span><span id="vsl-btn-txt">Toque para ativar o áudio</span></button>
     </div>
     <p class="center"><a class="btn btn-primary btn-xl" href="#arvore" data-cta>🎁 Quero descobrir meu presente de Natal</a></p>
@@ -90,12 +90,12 @@
 <section class="sec sec-alt" id="possibilidades">
   <div class="wrap">
     <h2>Imagine tudo o que você pode criar neste Natal!</h2>
-    <div class="mosaic">
-      <figure class="tile"><img loading="lazy" src="assets/img/sessao-1.webp" width="640" height="640" alt="Cartão Feliz Natal e etiquetas de presente bordados"><figcaption>Cartões e presentes personalizados</figcaption></figure>
-      <figure class="tile"><img loading="lazy" src="assets/img/sessao-2.webp" width="640" height="640" alt="Varal de moldes bordados sobre a lareira"><figcaption>Enfeites e detalhes para a árvore</figcaption></figure>
-      <figure class="tile"><img loading="lazy" src="assets/img/sessao-3.webp" width="640" height="640" alt="Mesa de ceia com marcadores de lugar e porta-guardanapos bordados"><figcaption>Decorações para a casa e a ceia</figcaption></figure>
-      <figure class="tile"><img loading="lazy" src="assets/img/sessao-4.webp" width="640" height="640" alt="Calendário do advento com 24 cartões bordados"><figcaption>Atividades e lembranças em família</figcaption></figure>
-    </div>
+    <div class="carousel car-mosaic" data-loop="1" role="region" aria-roledescription="carrossel" aria-label="O que você pode criar"><div class="track">
+      <figure class="tile slide"><img loading="lazy" src="assets/img/sessao-1.webp" width="640" height="640" alt="Cartão Feliz Natal e etiquetas de presente bordados"><figcaption>Cartões e presentes personalizados</figcaption></figure>
+      <figure class="tile slide"><img loading="lazy" src="assets/img/sessao-2.webp" width="640" height="640" alt="Varal de moldes bordados sobre a lareira"><figcaption>Enfeites e detalhes para a árvore</figcaption></figure>
+      <figure class="tile slide"><img loading="lazy" src="assets/img/sessao-3.webp" width="640" height="640" alt="Mesa de ceia com marcadores de lugar e porta-guardanapos bordados"><figcaption>Decorações para a casa e a ceia</figcaption></figure>
+      <figure class="tile slide"><img loading="lazy" src="assets/img/sessao-4.webp" width="640" height="640" alt="Calendário do advento com 24 cartões bordados"><figcaption>Atividades e lembranças em família</figcaption></figure>
+    </div></div>
   </div>
 </section>
 
@@ -122,7 +122,7 @@
   <div class="wrap">
     <h2>O que você recebe</h2>
     <p class="section-sub">250 moldes organizados em 4 categorias.</p>
-    <div class="cats"><article class="cat"><figure><img loading="lazy" src="assets/img/sessao-1.webp" width="640" height="640" alt="Cartão Feliz Natal e etiquetas de presente bordados"><span class="count">70 moldes</span></figure><div class="cat-body"><h3>Cartões e presentes</h3><p>Presentes com um toque só seu.</p><ul class="chips"><li>30 cartões</li><li>20 etiquetas</li><li>10 envelopes e embalagens</li><li>10 convites de ceia</li></ul></div></article><article class="cat"><figure><img loading="lazy" src="assets/img/sessao-2.webp" width="640" height="640" alt="Varal de moldes bordados sobre a lareira"><span class="count">70 moldes</span></figure><div class="cat-body"><h3>Árvore e casa</h3><p>A casa inteira no clima de Natal.</p><ul class="chips"><li>30 enfeites de árvore</li><li>15 guirlandas e varais</li><li>10 meias e lareira</li><li>15 presépio e cenas</li></ul></div></article><article class="cat"><figure><img loading="lazy" src="assets/img/sessao-3.webp" width="640" height="640" alt="Mesa de ceia com marcadores de lugar e porta-guardanapos bordados"><span class="count">50 moldes</span></figure><div class="cat-body"><h3>Mesa da ceia</h3><p>Uma mesa que todo mundo repara.</p><ul class="chips"><li>20 marcadores de lugar</li><li>10 porta-guardanapos</li><li>10 descansos de copo</li><li>10 cardápios e plaquinhas</li></ul></div></article><article class="cat"><figure><img loading="lazy" src="assets/img/sessao-4.webp" width="640" height="640" alt="Calendário do advento com 24 cartões bordados"><span class="count">60 moldes</span></figure><div class="cat-body"><h3>Em família e crianças</h3><p>Momentos para fazer juntos.</p><ul class="chips"><li>30 moldes fáceis</li><li>25 do calendário do advento</li><li>5 atividades em grupo</li></ul></div></article></div>
+    <div class="carousel car-cats" data-loop="1" role="region" aria-roledescription="carrossel" aria-label="As 4 categorias do kit"><div class="track"><article class="cat slide"><figure><img loading="lazy" src="assets/img/sessao-1.webp" width="640" height="640" alt="Cartão Feliz Natal e etiquetas de presente bordados"><span class="count">70 moldes</span></figure><div class="cat-body"><h3>Cartões e presentes</h3><p>Presentes com um toque só seu.</p><ul class="chips"><li>30 cartões</li><li>20 etiquetas</li><li>10 envelopes e embalagens</li><li>10 convites de ceia</li></ul></div></article><article class="cat slide"><figure><img loading="lazy" src="assets/img/sessao-2.webp" width="640" height="640" alt="Varal de moldes bordados sobre a lareira"><span class="count">70 moldes</span></figure><div class="cat-body"><h3>Árvore e casa</h3><p>A casa inteira no clima de Natal.</p><ul class="chips"><li>30 enfeites de árvore</li><li>15 guirlandas e varais</li><li>10 meias e lareira</li><li>15 presépio e cenas</li></ul></div></article><article class="cat slide"><figure><img loading="lazy" src="assets/img/sessao-3.webp" width="640" height="640" alt="Mesa de ceia com marcadores de lugar e porta-guardanapos bordados"><span class="count">50 moldes</span></figure><div class="cat-body"><h3>Mesa da ceia</h3><p>Uma mesa que todo mundo repara.</p><ul class="chips"><li>20 marcadores de lugar</li><li>10 porta-guardanapos</li><li>10 descansos de copo</li><li>10 cardápios e plaquinhas</li></ul></div></article><article class="cat slide"><figure><img loading="lazy" src="assets/img/sessao-4.webp" width="640" height="640" alt="Calendário do advento com 24 cartões bordados"><span class="count">60 moldes</span></figure><div class="cat-body"><h3>Em família e crianças</h3><p>Momentos para fazer juntos.</p><ul class="chips"><li>30 moldes fáceis</li><li>25 do calendário do advento</li><li>5 atividades em grupo</li></ul></div></article></div></div>
   </div>
 </section>
 

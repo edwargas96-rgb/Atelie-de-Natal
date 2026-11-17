@@ -193,6 +193,10 @@
     }
     btn.addEventListener("click", playWithSound);
     v.addEventListener("click", function () { if (!withSound) playWithSound(); });
+    frame.addEventListener("contextmenu", function (e) { if (withSound) e.preventDefault(); });
+    v.addEventListener("enterpictureinpicture", function () { if (withSound && document.exitPictureInPicture) document.exitPictureInPicture().catch(function () {}); });
+    v.addEventListener("webkitbeginfullscreen", function () { if (withSound) v.webkitExitFullscreen(); });
+    document.addEventListener("fullscreenchange", function () { if (withSound && !finished && document.fullscreenElement === v) document.exitFullscreen().catch(function () {}); });
     // depois do play com som: não pausa, não adianta e não volta
     v.addEventListener("pause", function () {
       if (withSound && !finished && !v.ended && !document.hidden) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
@@ -252,6 +256,12 @@
     track.addEventListener("touchend", release, { passive: true }); track.addEventListener("touchcancel", release, { passive: true });
     track.addEventListener("wheel", function () { idleUntil = Date.now() + 1800; }, { passive: true });
     el.addEventListener("mouseenter", hold); el.addEventListener("mouseleave", release);
+    // arrastar com o mouse (PC)
+    var drag = null;
+    track.addEventListener("mousedown", function (e) { if (e.button !== 0) return; drag = { x: e.clientX, s: track.scrollLeft }; track.classList.add("dragging"); });
+    window.addEventListener("mousemove", function (e) { if (drag) { track.scrollLeft = drag.s - (e.clientX - drag.x); pos = track.scrollLeft; } });
+    window.addEventListener("mouseup", function () { if (drag) { drag = null; track.classList.remove("dragging"); release(); } });
+    track.addEventListener("dragstart", function (e) { e.preventDefault(); });
     window.addEventListener("resize", start);
     if ("IntersectionObserver" in window) new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }, { threshold: 0.1 }).observe(el); else visible = true;
     start(); setTimeout(start, 600); window.addEventListener("load", start);
