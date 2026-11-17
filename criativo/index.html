@@ -50,7 +50,11 @@ body{font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased;color:#111b
 .meta{float:right;margin:6px 0 -5px 10px;font:400 11px Inter;color:#667781;display:inline-flex;gap:3px;align-items:center}
 .tick{width:16px;height:11px}
 .pic{padding:3px}
-.pic img{display:block;width:232px;height:300px;object-fit:cover;border-radius:7px}
+.pic img{display:block;width:232px;height:auto;max-height:370px;object-fit:cover;border-radius:7px}
+.stk{background:none!important;box-shadow:none!important;padding:0!important}
+.stk img{display:block;width:150px;height:auto}
+.stk .meta{float:none;display:inline-flex;margin:4px 0 0;padding:1px 7px;border-radius:9px;background:rgba(255,255,255,.85);box-shadow:0 1px .5px rgba(0,0,0,.13)}
+.out .stk{text-align:right}
 .pic .who{padding:3px 6px 3px}
 .pic .meta{position:absolute;right:10px;bottom:9px;margin:0;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6)}
 .lnk{width:270px}
@@ -93,7 +97,7 @@ body{font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased;color:#111b
 #cta{position:absolute;inset:0;z-index:70;background:rgba(17,27,33,.72);display:grid;place-items:center;opacity:0}
 #ctacard{width:330px;background:#fff8ec;border:3px solid #d9a441;border-radius:24px;padding:18px 18px 20px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.45)}
 #ctacard>img{width:250px;display:block;margin:0 auto 6px}
-#ctacard h2{font:700 27px/1.15 Inter;color:#1f4d3a;margin-bottom:6px}
+#ctacard h2{font:700 23px/1.18 Inter;color:#1f4d3a;margin-bottom:8px}
 #ctacard p{font:500 15px/1.3 Inter;color:#333;margin-bottom:10px}
 #ctaselo{display:inline-block;background:#b3282d;color:#fff;font:700 14px Inter;border-radius:999px;padding:5px 14px;margin-bottom:12px}
 #ctabtn{display:block;background:#1f4d3a;color:#fff;font:700 18px Inter;border-radius:999px;padding:13px 10px}
@@ -167,22 +171,26 @@ body{font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased;color:#111b
   var T = 0.55, EVENTS = [], MSGS = [];
   R.mensagens.forEach(function (m, i) {
     var o = { m: m, i: i };
-    if (m.who === "ana") {
+    if (m.who === "ana" && m.text) {
       var gs = Array.from(seg.segment(m.text), function (x) { return x.segment; });
-      o.kbIn = T; T += 0.3; o.chars = [];
+      o.kbIn = T; T += 0.28; o.chars = [];
       gs.forEach(function (g) {
-        T += 0.038 + rnd() * 0.03 + (g === " " ? 0.012 : 0) + (/[!?,.]/.test(g) ? 0.06 : 0);
+        T += 0.032 + rnd() * 0.026 + (g === " " ? 0.01 : 0) + (/[!?,.]/.test(g) ? 0.06 : 0);
         o.chars.push({ g: g, t: T, k: keyFor(g), up: g !== g.toLowerCase() && /\p{L}/u.test(g) });
         EVENTS.push({ t: T, type: "key" });
       });
-      T += 0.22; o.at = T; o.kbOut = T + 0.35; EVENTS.push({ t: T, type: "send" });
-      T += 0.35 + Math.min(0.5, m.text.length * 0.005);
+      T += 0.25; o.at = T; o.kbOut = T + 0.35; EVENTS.push({ t: T, type: "send" });
+      T += 0.45 + Math.min(0.6, m.text.length * 0.006);
+    } else if (m.who === "ana") {            // figurinha enviada pela Ana
+      T += 0.3; o.at = T; EVENTS.push({ t: T, type: "send" });
+      T += 0.75;
     } else {
       var len = m.text ? m.text.length : 30;
-      o.typeFrom = T; T += m.img ? 0.55 : m.link ? 0.5 : Math.min(0.85, 0.3 + len * 0.005);
+      o.typeFrom = T; T += m.img ? 0.7 : m.sticker ? 0.45 : m.link ? 0.55 : Math.min(0.8, 0.35 + len * 0.004);
       o.at = T; EVENTS.push({ t: T, type: "recv" });
-      T += m.img ? 0.75 : m.link ? 0.8 : 0.25 + Math.min(1.0, len * 0.011);
+      T += m.img ? 1.0 : m.sticker ? 0.65 : m.link ? 1.2 : 0.3 + Math.min(0.95, len * 0.0105);
     }
+    T += m.pausa || 0;
     MSGS.push(o);
   });
   var ctaAt = Math.max(T + 0.15, R.duracaoTotal - R.cta.duracao);
@@ -202,6 +210,7 @@ body{font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased;color:#111b
     var meta = '<span class="meta">' + R.hora + (out ? TICK : "") + "</span>";
     var html;
     if (m.img) html = '<div class="bub pic">' + who + '<img src="' + m.img + '" alt="">' + meta + "</div>";
+    else if (m.sticker) html = '<div class="bub stk"><img src="' + m.sticker + '" alt=""><span class="meta">' + R.hora + (out ? TICK : "") + "</span></div>";
     else if (m.link) html = '<div class="bub lnk">' + who + '<div class="card"><img src="' + m.link.img + '" alt=""><div><b>' + emo(m.link.titulo) + "</b><span>" + emo(m.link.desc) + "</span><small>" + m.link.url + '</small></div></div><span class="url">https://' + m.link.url + "</span>" + meta + "</div>";
     else html = '<div class="bub">' + who + emo(m.text) + meta + "</div>";
     row.innerHTML = html; row.style.display = "none"; chat.appendChild(row); o.el = row;
