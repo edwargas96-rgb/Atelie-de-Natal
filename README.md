@@ -15,3 +15,6 @@ Links dos checkouts, data real da promo, textos finais de garantia, licença e r
 
 ## Comportamento da promo
 Depois de `promoEnd` a página recarrega sozinha, a árvore some e só aparece o preço cheio.
+
+## Publicar
+Antes de cada publicação rode `python3 versao.py` (atualiza a versão dos CSS/JS para não pegar cache antigo).
