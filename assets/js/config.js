@@ -20,7 +20,7 @@ window.ATELIE_CONFIG = {
 
   // Links dos checkouts externos (Cakto, Hotmart ou Kiwify). Qualquer extra de checkout é configurado na plataforma.
   checkoutFullUrl: "", // checkout com preço cheio (R$ 167)
-  checkoutPromoUrl: "", // checkout com preço promo (R$ 37,90)
+  checkoutPromoUrl: "https://pay.wiapy.com/fUEKRQ6UwOt", // checkout com preço promo (R$ 37,90)
 
 
   // Vídeo da mini VSL (vertical 9:16). Para trocar, substitua os arquivos ou aponte para outros. Vazio = seção escondida.
