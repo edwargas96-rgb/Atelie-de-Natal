@@ -38,7 +38,7 @@ window.ATELIE_CONFIG = {
   ],
 
   // Meta Pixel (ID numérico). Vazio = nenhum rastreamento é carregado.
-  pixelId: "",
+  pixelId: "1014861567617309",
   // Endpoint da API de Conversões (função em /api/capi). Vazio = só Pixel no navegador.
   capiEndpoint: "/api/capi"
 };
