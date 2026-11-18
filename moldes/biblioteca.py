@@ -377,3 +377,141 @@ def motif(dst, name, cx, cy, size, swap=False, simple=False, **kw):
     k = size / 100.0
     l = L(k); MOTIFS[name](l, simple=simple, **kw)
     merge(dst, l.d, cx, cy, k, swap)
+
+
+# ================================================================ Ateliê 2027 (formas novas, diferentes do bônus)
+def m_globo(l, simple=False, **_):
+    l.P([(0, -46), (0, -32)], "gold", sp=2.6)
+    l.P(circ(0, -48, 2.5, 14), "gold", closed=True, sp=2.0)
+    l.P([(-5, -32), (5, -32), (5, -27), (-5, -27)], "gold", closed=True, corners=True)
+    l.P(circ(0, 0, 27), "red", closed=True)
+    for y in (-18, -9, 0, 9, 18):
+        w = (27 ** 2 - y ** 2) ** .5
+        l.P([(-w, y), (w, y)], "gold", sp=3.2)
+    for k in (-0.55, 0, 0.55):
+        l.P([(27 * math.sin(k) * math.cos(a), 27 * math.sin(a)) for a in [math.pi * (i / 40 - .5) for i in range(41)]], "gold", sp=3.2)
+    if not simple:
+        for x, y, s in [(-38, -20, 3.4), (37, -26, 3), (36, 22, 3.6), (-36, 26, 2.6)]: l.X(x, y, "gold", s)
+
+
+def m_baloes(l, simple=False, **_):
+    for cx, cy, c, r in [(-14, -14, "red", 13), (14, -20, "gold", 13), (0, 4, "green", 12)]:
+        l.P(chaikin([(cx, cy - r * 1.25), (cx + r, cy - r * .4), (cx + r * .7, cy + r * .75), (cx, cy + r * 1.15), (cx - r * .7, cy + r * .75), (cx - r, cy - r * .4)], 2), c, closed=True)
+        l.K(cx, cy + r * 1.3, c, 1.3)
+    for cx, cy, r, dx in [(-14, -14, 13, 6), (14, -20, 13, -4), (0, 4, 12, 0)]:
+        l.P(cubic((cx, cy + r * 1.4), (cx + dx, cy + r * 2.2), (dx * .5, 34), (0, 44), 30), "gold", sp=2.8)
+    if not simple:
+        l.P([(-4, 44), (4, 44)], "gold", sp=2.4)
+
+
+def m_ampulheta(l, simple=False, **_):
+    l.P([(-18, -40), (18, -40)], "gold"); l.P([(-18, 40), (18, 40)], "gold")
+    l.P([(-14, -38)] + cubic((-14, -38), (-14, -16), (-3, -6), (-3, 0), 20)[1:] + cubic((-3, 0), (-3, 6), (-14, 16), (-14, 38), 20)[1:], "red")
+    l.P([(14, -38)] + cubic((14, -38), (14, -16), (3, -6), (3, 0), 20)[1:] + cubic((3, 0), (3, 6), (14, 16), (14, 38), 20)[1:], "red")
+    l.P(cubic((-11, 34), (-6, 22), (6, 22), (11, 34), 20), "gold", sp=2.6)
+    l.P([(-9, -30), (9, -30)], "gold", sp=2.6)
+    for y in (6, 12, 18): l.K(0, y, "gold", 1.0)
+    if not simple:
+        for x, y in [(-30, -24), (30, -10), (-28, 22)]: l.X(x, y)
+
+
+def m_ondas(l, simple=False, n=7, **_):
+    for k in range(n if not simple else 4):
+        y = -30 + k * 10
+        pts = [(x, y + 3.2 * math.sin((x + k * 7) / 6.5)) for x in range(-44, 45, 2)]
+        l.P(pts, "green" if k % 2 else "gold", sp=3.0)
+    l.P(circ(0, -46, 7, 30), "gold", closed=True, sp=2.4)
+    for a in range(8):
+        t = a * math.pi / 4
+        l.S((10 * math.cos(t), -46 + 10 * math.sin(t)), (13 * math.cos(t), -46 + 13 * math.sin(t)), "gold")
+
+
+def m_coroa(l, simple=False, **_):
+    pts = [(-30, 22), (-30, -10), (-15, 6), (0, -24), (15, 6), (30, -10), (30, 22)]
+    l.P(pts + [(-30, 22)], "gold", closed=True, corners=True)
+    l.P([(-30, 12), (30, 12)], "gold", sp=2.8)
+    for x, y in [(-30, -14), (0, -28), (30, -14)]: l.K(x, y, "red", 2.0)
+    for x, c in [(-16, "red"), (0, "green"), (16, "red")]: l.K(x, 17, c, 1.8)
+    if not simple:
+        for x, y in [(-40, -30), (40, -32), (0, 36)]: l.X(x, y)
+
+
+def m_bau(l, simple=False, **_):
+    l.P([(-26, -2), (26, -2), (26, 30), (-26, 30)], "gold", closed=True, corners=True)
+    l.P([(-26, -2)] + cubic((-26, -2), (-26, -24), (26, -24), (26, -2), 30)[1:], "gold")
+    l.P([(-9, -2), (-9, 30)], "red", sp=2.8); l.P([(9, -2), (9, 30)], "red", sp=2.8)
+    l.P([(-4, 6), (4, 6), (4, 14), (-4, 14)], "red", closed=True, corners=True, sp=2.2)
+    if not simple:
+        for x, y in [(-20, -26), (0, -32), (20, -26)]: l.K(x, y, "gold", 1.6)
+        for x, y in [(-36, -12), (36, -14)]: l.X(x, y)
+
+
+def m_louro(l, simple=False, **_):
+    stem = cubic((0, 44), (-4, 20), (4, -10), (0, -44), 60)
+    l.P(stem, "brown" if False else "green", sp=3.0)
+    for i in range(6 if not simple else 4):
+        t = 0.12 + i * 0.14
+        idx = int(t * 60); x, y = stem[idx]
+        for s in (-1, 1):
+            a = math.radians(-90 + s * 50)
+            leaf = [(x + 14 * math.cos(a) * u + s * 3.5 * math.sin(math.pi * u) * math.sin(a), y + 14 * math.sin(a) * u - s * 3.5 * math.sin(math.pi * u) * math.cos(a)) for u in [k / 12 for k in range(13)]]
+            back = [(x + 14 * math.cos(a) * u - s * 3.5 * math.sin(math.pi * u) * math.sin(a), y + 14 * math.sin(a) * u + s * 3.5 * math.sin(math.pi * u) * math.cos(a)) for u in [k / 12 for k in range(12, -1, -1)]]
+            l.P(leaf + back[1:], "green", closed=True, sp=2.6)
+    if not simple:
+        l.K(0, -46, "gold", 1.8)
+
+
+def m_carteira(l, simple=False, **_):
+    l.P(chaikin([(-30, -12), (30, -12), (30, 26), (-30, 26)], 1), "red", closed=True)
+    l.P([(-30, -2)] + cubic((-30, -2), (-10, 6), (10, 6), (30, -2), 24)[1:], "red", sp=2.8)
+    l.K(0, 5, "gold", 2.0)
+    for x, y in [(-14, -26), (0, -32), (14, -24)]: l.P(circ(x, y, 6, 22), "gold", closed=True, sp=2.4); l.K(x, y, "gold", 1.0)
+    if not simple:
+        sub(l, "louro", 22, -20, 26)
+
+
+def m_mascara(l, simple=False, **_):
+    out = chaikin([(-36, -8), (-20, -18), (0, -10), (20, -18), (36, -8), (32, 10), (14, 14), (0, 6), (-14, 14), (-32, 10)], 2)
+    l.P(out, "gold", closed=True)
+    l.P(chaikin([(-24, -6), (-12, -10), (-6, -2), (-14, 4), (-24, 2)], 2), "red", closed=True, sp=2.4)
+    l.P(chaikin([(24, -6), (12, -10), (6, -2), (14, 4), (24, 2)], 2), "red", closed=True, sp=2.4)
+    l.P(cubic((34, 8), (40, 20), (38, 34), (32, 44), 24), "green", sp=2.8)
+    if not simple:
+        for k, c in [(-1, "red"), (0, "green"), (1, "gold")]:
+            l.P(cubic((-30 + k * 6, -14), (-36 + k * 10, -34), (-30 + k * 12, -42), (-22 + k * 10, -46), 24), c, sp=2.6)
+        for x, y in [(-10, 30), (6, 36), (18, 26), (-24, 38)]: l.K(x, y, "red" if x < 0 else "gold", 1.2)
+
+
+def m_pandeiro(l, simple=False, **_):
+    l.P(circ(0, 0, 30), "red", closed=True); l.P(circ(0, 0, 24), "gold", closed=True)
+    for k in range(5):
+        a = 2 * math.pi * k / 5 - math.pi / 2
+        l.P(circ(27 * math.cos(a), 27 * math.sin(a), 4, 16), "gold", closed=True, sp=2.0)
+    l.P(star(0, 0, 10, 4.2), "green", closed=True, corners=True)
+    if not simple:
+        for x, y in [(-40, -32), (40, -30), (-38, 34), (38, 36)]: l.X(x, y)
+
+
+def m_leque(l, simple=False, **_):
+    for k in range(7):
+        a = math.radians(-160 + k * 23.3)
+        tip = (40 * math.cos(a), 26 + 40 * math.sin(a))
+        l.P([(0, 26), tip], "gold" if k % 2 else "red", sp=3.0)
+    l.P([(40 * math.cos(math.radians(-160 + k * 4)), 26 + 40 * math.sin(math.radians(-160 + k * 4))) for k in range(36)], "red", sp=3.0)
+    l.K(0, 26, "gold", 2.2)
+    if not simple:
+        for k in range(6):
+            a = math.radians(-148 + k * 23.3); l.K(32 * math.cos(a), 26 + 32 * math.sin(a), "green", 1.2)
+
+
+def m_chapeu(l, simple=False, **_):
+    l.P([(0, -40), (24, 30), (-24, 30)], "red", closed=True, corners=True)
+    for y, w in [(-14, 9), (4, 15), (20, 21)]: l.P(cubic((-w, y), (-w / 2, y + 4), (w / 2, y + 4), (w, y), 20), "gold", sp=2.6)
+    l.P(circ(0, -44, 4.5, 20), "gold", closed=True, sp=2.0)
+    if not simple:
+        for x, y, c in [(-34, -20, "gold"), (34, -14, "green"), (-30, 10, "red"), (36, 18, "gold"), (-12, -36, "green"), (16, -34, "red")]: l.K(x, y, c, 1.3)
+
+
+MOTIFS.update({"globo": m_globo, "balões": m_baloes, "ampulheta": m_ampulheta, "ondas": m_ondas, "coroa": m_coroa,
+               "baú": m_bau, "louro": m_louro, "carteira": m_carteira, "máscara": m_mascara, "pandeiro": m_pandeiro,
+               "leque": m_leque, "chapéu de festa": m_chapeu})
