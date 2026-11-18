@@ -10,12 +10,20 @@
     fbq("init", C.pixelId);
   }
 
+  // código de teste do Meta (Gerenciador de Eventos > Testar eventos): abra a página com ?test_event_code=TEST...
+  var testCode = "";
+  try {
+    var q = new URLSearchParams(location.search).get("test_event_code");
+    if (q) sessionStorage.setItem("atelie_test_code", q);
+    testCode = sessionStorage.getItem("atelie_test_code") || "";
+  } catch (e) {}
+
   T.track = function (name, data, custom) {
     var id = uid();
     data = data || {};
     if (window.fbq && C.pixelId) fbq(custom ? "trackCustom" : "track", name, data, { eventID: id });
     if (C.pixelId && C.capiEndpoint) {
-      var body = JSON.stringify({ event_name: name, event_id: id, event_source_url: location.href, custom_data: data, fbp: cookie("_fbp"), fbc: cookie("_fbc") });
+      var body = JSON.stringify({ event_name: name, event_id: id, event_source_url: location.href, custom_data: data, fbp: cookie("_fbp"), fbc: cookie("_fbc"), test_event_code: testCode || undefined });
       try {
         if (navigator.sendBeacon) navigator.sendBeacon(C.capiEndpoint, new Blob([body], { type: "application/json" }));
         else fetch(C.capiEndpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: body, keepalive: true });

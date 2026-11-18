@@ -7,6 +7,7 @@
 
   var end = new Date(C.promoEnd).getTime();
   var promoActive = Date.now() < end;
+  try { if (new URLSearchParams(location.search).get("resetar") === "1") localStorage.removeItem(KEY); } catch (e) {}   // teste: ?resetar=1 fecha o presente de novo
   var opened = [];       // ids de presentes abertos
   try { opened = JSON.parse(localStorage.getItem(KEY) || "[]"); if (!Array.isArray(opened)) opened = []; } catch (e) { opened = []; }
 

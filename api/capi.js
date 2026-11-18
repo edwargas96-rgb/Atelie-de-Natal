@@ -28,12 +28,15 @@ module.exports = async function handler(req, res) {
       custom_data: b.custom_data && typeof b.custom_data === "object" ? b.custom_data : {}
     }]
   };
-  if (META_TEST_EVENT_CODE) payload.test_event_code = META_TEST_EVENT_CODE;
+  const tc = META_TEST_EVENT_CODE || (typeof b.test_event_code === "string" && /^TEST\w{1,20}$/.test(b.test_event_code) ? b.test_event_code : "");
+  if (tc) payload.test_event_code = tc;
 
   try {
     const r = await fetch(`https://graph.facebook.com/v21.0/${META_PIXEL_ID}/events?access_token=${META_CAPI_TOKEN}`, {
       method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload)
     });
+    if (!r.ok) console.error("CAPI recusou", b.event_name, r.status, (await r.text()).slice(0, 300));
+    else console.log("CAPI ok", b.event_name, tc ? "(teste)" : "");
     return res.status(r.ok ? 204 : 502).end();
-  } catch (e) { return res.status(502).end(); }
+  } catch (e) { console.error("CAPI erro", e && e.message); return res.status(502).end(); }
 };
