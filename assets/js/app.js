@@ -73,7 +73,7 @@
     opened.push(i); save();
     btn.classList.add("open", "current");
     btn.setAttribute("aria-label", "Presente " + (i + 1) + " de " + POS.length + ", aberto");
-    lockOthers(); showOpened(); render();
+    lockOthers(); pendingReveal = true;   // o preço só aparece na página depois que o modal do presente fecha
     setTimeout(function () { showModal(i); }, reduce ? 0 : 650);
     if (window.AtelieTrack) AtelieTrack.track("PresenteAberto", { numero: i + 1, auto: !!auto }, true);
   }
@@ -290,9 +290,11 @@
     modal.hidden = false; confetti();
     setTimeout(function () { $("#m-go").focus(); }, 50);
   }
-  function closeModal() { modal.hidden = true; if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+  var pendingReveal = false;
+  function reveal() { if (pendingReveal) { pendingReveal = false; showOpened(); render(); } }
+  function closeModal() { modal.hidden = true; reveal(); if (lastFocus && lastFocus.focus) lastFocus.focus(); }
   $("#m-close").addEventListener("click", closeModal);
-  $("#m-go").addEventListener("click", function () { modal.hidden = true; });
+  $("#m-go").addEventListener("click", function () { modal.hidden = true; reveal(); });
   modal.addEventListener("click", function (e) { if (e.target === modal) closeModal(); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !modal.hidden) closeModal(); });
 
