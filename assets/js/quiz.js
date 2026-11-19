@@ -19,21 +19,28 @@
   function t(n, p) { if (window.AtelieTrack) AtelieTrack.track(n, p || {}, true); }
   function stars() { var s = ""; for (var k = 0; k < Q.length; k++) s += '<i class="' + (k < i ? "on" : "") + '">★</i>'; return '<div class="qz-stars">' + s + "</div>"; }
   function step() {
-    if (i >= Q.length) return result();
+    if (i >= Q.length) return loading();
     var q = Q[i];
     el.querySelector(".qz-body").innerHTML = stars() + '<p class="qz-n">Pergunta ' + (i + 1) + " de " + Q.length + '</p><h3>' + q.q + '</h3><div class="qz-opts">' +
       q.a.map(function (a) { return '<button type="button" data-v="' + a[2] + '"><span>' + a[0] + "</span>" + a[1] + "</button>"; }).join("") + "</div>";
     [].forEach.call(el.querySelectorAll(".qz-opts button"), function (b) {
-      b.onclick = function () { b.classList.add("sel"); r[q.k] = b.dataset.v; t("QuizResposta", { pergunta: q.k, resposta: b.dataset.v }); i++; setTimeout(step, 280); };
+      b.onclick = function () { b.classList.add("sel"); r[q.k] = b.dataset.v; t("QuizResposta", { pergunta: q.k, resposta: b.dataset.v }); i++; var f = FB[b.dataset.v]; if (f) { el.querySelector(".qz-opts").insertAdjacentHTML("afterend", '<p class="qz-fb">' + f + "</p>"); setTimeout(step, 1300); } else setTimeout(step, 350); };
     });
+  }
+  var FB = { nunca: "Perfeito! 78% das nossas alunas também nunca tinham bordado 💛", nao_sei: "Fica tranquila, esse é o medo nº 1… e tem solução 😉", material: "Boa notícia: você vai precisar de bem pouco 🧵", seguranca: "Super normal ter esse cuidado. Já já te mostro 🔒", tempo: "Entendi! Vamos achar moldes rapidinhos pra você ⏰", vender: "Ótimo! Cartão bordado vende muito no fim de ano 💰", familia: "Que lindo! Vai virar tradição na sua casa 👵" };
+  function loading() {
+    var msgs = ["Analisando suas respostas…", "Traçando seu perfil de bordadeira…", "Vendo se o Ateliê é mesmo pra você…", "Separando os moldes ideais…", "Buscando a melhor oferta pra você…"];
+    el.querySelector(".qz-body").innerHTML = '<div class="qz-load"><div class="qz-spin"></div><h3>Só um instante…</h3><div class="qz-bar"><i></i></div><p class="qz-msg"></p><b class="qz-pc">0%</b></div>';
+    var bar = el.querySelector(".qz-bar i"), msg = el.querySelector(".qz-msg"), pc = el.querySelector(".qz-pc"), t0 = Date.now(), D = 5500;
+    (function tick() { var k = Math.min(1, (Date.now() - t0) / D); bar.style.width = k * 100 + "%"; pc.textContent = Math.round(k * 100) + "%"; msg.textContent = msgs[Math.min(msgs.length - 1, Math.floor(k * msgs.length))]; if (k < 1) requestAnimationFrame(tick); else setTimeout(result, 400); })();
   }
   function result() {
     var p = PERFIL[r.pra] || PERFIL.eu, pct = 90 + Math.floor(Math.random() * 8);
     var buy = document.getElementById("buy");
     t("QuizConcluido", { perfil: r.pra, objecao: r.obj });
-    el.querySelector(".qz-body").innerHTML = stars() + '<div class="qz-res"><div class="qz-emo">' + p[1] + '</div><p class="qz-n">Seu perfil</p><h3>' + p[0] + '</h3><p class="qz-pct"><b>' + pct + '%</b> compatível com o Ateliê</p><p>' + p[2] + '</p>' +
+    el.querySelector(".qz-body").innerHTML = stars() + '<div class="qz-res"><p class="qz-ok">✅ Perfil encontrado!</p><div class="qz-emo">' + p[1] + '</div><p class="qz-n">Seu perfil</p><h3>' + p[0] + '</h3><p class="qz-pct"><b>' + pct + '%</b> compatível com o Ateliê</p><p>' + p[2] + '</p>' +
       '<ul><li>' + OBJ[r.obj] + '</li><li><b>Comece por:</b> ' + CANTO[r.canto] + ".</li></ul>" +
-      '<a class="btn btn-primary btn-xl" href="' + buy.getAttribute("href") + '" id="qz-go">' + buy.textContent + "</a></div>";
+      '<a class="btn btn-primary btn-xl" href="' + buy.getAttribute("href") + '" id="qz-go">' + buy.textContent + "</a><p class=\"qz-sm\">🎁 Seu preço de Natal ficou reservado</p></div>";
     document.getElementById("qz-go").onclick = function () { t("QuizCheckout"); if (window.AtelieTrack) AtelieTrack.track("InitiateCheckout", { value: (window.ATELIE_CONFIG || {}).promoPrice, currency: "BRL", content_name: "Ateliê de Natal", num_items: 1 }); };
   }
   function open(e) {
