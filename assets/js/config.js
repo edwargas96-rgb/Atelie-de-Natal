@@ -15,12 +15,12 @@ window.ATELIE_CONFIG = {
   autoOpenSeconds: 6,
 
   // Preços (em reais). O valor cheio só deve aparecer se o preço realmente voltar a ele após a data.
-  fullPrice: 167,
-  promoPrice: 37.9,
+  fullPrice: 97,
+  promoPrice: 27.9,
 
   // Links dos checkouts externos (Cakto, Hotmart ou Kiwify). Qualquer extra de checkout é configurado na plataforma.
-  checkoutFullUrl: "", // checkout com preço cheio (R$ 167)
-  checkoutPromoUrl: "https://pay.wiapy.com/fUEKRQ6UwOt", // checkout com preço promo (R$ 37,90)
+  checkoutFullUrl: "", // checkout com preço cheio (R$ 97)
+  checkoutPromoUrl: "https://pay.wiapy.com/fUEKRQ6UwOt", // checkout com preço promo (R$ 27,90)
 
 
   // Vídeo da mini VSL (vertical 9:16). Para trocar, substitua os arquivos ou aponte para outros. Vazio = seção escondida.
