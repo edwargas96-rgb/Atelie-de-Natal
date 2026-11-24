@@ -50,6 +50,27 @@
     otimo: ["✅ Comece hoje, sem pressa", ["Acesso imediato por e-mail", "Pagamento único", "Garantia de 7 dias"]],
     tantofaz: ["✅ Os moldes ficam com você", ["PDF para imprimir quando quiser", "Pagamento único", "Garantia de 7 dias"]]
   };
+  var BONUS = {
+    pp: { img: "assets/img/bonus-1.webp", nome: "Primeiros Pontos", sub: "Guia dos 6 pontos básicos", n: 1 },
+    cx: { img: "assets/img/bonus-2.webp", nome: "Caixinha do Natal", sub: "O guia dos materiais", n: 2 },
+    rc: { img: "assets/img/bonus-3.webp", nome: "50 Recadinhos de Natal", sub: "Mensagens prontas para os cartões", n: 3 },
+    sn: { img: "assets/img/bonus-4.webp", nome: "Semana do Natal", sub: "Plano de 7 dias", n: 4 },
+    bb: { img: "assets/img/bonus-5.webp", nome: "Brinde Bordado", sub: "20 moldes de Ano-Novo", n: 5 }
+  };
+  // qual bônus aparece em cada resposta (cada bônus aparece no máximo uma vez)
+  var BRESP = {
+    nunca: ["pp", "Não se preocupe: você ganha um presente especial neste Natal", "Feito para quem está aprendendo a bordar."],
+    jeito: ["pp", "Não se preocupe: você ganha um presente especial neste Natal", "Feito para quem acha que não leva jeito: começa do zero."],
+    material: ["cx", "Fica tranquila: o material certo vem explicado", "Você sabe exatamente o que comprar, sem gastar à toa."],
+    tempo: ["sn", "Presente pra quem tem pouco tempo", "Um plano de 7 dias para o Natal não chegar antes de você."],
+    perco: ["pp", "Esse presente é pra você não se perder mais", "Os 6 pontos básicos explicados, um por um."],
+    comeco: ["pp", "Não sabe por onde começar? Comece por aqui", "Os 6 pontos básicos explicados, um por um."],
+    presente: ["rc", "Um presente para os seus presentes", "Nunca mais fique olhando o cartão em branco."],
+    Iniciante: ["pp", "Iniciante? Este presente é seu", "Feito para quem está aprendendo a bordar."],
+    "Avançada": ["bb", "Para quem já borda: um presente a mais", "Depois do Natal, continue bordando no Ano-Novo."],
+    "10 min por dia": ["sn", "Pouco tempo? Tem um plano pra isso", "Um plano de 7 dias para deixar tudo pronto."],
+    "Fins de semana": ["sn", "Pouco tempo? Tem um plano pra isso", "Um plano de 7 dias para deixar tudo pronto."]
+  };
   var PERFIL = { presente: "Bordadeira presenteira", renda: "Bordadeira empreendedora", relaxar: "Bordadeira zen", decorar: "Decoradora de Natal" };
   var OBJ = { feio: "Os moldes têm pontinhos para seguir, e o guia Primeiros Pontos ensina do zero", material: "Só papel, agulha e linha: sem tecido e sem bastidor", seguranca: "Pagamento seguro e garantia de 7 dias", tempo: "Projetos pequenos que cabem na sua rotina" };
   var NIVEL = { Iniciante: "Perfeito para iniciante: é só seguir os pontinhos", "Básico": "Você já sabe o básico: vai voar com os 250 moldes", "Avançada": "Para quem já borda: 250 moldes novos para criar" };
@@ -88,7 +109,12 @@
 
   function feedback(q, o) {
     var h = '<div class="qx-fb"><p class="qx-gain">+' + o[2] * 10 + " XP · Resposta " + (i + 1) + " de " + Q.length + "!</p>", livre = true;
-    if (q.fb === "dep") {
+    var bk = BRESP[o[3]], vistos = ans._b || (ans._b = {});
+    if (bk && !vistos[bk[0]]) {
+      vistos[bk[0]] = 1; var B = BONUS[bk[0]];
+      h += '<p class="qx-t">🎁 ' + esc(bk[1]) + '</p><div class="qx-bonus"><span class="qx-tag">Bônus ' + B.n + ' de 5 · de presente</span><div class="qx-img qx-capa"><img loading="lazy" decoding="async" src="' + B.img + '" alt="Capa do bônus ' + esc(B.nome) + '"></div><p class="qx-bn">' + esc(B.nome) + "</p><p class=\"qx-leg\">" + esc(B.sub) + '</p><p class="qx-ben">' + esc(bk[2]) + "</p></div>";
+      t("QuizBonus", { bonus: B.nome });
+    } else if (q.fb === "dep") {
       var d = DEP[q.dep], a = d.av, W = a[0], H = a[1], cx = a[2], cy = a[3], D = a[4];
       var st = "background-image:url(" + d.img + ");background-size:" + (W / D * 100).toFixed(1) + "% auto;background-position:" + ((cx - D / 2) / (W - D) * 100).toFixed(2) + "% " + ((cy - D / 2) / (H - D) * 100).toFixed(2) + "%";
       h += '<p class="qx-intro">' + esc(d.intro) + '</p><div class="qx-dep"><div class="qx-av" role="img" aria-label="Foto de ' + esc(d.nome) + '" style="' + st + '"></div><p class="qx-nome">' + esc(d.nome) +
@@ -138,6 +164,23 @@
     later(resultado, DUR + 350);
   }
 
+  function plano() {
+    var a = function (k) { return ans[k] ? ans[k].v : ""; }, passos = [];
+    var ini = a("nivel") === "Iniciante" || /nunca|jeito/.test(a("exp")) || /perco|comeco/.test(a("molde")) || a("parou") === "dificil";
+    if (ini) passos.push(["pp", "Comece pelo <b>Primeiros Pontos</b>: aprenda os 6 pontos básicos antes do primeiro molde."]);
+    else if (a("medo") === "material" || a("parou") === "caro") passos.push(["cx", "Comece pela <b>Caixinha do Natal</b>: separe só o material certo, sem gastar à toa."]);
+    else passos.push(["", "Comece pelo tema que você mais gosta: são 250 moldes em 4 categorias."]);
+    if (passos[0][0] !== "cx") passos.push(["cx", "Confira a <b>Caixinha do Natal</b>: o guia dos materiais para começar."]);
+    var ritmo = { "10 min por dia": "10 minutinhos por dia: um cartão ou etiqueta de cada vez.", "30 min por dia": "Meia hora por dia: um molde de cada vez, no seu ritmo.", "1 h ou mais por dia": "Uma hora ou mais: dá para ir das etiquetas às guirlandas e ao presépio.", "Fins de semana": "Nos fins de semana: separe um projeto por sábado ou domingo." };
+    passos.push(["", "<b>Seu ritmo:</b> " + esc(ritmo[a("tempo")] || "um molde de cada vez.")]);
+    var obj = { presente: ["rc", "<b>Seu objetivo: presentear.</b> Use os <b>50 Recadinhos de Natal</b> nos cartões."], renda: ["", "<b>Seu objetivo: renda extra.</b> Comece pelas peças pequenas: cartões, etiquetas e enfeites."], relaxar: ["", "<b>Seu objetivo: relaxar.</b> Faça do bordado o seu momento, longe do celular."], decorar: ["", "<b>Seu objetivo: decorar.</b> Comece pela árvore e termine na mesa da ceia."] }[a("obj")];
+    if (obj) passos.push(obj);
+    passos.push(["sn", a("natal") === "muito" ? "Siga a <b>Semana do Natal</b>: o plano de 7 dias para deixar tudo pronto até a ceia." : "Quando quiser, use a <b>Semana do Natal</b>: um plano de 7 dias, sem correria."]);
+    var fim = { dificil: "Desta vez é diferente: é só seguir os pontinhos do molde.", tempo: "Sem pressão: um molde de cada vez.", caro: "Material simples: só papel, agulha e linha.", novidade: "Depois do dia 25, continue com o <b>Brinde Bordado</b>: 20 moldes de Ano-Novo." }[a("parou")];
+    if (fim) passos.push([a("parou") === "novidade" ? "bb" : "", fim]);
+    return '<div class="qx-plano"><p class="qx-pt">📋 Seu plano personalizado</p><ol>' + passos.map(function (p) {
+      return "<li>" + (p[0] ? '<img loading="lazy" src="' + BONUS[p[0]].img + '" alt="">' : "<span></span>") + "<p>" + p[1] + "</p></li>"; }).join("") + "</ol></div>";
+  }
   function resultado() {
     var min = Q.length * 10, max = 0; Q.forEach(function (q) { max += Math.max.apply(null, q.a.map(function (o) { return o[2]; })) * 10; });
     var minP = 0; Q.forEach(function (q) { minP += Math.min.apply(null, q.a.map(function (o) { return o[2]; })) * 10; });
@@ -151,7 +194,7 @@
       '<p class="qx-tit">O Ateliê de Natal é para você!</p><div class="qx-placar"><div><b>' + xp + '</b><small>XP total</small></div><div><b>8/8</b><small>respostas</small></div><div><b>' + esc(ans.nivel.v) + "</b><small>seu nível</small></div></div>" +
       '<div class="qx-grade">' + grade.map(function (k) { return img(k); }).join("") + '</div><p class="qx-mais">…e os 250 moldes + 5 bônus esperando por você</p>' +
       '<div class="qx-chips"><span>' + esc(ans.obj.txt.replace(/^Para /, "")) + "</span><span>" + esc(ans.tempo.v) + "</span></div>" +
-      '<ul class="qx-list">' + motivos.map(function (m) { return "<li>" + esc(m) + "</li>"; }).join("") + "</ul>" +
+      plano() +
       '<a class="btn btn-primary btn-xl qx-go" href="#oferta">' + (locked ? "🎁 Revelar meu preço de Natal" : "Quero começar agora") + "</a>" +
       '<p class="qx-micro">' + esc(micro.trim()) + '</p><p class="qx-nota">Resultado orientativo de acordo com as suas respostas.</p></div>';
     el.querySelector(".qx-card").scrollTop = 0;
