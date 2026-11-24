@@ -71,6 +71,40 @@
     "10 min por dia": ["sn", "Pouco tempo? Tem um plano pra isso", "Um plano de 7 dias para deixar tudo pronto."],
     "Fins de semana": ["sn", "Pouco tempo? Tem um plano pra isso", "Um plano de 7 dias para deixar tudo pronto."]
   };
+  // fala acolhedora para cada resposta ({n} = nome da pessoa)
+  var FALA = {
+    nunca: "Que bom que você chegou até aqui, {n}! Todo mundo começa do zero, e o primeiro ponto é sempre o mais especial. Aqui você aprende no seu ritmo, sem pressa.",
+    tentei: "{n}, já ter tentado é meio caminho andado! Você já sabe como é segurar a agulha. Agora só falta o molde certo pra seguir.",
+    bordo: "Que delícia, {n}! Quem ama bordar sabe: cada ponto é um momento só nosso. E o Natal é a época perfeita pra isso.",
+    jeito: "{n}, quase todo mundo pensa isso antes de começar. Mas jeito a gente pega fazendo, e no papel os pontinhos mostram o caminho.",
+    feio: "Não se preocupe, {n}, você não é a única! No começo o bordado parece assustador, mas com os pontinhos marcados no molde fica difícil errar. E logo vira um hobby gostoso.",
+    material: "Super normal, {n}! Ninguém quer gastar com coisa que nem vai usar. A boa notícia: aqui é só papel, agulha e linha.",
+    seguranca: "Você está certíssima em ter cuidado, {n}. Por isso o pagamento é seguro, o acesso chega no seu e-mail e você tem 7 dias de garantia.",
+    tempo: "Eu te entendo, {n}: a rotina é corrida mesmo. Mas a gente não pode deixar de lado a vontade de viver momentos especiais, ainda mais no Natal.",
+    perco: "Isso acontece com muita gente, {n}! Molde confuso desanima qualquer uma. Aqui cada ponto é um furinho marcado: é só ir de um ao outro.",
+    comeco: "{n}, não saber por onde começar é o que mais trava. Por isso você vai ter um caminho claro, do primeiro ponto ao último.",
+    consigo: "Que ótimo, {n}! Demorar um pouco é normal, é o seu ritmo. O que importa é o carinho em cada ponto.",
+    dificil: "{n}, ter parado porque ficou difícil não é culpa sua: faltou um jeito simples de começar. Desta vez você vai do fácil ao mais elaborado, aos poucos.",
+    caro: "Faz todo sentido, {n}. Hobby não pode virar dor de cabeça no bolso. Aqui o material é simples e você imprime os moldes em casa.",
+    novidade: "Adoro, {n}! Quem não para quer sempre um molde novo pra se inspirar. E aqui são 250 só para este Natal.",
+    "10 min por dia": "{n}, 10 minutinhos por dia já é um ótimo começo! Ponto a ponto, o cartão vai ficando pronto sem você nem perceber. Cuidar de você também é prioridade.",
+    "30 min por dia": "Meia hora só pra você, {n}? Perfeito! É aquele momento de desligar a cabeça e fazer algo bonito com as próprias mãos.",
+    "1 h ou mais por dia": "Que maravilha, {n}! Com esse tempo dá pra caprichar: guirlandas, presépio e a mesa da ceia inteira.",
+    "Fins de semana": "Tudo bem, {n}! A vida é corrida, mas o fim de semana pode virar o seu momento especial. Um projetinho por vez já deixa a casa no clima.",
+    presente: "Que lindo, {n}! Presente feito à mão tem um valor que nenhuma loja vende: ele leva o seu carinho em cada ponto.",
+    renda: "Boa ideia, {n}! Peças feitas à mão têm um charme especial no fim do ano. E você já começa com 250 moldes prontos.",
+    relaxar: "Você merece, {n}. Num mundo tão corrido, bordar é parar, respirar e fazer algo bonito só pra você.",
+    decorar: "{n}, imagina sua casa toda decorada com peças feitas por você! Cada elogio vai ter um gostinho especial.",
+    Iniciante: "Começar do zero é lindo, {n}! Você vai lembrar do seu primeiro bordado pra sempre.",
+    "Básico": "{n}, com o básico você já vai longe! Os moldes te levam ao próximo nível sem complicação.",
+    "Avançada": "{n}, você vai se divertir! Com a sua experiência, os 250 moldes viram uma festa de criatividade.",
+    muito: "Então vamos juntas, {n}! O Natal está chegando, e dá tempo de deixar tudo pronto com as suas mãos.",
+    otimo: "Vai ser ótimo mesmo, {n}! Começar neste Natal pode virar uma tradição nova na sua família.",
+    tantofaz: "Tudo bem, {n}, sem pressão! Os moldes ficam com você para bordar quando quiser."
+  };
+  var NOME_Q = { 0: "{n}, você já bordou alguma vez?", 4: "{n}, quanto tempo você tem por dia?", 7: "{n}, quão importante é começar ainda neste Natal?" };
+  var nome = "";
+  function N(s) { return esc(s.replace(/\{n\}/g, nome || "você")).replace(/^você,\s*/i, ""); }
   var PERFIL = { presente: "Bordadeira presenteira", renda: "Bordadeira empreendedora", relaxar: "Bordadeira zen", decorar: "Decoradora de Natal" };
   var OBJ = { feio: "Os moldes têm pontinhos para seguir, e o guia Primeiros Pontos ensina do zero", material: "Só papel, agulha e linha: sem tecido e sem bastidor", seguranca: "Pagamento seguro e garantia de 7 dias", tempo: "Projetos pequenos que cabem na sua rotina" };
   var NIVEL = { Iniciante: "Perfeito para iniciante: é só seguir os pontinhos", "Básico": "Você já sabe o básico: vai voar com os 250 moldes", "Avançada": "Para quem já borda: 250 moldes novos para criar" };
@@ -91,7 +125,7 @@
 
   function pergunta() {
     var q = Q[i];
-    body.innerHTML = top() + '<p class="qx-n">Pergunta ' + (i + 1) + " de " + Q.length + "</p><h3>" + esc(q.q) + '</h3><div class="qx-area"><div class="qx-opts">' +
+    body.innerHTML = top() + '<p class="qx-n">Pergunta ' + (i + 1) + " de " + Q.length + "</p><h3>" + (nome && NOME_Q[i] ? N(NOME_Q[i]) : esc(q.q)) + '</h3><div class="qx-area"><div class="qx-opts">' +
       q.a.map(function (o, n) { return '<button type="button" data-n="' + n + '"><span>' + o[0] + "</span>" + esc(o[1]) + "</button>"; }).join("") + "</div></div>";
     el.querySelector(".qx-card").scrollTop = 0;
     [].forEach.call(body.querySelectorAll(".qx-opts button"), function (b) { b.onclick = function () { responder(+b.dataset.n, b); }; });
@@ -108,21 +142,21 @@
   }
 
   function feedback(q, o) {
-    var h = '<div class="qx-fb"><p class="qx-gain">+' + o[2] * 10 + " XP · Resposta " + (i + 1) + " de " + Q.length + "!</p>", livre = true;
+    var h = '<div class="qx-fb"><p class="qx-gain">+' + o[2] * 10 + " XP · Resposta " + (i + 1) + " de " + Q.length + "!</p>" + (FALA[o[3]] ? '<p class="qx-fala">' + N(FALA[o[3]]) + "</p>" : ""), livre = true;
     var bk = BRESP[o[3]], vistos = ans._b || (ans._b = {});
     if (bk && !vistos[bk[0]]) {
       vistos[bk[0]] = 1; var B = BONUS[bk[0]];
-      h += '<p class="qx-t">🎁 ' + esc(bk[1]) + '</p><div class="qx-bonus"><span class="qx-tag">Bônus ' + B.n + ' de 5 · de presente</span><div class="qx-img qx-capa"><img loading="lazy" decoding="async" src="' + B.img + '" alt="Capa do bônus ' + esc(B.nome) + '"></div><p class="qx-bn">' + esc(B.nome) + "</p><p class=\"qx-leg\">" + esc(B.sub) + '</p><p class="qx-ben">' + esc(bk[2]) + "</p></div>";
+      h += '<p class="qx-t">🎁 ' + esc(bk[1]) + '</p><div class="qx-bonus qx-row"><div class="qx-img qx-capa"><img loading="lazy" decoding="async" src="' + B.img + '" alt="Capa do bônus ' + esc(B.nome) + '"></div><div class="qx-txt"><span class="qx-tag">Bônus ' + B.n + ' de 5 · de presente</span><p class="qx-bn">' + esc(B.nome) + "</p><p class=\"qx-leg\">" + esc(B.sub) + '</p><p class="qx-ben">' + esc(bk[2]) + "</p></div></div>";
       t("QuizBonus", { bonus: B.nome });
     } else if (q.fb === "dep") {
       var d = DEP[q.dep], a = d.av, W = a[0], H = a[1], cx = a[2], cy = a[3], D = a[4];
       var st = "background-image:url(" + d.img + ");background-size:" + (W / D * 100).toFixed(1) + "% auto;background-position:" + ((cx - D / 2) / (W - D) * 100).toFixed(2) + "% " + ((cy - D / 2) / (H - D) * 100).toFixed(2) + "%";
-      h += '<p class="qx-intro">' + esc(d.intro) + '</p><div class="qx-dep"><div class="qx-av" role="img" aria-label="Foto de ' + esc(d.nome) + '" style="' + st + '"></div><p class="qx-nome">' + esc(d.nome) +
+      h += '<p class="qx-intro">' + esc(d.intro.replace(/^Você não é a única\. /, "")) + '</p><div class="qx-dep"><div class="qx-av" role="img" aria-label="Foto de ' + esc(d.nome) + '" style="' + st + '"></div><p class="qx-nome">' + esc(d.nome) +
         (d.cidade ? " <small>· " + esc(d.cidade) + "</small>" : "") + '</p><p class="qx-st" aria-label="5 estrelas">⭐⭐⭐⭐⭐</p><blockquote>“' + esc(d.frase) + "”</blockquote></div>";
       livre = false;
     } else if (q.fb === "img") {
       var f = FB_IMG[o[3]];
-      h += '<p class="qx-t">' + esc(f[0]) + '</p><div class="qx-img">' + img(f[1]) + '</div><p class="qx-leg">' + esc(LEG[f[1]]) + (f[1] === "mk" ? "" : " · um dos temas dos 250 moldes") + '</p><p class="qx-ben">' + esc(f[2]) + "</p>";
+      h += '<p class="qx-t">' + esc(f[0]) + '</p><div class="qx-row qx-bonus"><div class="qx-img">' + img(f[1]) + '</div><div class="qx-txt"><p class="qx-ben">' + esc(f[2]) + '</p><p class="qx-leg">' + esc(LEG[f[1]]) + (f[1] === "mk" ? "" : " · um dos temas dos 250 moldes") + "</p></div></div>";
     } else {
       var bn = FB_BEN[o[3]];
       h += '<p class="qx-t">' + esc(bn[0]) + '</p><ul class="qx-list">' + bn[1].map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>";
@@ -178,7 +212,7 @@
     passos.push(["sn", a("natal") === "muito" ? "Siga a <b>Semana do Natal</b>: o plano de 7 dias para deixar tudo pronto até a ceia." : "Quando quiser, use a <b>Semana do Natal</b>: um plano de 7 dias, sem correria."]);
     var fim = { dificil: "Desta vez é diferente: é só seguir os pontinhos do molde.", tempo: "Sem pressão: um molde de cada vez.", caro: "Material simples: só papel, agulha e linha.", novidade: "Depois do dia 25, continue com o <b>Brinde Bordado</b>: 20 moldes de Ano-Novo." }[a("parou")];
     if (fim) passos.push([a("parou") === "novidade" ? "bb" : "", fim]);
-    return '<div class="qx-plano"><p class="qx-pt">📋 Seu plano personalizado</p><ol>' + passos.map(function (p) {
+    return '<div class="qx-plano"><p class="qx-pt">📋 ' + (nome ? 'Plano da ' + esc(nome) : 'Seu plano personalizado') + '</p><ol>' + passos.map(function (p) {
       return "<li>" + (p[0] ? '<img loading="lazy" src="' + BONUS[p[0]].img + '" alt="">' : "<span></span>") + "<p>" + p[1] + "</p></li>"; }).join("") + "</ol></div>";
   }
   function resultado() {
@@ -191,7 +225,7 @@
     var micro = (document.querySelector("#oferta .fine") || {}).textContent || "Pagamento único · Acesso imediato · Garantia de 7 dias";
     var grade = ["s1", "s2", "s3", "s4", "b1", "b2", "b3", "b4"];
     body.innerHTML = top() + '<div class="qx-res"><span class="qx-selo">🏆 Conquista desbloqueada: ' + esc(perfil) + "</span>" + anel("qx-big", 0) + '<p class="qx-comb">combina com você</p>' +
-      '<p class="qx-tit">O Ateliê de Natal é para você!</p><div class="qx-placar"><div><b>' + xp + '</b><small>XP total</small></div><div><b>8/8</b><small>respostas</small></div><div><b>' + esc(ans.nivel.v) + "</b><small>seu nível</small></div></div>" +
+      '<p class="qx-tit">' + (nome ? esc(nome) + ', o' : 'O') + ' Ateliê de Natal é para você!</p><div class="qx-placar"><div><b>' + xp + '</b><small>XP total</small></div><div><b>8/8</b><small>respostas</small></div><div><b>' + esc(ans.nivel.v) + "</b><small>seu nível</small></div></div>" +
       '<div class="qx-grade">' + grade.map(function (k) { return img(k); }).join("") + '</div><p class="qx-mais">…e os 250 moldes + 5 bônus esperando por você</p>' +
       '<div class="qx-chips"><span>' + esc(ans.obj.txt.replace(/^Para /, "")) + "</span><span>" + esc(ans.tempo.v) + "</span></div>" +
       plano() +
@@ -225,6 +259,18 @@
     })(t0);
   }
 
+  function telaNome() {
+    body.innerHTML = '<div class="qx-nomeb"><div class="qx-emo">🎄</div><p class="qx-n">Teste rápido · 8 perguntas</p><h3>Antes de começar…<br>como posso te chamar?</h3>' +
+      '<form class="qx-form"><input type="text" class="qx-in" maxlength="24" autocomplete="given-name" autocapitalize="words" placeholder="Seu primeiro nome" aria-label="Seu primeiro nome">' +
+      '<button type="submit" class="btn btn-primary btn-xl qx-start" disabled>Começar meu teste →</button></form><p class="qx-nota">Usamos seu nome só aqui no teste.</p></div>';
+    var inp = body.querySelector(".qx-in"), go = body.querySelector(".qx-start");
+    inp.oninput = function () { go.disabled = inp.value.trim().length < 2; };
+    body.querySelector(".qx-form").onsubmit = function (e) {
+      e.preventDefault(); var v = inp.value.trim().split(/\s+/)[0] || ""; if (v.length < 2) return;
+      nome = v.charAt(0).toUpperCase() + v.slice(1).toLowerCase(); inp.blur(); pergunta();
+    };
+    setTimeout(function () { try { inp.focus({ preventScroll: true }); } catch (x) {} }, 250);
+  }
   function abrir(e) {
     if (e) e.preventDefault();
     if (!el) {
@@ -234,9 +280,9 @@
       el.querySelector(".qx-x").onclick = fechar;
       el.addEventListener("click", function (ev) { if (ev.target === el) fechar(); });
     }
-    stopAll(); ans = {}; xp = 0; i = 0;
+    stopAll(); ans = {}; xp = 0; i = 0; nome = "";
     el.hidden = false; document.documentElement.style.overflow = document.body.style.overflow = "hidden";
-    t("QuizInicio"); pergunta();
+    t("QuizInicio"); telaNome();
     el.querySelector(".qx-x").focus({ preventScroll: true });
   }
   function fechar() {
