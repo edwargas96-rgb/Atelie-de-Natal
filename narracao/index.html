@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Motion narração</title>
+<style>
+@font-face{font-family:N;font-weight:800;src:url(../assets/fonts/nunito-sans-latin-700-normal.woff2)}
+*{margin:0;padding:0}html,body{width:1080px;height:1920px;overflow:hidden;background:#FFF3E0}
+svg{display:block;width:1080px;height:1920px;font-family:N,sans-serif}
+</style></head>
+<body><svg id="s" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg"></svg>
+<script>
+/* Motion em código: cada cena é uma função do tempo t (s) que devolve o SVG do quadro. */
+var C = { cream: "#FFF3E0", wall: "#F8E6C8", pine: "#1F4D3A", pine2: "#2E6B4A", cherry: "#B3282D", gold: "#D9A441", ink: "#3A2A20", skin: "#F4C7A1", hair: "#6B3E26", wood: "#C98E5A", wood2: "#B07745", money: "#5FA36A" };
+var OL = 'stroke="' + C.ink + '" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"';
+function cl(x, a, b) { return Math.max(a, Math.min(b, x)); }
+function seg(t, a, b) { return cl((t - a) / (b - a), 0, 1); }
+function eio(x) { return x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; }
+function eo(x) { return 1 - Math.pow(1 - x, 3); }
+function back(x) { var c = 1.7; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); }
+function lerp(a, b, k) { return a + (b - a) * k; }
+function g(tr, inner, extra) { return '<g transform="' + tr + '"' + (extra || "") + ">" + inner + "</g>"; }
+function rnd(i) { var x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); }
+
+/* ---------------- cenário: sala de estar no Natal ---------------- */
+function sala(t) {
+  var s = '<rect width="1080" height="1920" fill="' + C.wall + '"/>';
+  s += '<rect y="0" width="1080" height="70" fill="' + C.pine + '"/>';
+  // papel de parede: bolinhas
+  for (var r = 0; r < 12; r++) for (var c = 0; c < 9; c++) s += '<circle cx="' + (60 + c * 125 + (r % 2) * 62) + '" cy="' + (130 + r * 105) + '" r="5" fill="#EFD5AE"/>';
+  // janela com neve
+  s += '<rect x="90" y="260" width="330" height="420" rx="18" fill="#2B4A6B" ' + OL + '/>';
+  for (var k = 0; k < 26; k++) { var x = 100 + rnd(k) * 310, y = 270 + ((rnd(k + 50) * 420 + t * (40 + rnd(k + 9) * 40)) % 410); s += '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="' + (4 + rnd(k + 3) * 5).toFixed(1) + '" fill="#fff" opacity=".9"/>'; }
+  s += '<path d="M90 630 Q255 590 420 630 L420 680 L90 680Z" fill="#fff"/>';
+  s += '<path d="M255 260V680M90 470H420" stroke="' + C.wood2 + '" stroke-width="14"/><rect x="90" y="260" width="330" height="420" rx="18" fill="none" ' + OL + '/>';
+  s += '<rect x="70" y="672" width="370" height="30" rx="10" fill="' + C.wood + '" ' + OL + '/>';
+  // varal de bandeirinhas
+  s += '<path d="M0 150 Q540 250 1080 150" fill="none" stroke="' + C.ink + '" stroke-width="4"/>';
+  for (var b = 0; b < 9; b++) { var bx = 60 + b * 120, by = 150 + Math.sin(Math.PI * bx / 1080) * 100 * .98, sw = Math.sin(t * 2.4 + b) * 4; s += g("translate(" + bx + "," + by + ") rotate(" + sw.toFixed(1) + ")", '<path d="M-34 0 L34 0 L0 62Z" fill="' + [C.cherry, C.gold, C.pine2][b % 3] + '" ' + OL + '/>'); }
+  // chão e tapete
+  s += '<rect y="1480" width="1080" height="440" fill="' + C.wood + '"/>';
+  for (var f = 0; f < 6; f++) s += '<path d="M0 ' + (1540 + f * 70) + 'H1080" stroke="' + C.wood2 + '" stroke-width="5"/>';
+  s += '<rect y="1470" width="1080" height="22" fill="' + C.wood2 + '"/>';
+  s += '<ellipse cx="520" cy="1650" rx="420" ry="85" fill="' + C.cherry + '" opacity=".9"/><ellipse cx="520" cy="1650" rx="360" ry="62" fill="none" stroke="#fff" stroke-width="5" stroke-dasharray="16 14"/>';
+  s += arvore(860, 1480, t);
+  return s;
+}
+function arvore(x, y, t) {
+  var s = '<rect x="' + (x - 26) + '" y="' + (y - 90) + '" width="52" height="90" fill="' + C.wood2 + '" ' + OL + '/>';
+  s += '<path d="M' + (x - 130) + ' ' + (y - 70) + ' L' + (x + 130) + ' ' + (y - 70) + ' L' + (x + 106) + ' ' + y + ' L' + (x - 106) + ' ' + y + 'Z" fill="' + C.cherry + '" ' + OL + '/>';
+  [[230, y - 120, 140], [190, y - 300, 140], [140, y - 470, 130]].forEach(function (l) {
+    s += '<path d="M' + (x - l[0]) + ' ' + l[1] + ' L' + x + ' ' + (l[1] - l[2] * 1.6) + ' L' + (x + l[0]) + ' ' + l[1] + ' Q' + x + ' ' + (l[1] + 40) + ' ' + (x - l[0]) + ' ' + l[1] + 'Z" fill="' + C.pine2 + '" ' + OL + '/>';
+  });
+  // luzinhas piscando
+  for (var i = 0; i < 16; i++) {
+    var row = i % 4, k = Math.floor(i / 4), wy = y - 170 - row * 150 + k * 12, half = 170 - row * 38, lx = x - half + (k + .5) * (2 * half / 4);
+    var on = (Math.sin(t * 5 + i * 1.7) + 1) / 2, col = [C.gold, "#FF6B6B", "#FFE08A", "#7FD1FF"][i % 4];
+    s += '<circle cx="' + lx.toFixed(1) + '" cy="' + wy.toFixed(1) + '" r="' + (11 + on * 3).toFixed(1) + '" fill="' + col + '" opacity="' + (.55 + on * .45).toFixed(2) + '" ' + OL.replace('stroke-width="6"', 'stroke-width="3"') + '/>';
+  }
+  var st = 1 + Math.sin(t * 3) * .06;
+  s += g("translate(" + x + "," + (y - 700) + ") scale(" + st.toFixed(3) + ")", estrela(48, C.gold));
+  return s;
+}
+function estrela(r, cor) { var p = []; for (var i = 0; i < 10; i++) { var a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r * .45 : r; p.push((rr * Math.cos(a)).toFixed(1) + "," + (rr * Math.sin(a)).toFixed(1)); } return '<polygon points="' + p.join(" ") + '" fill="' + cor + '" ' + OL + '/>'; }
+
+/* ---------------- personagem: a mulher ----------------
+   o = { t, humor: "feliz"|"surpresa"|"preocupada", fala: 0..1, bracoE:[ombro,cotovelo], bracoD:[..], maoD: svg na mão direita, maoE: svg, gota: 0..1 (posição), pisca } */
+function braco(sx, sy, hx, hy, item, lado) { // braço com cotovelo: ombro (sx,sy) -> mão (hx,hy)
+  var L1 = 150, L2 = 135, dx = hx - sx, dy = hy - sy, d = Math.min(Math.hypot(dx, dy), L1 + L2 - 1), base = Math.atan2(dy, dx);
+  var a = Math.acos(cl((L1 * L1 + d * d - L2 * L2) / (2 * L1 * d), -1, 1)), sg = lado > 0 ? -1 : 1;
+  if (lado > 0 && dy < 0) sg = 1; if (lado < 0 && dy < 0) sg = -1;
+  var ex = sx + L1 * Math.cos(base + sg * a), ey = sy + L1 * Math.sin(base + sg * a);
+  var k = d / Math.hypot(dx, dy); hx = sx + dx * k; hy = sy + dy * k;
+  var pth = 'M' + sx + ' ' + sy + ' L' + ex.toFixed(1) + ' ' + ey.toFixed(1) + ' L' + hx.toFixed(1) + ' ' + hy.toFixed(1);
+  var s = '<path d="' + pth + '" fill="none" stroke="' + C.ink + '" stroke-width="76" stroke-linecap="round" stroke-linejoin="round"/>';
+  s += '<path d="' + pth + '" fill="none" stroke="' + C.cherry + '" stroke-width="64" stroke-linecap="round" stroke-linejoin="round"/>';
+  s += '<circle cx="' + hx.toFixed(1) + '" cy="' + hy.toFixed(1) + '" r="30" fill="' + C.skin + '" ' + OL + '/>';
+  if (item) s += g("translate(" + hx.toFixed(1) + "," + hy.toFixed(1) + ")", item);
+  return s;
+}
+function mulher(o) {
+  var t = o.t, s = "", hum = o.humor || "feliz", bob = Math.sin(t * 2.2) * 6;
+  // pernas e sapatos
+  s += '<rect x="-62" y="-190" width="44" height="180" rx="20" fill="#5A3B2E" ' + OL + '/><rect x="18" y="-190" width="44" height="180" rx="20" fill="#5A3B2E" ' + OL + '/>';
+  s += '<ellipse cx="-48" cy="-8" rx="46" ry="24" fill="' + C.cherry + '" ' + OL + '/><ellipse cx="48" cy="-8" rx="46" ry="24" fill="' + C.cherry + '" ' + OL + '/>';
+  var up = "translate(0," + bob.toFixed(1) + ")";
+  var c = "";
+  // saia
+  c += '<path d="M-130 -360 L130 -360 L175 -160 Q0 -130 -175 -160Z" fill="' + C.pine + '" ' + OL + '/>';
+  c += '<path d="M-160 -190 Q0 -165 160 -190" fill="none" stroke="' + C.gold + '" stroke-width="8"/>';
+  // braço esquerdo atrás do corpo? fica na frente quando vai ao rosto
+  var bE = o.bracoE || [-175, -330], bD = o.bracoD || [175, -330];
+  // tronco (suéter)
+  c += '<path d="M-120 -590 Q0 -625 120 -590 L150 -350 Q0 -330 -150 -350Z" fill="' + C.cherry + '" ' + OL + '/>';
+  c += '<path d="M-140 -430 l35 -26 l35 26 l35 -26 l35 26 l35 -26 l35 26 l35 -26" fill="none" stroke="#fff" stroke-width="9" stroke-linejoin="round"/>';
+  for (var i = 0; i < 4; i++) c += '<circle cx="' + (-90 + i * 60) + '" cy="-500" r="7" fill="#fff"/>';
+  // pescoço e cabeça
+  c += '<rect x="-28" y="-640" width="56" height="60" fill="' + C.skin + '" ' + OL + '/>';
+  var tilt = o.inclina || 0;
+  var h = "";
+  h += '<circle cx="0" cy="-130" r="58" fill="' + C.hair + '" ' + OL + '/>'; // coque
+  h += '<path d="M-38 -140 Q0 -170 38 -140" fill="none" stroke="' + C.cherry + '" stroke-width="12"/>';
+  h += '<circle cx="0" cy="0" r="150" fill="' + C.hair + '" ' + OL + '/>';
+  h += '<ellipse cx="0" cy="18" rx="128" ry="132" fill="' + C.skin + '" ' + OL + '/>';
+  h += '<path d="M-132 -10 Q-120 -120 0 -118 Q118 -120 132 -10 Q60 -70 -10 -60 Q-80 -55 -132 -10Z" fill="' + C.hair + '" ' + OL + '/>';
+  // olhos
+  var pis = o.pisca || 0, ry = (hum === "surpresa" ? 26 : 19) * (1 - pis) + 2;
+  h += '<ellipse cx="-48" cy="20" rx="' + (hum === "surpresa" ? 20 : 15) + '" ry="' + ry.toFixed(1) + '" fill="' + C.ink + '"/><ellipse cx="48" cy="20" rx="' + (hum === "surpresa" ? 20 : 15) + '" ry="' + ry.toFixed(1) + '" fill="' + C.ink + '"/>';
+  if (pis < .5) h += '<circle cx="-42" cy="12" r="5" fill="#fff"/><circle cx="54" cy="12" r="5" fill="#fff"/>';
+  // sobrancelhas
+  var bw = hum === "preocupada" ? 1 : hum === "surpresa" ? .4 : 0;
+  h += '<path d="M-78 ' + (-22 - bw * 4) + ' L-24 ' + (-26 - bw * 26) + '" ' + OL + ' stroke-width="9" fill="none"/><path d="M78 ' + (-22 - bw * 4) + ' L24 ' + (-26 - bw * 26) + '" ' + OL + ' stroke-width="9" fill="none"/>';
+  // bochechas
+  h += '<circle cx="-82" cy="66" r="20" fill="#F29A8E" opacity=".55"/><circle cx="82" cy="66" r="20" fill="#F29A8E" opacity=".55"/>';
+  // boca
+  var fa = o.fala || 0;
+  if (hum === "feliz") h += fa > .15 ? '<path d="M-36 72 Q0 ' + (72 + 30 + fa * 18).toFixed(1) + ' 36 72Z" fill="#8E2B2B" ' + OL + '/>' : '<path d="M-38 74 Q0 108 38 74" fill="none" ' + OL + ' stroke-width="8"/>';
+  else if (hum === "surpresa") h += '<ellipse cx="0" cy="92" rx="20" ry="' + (24 + fa * 8).toFixed(1) + '" fill="#8E2B2B" ' + OL + '/>';
+  else h += fa > .15 ? '<ellipse cx="0" cy="94" rx="' + (22 + fa * 6).toFixed(1) + '" ry="' + (10 + fa * 14).toFixed(1) + '" fill="#8E2B2B" ' + OL + '/>' : '<path d="M-40 98 q13 -14 26 0 t26 0 t26 0" fill="none" ' + OL + ' stroke-width="8"/>';
+  // gotinha de suor
+  if (o.gota != null && o.gota >= 0) {
+    var gy = -40 + o.gota * 90, op = o.gota > .85 ? (1 - o.gota) / .15 : Math.min(1, o.gota * 6);
+    h += g("translate(112," + gy.toFixed(1) + ")", '<path d="M0 -34 Q22 0 14 14 A16 16 0 0 1 -14 14 Q-22 0 0 -34Z" fill="#8FD3F0" ' + OL + ' stroke-width="5"/><ellipse cx="-4" cy="4" rx="4" ry="7" fill="#fff"/>', ' opacity="' + op.toFixed(2) + '"');
+  }
+  c += g("translate(0,-770) rotate(" + tilt + ")", h);
+  // braços por cima do tronco
+  c += braco(-120, -560, bE[0], bE[1], o.maoE, -1);
+  c += braco(120, -560, bD[0], bD[1], o.maoD, 1);
+  s += g(up, c);
+  return g("translate(" + o.x + "," + o.y + ") scale(" + (o.esc || 1) + ")", s);
+}
+/* objetos */
+function celular(brilho, sc) { return g("rotate(-8) scale(" + (sc == null ? 1 : sc).toFixed(3) + ")", '<rect x="-42" y="-120" width="84" height="150" rx="16" fill="#2a2a2a" ' + OL + '/><rect x="-32" y="-106" width="64" height="118" rx="8" fill="' + (brilho ? "#BFF0C8" : "#6c8a9c") + '"/>' + (brilho ? '<text x="0" y="-36" font-size="40" text-anchor="middle">💰</text>' : "")); }
+function conta(tr, sc) {
+  return g("rotate(" + tr.toFixed(2) + ") scale(" + sc.toFixed(3) + ")", '<rect x="-95" y="-250" width="190" height="240" rx="10" fill="#fff" ' + OL + '/><rect x="-95" y="-250" width="190" height="50" rx="10" fill="' + C.cherry + '"/><path d="M-95 -205h190" ' + OL + '/>' +
+    '<text x="0" y="-215" font-size="30" font-weight="800" fill="#fff" text-anchor="middle">CONTA</text>' +
+    [-170, -140, -110].map(function (y) { return '<path d="M-70 ' + y + 'H70" stroke="#c9c0b4" stroke-width="10" stroke-linecap="round"/>'; }).join("") +
+    '<text x="0" y="-40" font-size="56" font-weight="800" fill="' + C.cherry + '" text-anchor="middle">R$</text>');
+}
+function nota(fl) { // nota de dinheiro com asinhas
+  var w = Math.sin(fl) * 26;
+  return '<g transform="rotate(' + (-12 + w * .2).toFixed(1) + ')">' +
+    '<ellipse cx="-44" cy="-30" rx="38" ry="18" fill="#fff" ' + OL + ' transform="rotate(' + (-30 - w) + ' -10 -20)"/>' +
+    '<ellipse cx="44" cy="-30" rx="38" ry="18" fill="#fff" ' + OL + ' transform="rotate(' + (30 + w) + ' 10 -20)"/>' +
+    '<rect x="-62" y="-32" width="124" height="66" rx="8" fill="' + C.money + '" ' + OL + '/><circle cx="0" cy="1" r="20" fill="#8FCB97" stroke="#2F6B3A" stroke-width="4"/><text x="0" y="11" font-size="26" font-weight="800" fill="#2F6B3A" text-anchor="middle">$</text></g>';
+}
+function iconePresente() { return '<rect x="-70" y="-50" width="140" height="110" rx="8" fill="' + C.cherry + '" ' + OL + '/><rect x="-82" y="-78" width="164" height="36" rx="8" fill="' + C.cherry + '" ' + OL + '/><rect x="-12" y="-78" width="24" height="138" fill="' + C.gold + '"/><path d="M0 -78 C-40 -130 -80 -90 -40 -78 M0 -78 C40 -130 80 -90 40 -78" fill="none" stroke="' + C.gold + '" stroke-width="12" stroke-linecap="round"/>'; }
+function iconeCeia() { return '<ellipse cx="0" cy="40" rx="110" ry="26" fill="#fff" ' + OL + '/><path d="M-80 30 Q-90 -70 0 -70 Q90 -70 80 30Z" fill="#C8762E" ' + OL + '/><path d="M-50 -20 Q0 -50 50 -20" fill="none" stroke="#E9A25C" stroke-width="12" stroke-linecap="round"/><path d="M70 -10 l40 -30 M-70 -10 l-40 -30" ' + OL + ' stroke-width="14"/><circle cx="112" cy="-42" r="12" fill="#fff" ' + OL + '/><circle cx="-112" cy="-42" r="12" fill="#fff" ' + OL + '/>'; }
+function iconeLuz() { return '<rect x="-70" y="-90" width="140" height="170" rx="10" fill="#fff" ' + OL + '/><path d="M-10 -60 L-30 0 L0 0 L-14 56 L34 -14 L4 -14 L22 -60Z" fill="' + C.gold + '" ' + OL + ' stroke-width="5"/>'; }
+function balao(txt, sc) { return g("scale(" + sc.toFixed(3) + ")", '<rect x="-150" y="-70" width="300" height="100" rx="50" fill="#fff" ' + OL + '/><path d="M-20 28 L0 64 L20 28Z" fill="#fff" ' + OL + '/><rect x="-24" y="20" width="48" height="14" fill="#fff"/><text x="0" y="-4" font-size="42" font-weight="800" fill="' + C.pine + '" text-anchor="middle">' + txt + '</text>'); }
+
+function pisca(t) { var p = (t % 3.1); return p < .14 ? Math.sin(p / .14 * Math.PI) : 0; }
+function fala(t, a, b) { if (t < a || t > b) return 0; return Math.abs(Math.sin(t * 13)) * (.6 + .4 * Math.sin(t * 3.1)); }
+
+/* ---------------- CENA 1 (0 – 8,32 s): "o dinheiro já tem destino antes de cair na conta" ---------------- */
+function cena1(t) {
+  var zoom = 1 + .07 * eio(seg(t, 0, 8.3)), s = sala(t);
+  var falando = fala(t, .1, 2.8) + fala(t, 3.1, 8.2);
+  var humor = t < 5.4 ? "feliz" : t < 6.6 ? "surpresa" : "preocupada";
+  // braço esquerdo: acena no começo; depois vai à bochecha (preocupada)
+  function mix(a, b, k) { return [lerp(a[0], b[0], k), lerp(a[1], b[1], k)]; }
+  var REP = [-185, -330], ACENO = [-265 + Math.sin(t * 7) * 30, -770 + Math.cos(t * 7) * 12], ROSTO = [-118, -690];
+  var bE = mix(REP, ACENO, eio(seg(t, .15, .55)) - eio(seg(t, 2.5, 2.95)));
+  if (t > 6.6) bE = mix(REP, ROSTO, eio(seg(t, 6.6, 7.1)));
+  // braço direito: celular na frente do peito; depois a conta, mais ao lado
+  var CEL = [85, -470], OLHA = [95, -545], CONTA = [235, -455];
+  var bD = mix(CEL, OLHA, eio(seg(t, 4.4, 4.75)) - eio(seg(t, 6.2, 6.5)));
+  var kConta = eio(seg(t, 6.3, 6.8)); if (t > 6.3) bD = mix(CEL, CONTA, kConta);
+  var item;
+  if (t < 6.6) item = g("translate(-6,-8)", celular(t > 4.4, 1 - eio(seg(t, 6.3, 6.6))));
+  else { var tre = Math.sin(t * 38) * 2.4 * seg(t, 7.0, 7.2); item = g("translate(-10,0)", conta(tre - 8, back(seg(t, 6.6, 6.95)))); }
+  var gota = t > 6.95 ? ((t - 6.95) % 1.3) / 1.3 : -1;
+  var tilt = humor === "preocupada" ? -6 * eio(seg(t, 6.6, 7.1)) : Math.sin(t * 1.7) * 3;
+  var personagem = mulher({ t: t, x: 470, y: 1600, esc: 1.05, humor: humor, fala: falando, pisca: pisca(t), bracoE: bE, bracoD: bD, maoD: item, gota: gota, inclina: tilt });
+  // notificação + notas voando para os destinos
+  var extra = "";
+  var alvos = [[200, 470, iconePresente()], [540, 370, iconeCeia()], [880, 470, iconeLuz()]];
+  var kAlvo = seg(t, 3.9, 4.4);
+  alvos.forEach(function (a, i) {
+    var pop = back(seg(t, 4.9 + i * .12, 5.3 + i * .12)), hit = 0;
+    for (var n = 0; n < 6; n++) { var ch = 5.3 + n * .15 + .55; if (n % 3 === i && t > ch && t < ch + .3) hit = Math.sin((t - ch) / .3 * Math.PI); }
+    if (t > 4.9) extra += g("translate(" + a[0] + "," + a[1] + ") scale(" + (pop * (1 + hit * .15)).toFixed(3) + ")", '<circle r="120" fill="#fff" opacity=".75"/>' + a[2]);
+  });
+  // ponto de partida: o celular na mão direita (aprox.)
+  var px = 565, py = 1030;
+  for (var n = 0; n < 6; n++) {
+    var t0 = 5.3 + n * .15, k = seg(t, t0, t0 + .55); if (k <= 0 || k >= 1) continue;
+    var a = alvos[n % 3], e = eio(k), x = lerp(px, a[0], e) + Math.sin(k * Math.PI) * (n % 2 ? 90 : -90), y = lerp(py, a[1], e) - Math.sin(k * Math.PI) * 260;
+    extra += g("translate(" + x.toFixed(1) + "," + y.toFixed(1) + ") scale(" + (1 - k * .45).toFixed(3) + ")", nota(t * 22 + n));
+  }
+  var corpo = g("translate(540,1100) scale(" + zoom.toFixed(4) + ") translate(-540,-1100)", s + personagem + extra);
+  return corpo + vinheta();
+}
+function vinheta() { return '<defs><radialGradient id="vg" cx="50%" cy="50%" r="75%"><stop offset="60%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#3A2A20" stop-opacity=".28"/></radialGradient></defs><rect width="1080" height="1920" fill="url(#vg)"/>'; }
+
+var CENAS = { conta: { dur: 8.32, f: cena1 } };
+var nome = new URLSearchParams(location.search).get("c") || "conta";
+window.TIMELINE = { total: CENAS[nome].dur };
+window.renderAt = function (t) { document.getElementById("s").innerHTML = CENAS[nome].f(t); };
+renderAt(0);
+</script></body></html>
