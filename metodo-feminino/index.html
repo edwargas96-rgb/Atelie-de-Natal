@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Método Feminino</title>
+<meta name="description" content="O método de bastidor que as modelos usam para firmar os braços, adaptado para a mulher depois dos 35.">
+<meta name="theme-color" content="#f7f1ea">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topo">
+    <button class="voltar" id="voltar" aria-label="Voltar" hidden>&larr;</button>
+    <span class="marca">MÉTODO FEMININO</span>
+    <span class="espaco"></span>
+  </header>
+  <div class="barra" id="barra" hidden><span id="barra-fill"></span></div>
+
+  <main id="app" class="app" aria-live="polite"></main>
+
+  <!-- Feedback rápido entre perguntas -->
+  <div class="feedback" id="feedback" hidden>
+    <div class="feedback-card">
+      <span class="feedback-icone">✦</span>
+      <p id="feedback-texto"></p>
+    </div>
+  </div>
+
+  <script src="ilustracoes.js"></script>
+  <script src="perguntas.js"></script>
+  <script src="quiz.js"></script>
+</body>
+</html>
