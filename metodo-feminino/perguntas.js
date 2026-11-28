@@ -83,6 +83,7 @@ window.ROTEIRO = [
   {
     tipo: "unica", chave: "foto",
     titulo: "Quando você se vê numa foto com o braço de fora, o que sente?",
+    foto: "assets/foto-tchau.webp", fotoAlt: "Mulher acenando e segurando o braço num almoço de família",
     img: "tchau",
     imgDesc: "IMAGEM: mulher 40+ acenando, foco na parte de trás do braço (sem expor, tom acolhedor).",
     opcoes: [
@@ -99,6 +100,7 @@ window.ROTEIRO = [
     sobre: "Feche os olhos por um segundo",
     titulo: "Agora imagina <em>você</em> na virada do ano…",
     texto: "Vestido sem manga, taça na mão, levantando o braço na contagem regressiva. <strong>Sem pensar no braço. Sem se esconder da foto.</strong>",
+    foto: "assets/foto-reveillon.webp", fotoAlt: "Mulher de vestido rosé brindando na virada do ano",
     img: "taca",
     imgDesc: "IMAGEM: mulher 40+ elegante de vestido sem manga brindando no réveillon, fogos ao fundo.",
     botao: "Eu quero isso"
@@ -176,6 +178,7 @@ window.ROTEIRO = [
     sobre: "O segredo de bastidor",
     titulo: "Por que o braço das modelos <em>não balança</em>?",
     texto: "Não é só genética. Nos bastidores, minutos antes de entrar na passarela, elas fazem uma sequência curta que <strong>acorda o tríceps</strong>. É essa sequência que adaptamos para o corpo da mulher depois dos 35.",
+    foto: "assets/foto-camarim.webp", fotoAlt: "Modelo no camarim fazendo extensão de braço com garrafinha",
     img: "bastidor",
     imgDesc: "IMAGEM: camarim de desfile, espelho com lâmpadas, modelo fazendo extensão de braço.",
     botao: "Quero conhecer"

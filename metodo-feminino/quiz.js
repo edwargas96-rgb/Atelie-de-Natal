@@ -149,7 +149,7 @@
       '<p class="sub">Não é só gordura e não é falta de esforço. É um músculo que ninguém te ensinou a acordar.</p>' +
       '<div class="diag"><span class="rotulo">Nível de adormecimento</span><div class="nivel">' + nivel[0].charAt(0).toUpperCase() + nivel[0].slice(1) + '</div>' +
       '<div class="medidor"><span style="width:' + nivel[1] + '%"></span></div><div class="medidor-legenda"><span>Leve</span><span>Moderado</span><span>Profundo</span></div></div>' +
-      '<div class="img-slot">' + window.Ilustra("confiante") + '<span class="etiqueta">IMAGEM: mulher 40+ confiante, sem manga, braço firme (antes/depois ilustrativo, sem promessa).</span></div>' +
+      '<div class="foto"><img src="assets/foto-resultado.webp" alt="Mulher confiante de regata na sala" width="1448" height="1086"></div>' +
       '<div class="plano"><h3>Seu plano de 21 dias</h3><ul>' + plano.map(function (p) { return "<li>" + p + "</li>"; }).join("") + "</ul></div>" +
       '<div class="data-alvo">' + dataTxt + "</div>" +
       '<div class="oferta"><p class="sobre">Método Feminino · 21 dias</p><h3>O método de bastidor, adaptado para você</h3><ul>' +
