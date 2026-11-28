@@ -23,12 +23,18 @@ window.ROTEIRO = [
   {
     tipo: "intro",
     sobre: "Bastidores da passarela",
-    titulo: "O método que as <em>modelos</em> usam para firmar os braços antes de cada desfile",
-    sub: "Agora adaptado para a mulher depois dos 35. Descubra em 2 minutos o que está deixando o seu braço sem firmeza.",
+    titulo: "Aprenda em <em>21 dias</em>, com aulas guiadas, o método que as <em>modelos escondem</em> para ter braços firmes",
+    bullets: [
+      "Agora adaptado para mulheres 35+",
+      "Acesso imediato e vitalício",
+      "Garantia de 7 dias",
+      "4 bônus exclusivos",
+      "Pagamento 100% seguro"
+    ],
     img: "passarela",
     imgDesc: "IMAGEM: modelo de costas na passarela, vestido sem manga, braço firme, luz de desfile. Tom elegante, bege/dourado.",
-    botao: "Começar meu teste",
-    nota: "Gratuito · 2 minutos · resultado na hora"
+    botao: "Descobrir se é para mim",
+    nota: "Teste gratuito · leva 2 minutos"
   },
   {
     tipo: "nome",
