@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Treino do dia</title>
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #f7f1ea; font-family: Inter, "Helvetica Neue", Arial, sans-serif; color: #2a1d1f; }
+  .q { position: relative; width: 100vw; height: 100vh; overflow: hidden; background: radial-gradient(120% 70% at 50% 8%, #fbe9ea 0%, #f7f1ea 60%); }
+  .marca { position: absolute; top: 2.6vh; left: 0; right: 0; text-align: center; font: 600 2.3vh Georgia, "Times New Roman", serif; letter-spacing: .3em; z-index: 5; }
+  .topo { position: absolute; top: 6.4vh; left: 5vw; right: 5vw; display: flex; justify-content: center; gap: 1.4vw; z-index: 5; }
+  .chip { font: 600 1.6vh Inter, Arial, sans-serif; padding: .7vh 2.4vw; border-radius: 99vh; background: #fffaf5; border: .15vh solid #e8dacb; color: #6d5a57; }
+  .chip.fase { background: #6e2a35; color: #fff8ef; border-color: #6e2a35; }
+  .palco { position: absolute; left: 5vw; right: 5vw; top: 11vh; bottom: 23vh; border-radius: 3vh; overflow: hidden; background: #DCEBD8; box-shadow: 0 1.6vh 4vh rgba(74,44,36,.15); }
+  .palco > #boneca-box { position: absolute; inset: 0; display: grid; place-items: center; }
+  .palco svg { height: 110%; width: auto; display: block; transform: translateY(3%); }
+  .contador { position: absolute; top: 1.4vh; right: 1.4vh; background: rgba(42,29,31,.85); color: #fff8ef; font: 700 1.6vh Inter, Arial, sans-serif; padding: .7vh 1.6vh; border-radius: 99vh; font-variant-numeric: tabular-nums; }
+  .barra-ex { position: absolute; left: 0; bottom: 0; height: .7vh; background: #b08d57; width: 0; }
+  .card { position: absolute; left: 5vw; right: 5vw; bottom: 3vh; height: 18vh; background: #2a1d1f; color: #fff8ef; border-radius: 2.4vh; padding: 1.8vh 4vw; display: grid; align-content: center; gap: .8vh; }
+  .card h2 { font: 600 3.4vh/1.05 Georgia, serif; }
+  .metricas { display: flex; gap: 2vw; flex-wrap: wrap; }
+  .metricas span { font: 700 1.9vh Inter, Arial, sans-serif; background: rgba(255,248,239,.12); border-radius: 1vh; padding: .5vh 1.8vw; font-variant-numeric: tabular-nums; }
+  .metricas span i { font-style: normal; color: #ecdcbc; font-weight: 500; margin-right: .6vw; }
+  .dica { font: 500 1.75vh/1.35 Inter, Arial, sans-serif; color: #f3d9dd; }
+  .tela { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 0 8vw; background: radial-gradient(120% 70% at 50% 8%, #fbe9ea 0%, #f7f1ea 60%); z-index: 8; transition: opacity .5s; }
+  .tela.sai { opacity: 0; pointer-events: none; }
+  .tela small { display: block; font: 700 1.7vh Inter, Arial, sans-serif; letter-spacing: .24em; text-transform: uppercase; color: #b08d57; margin-bottom: 1.4vh; }
+  .tela h1 { font: 600 8vh/1 Georgia, serif; }
+  .tela h1 em { color: #6e2a35; }
+  .tela p { font: 500 2.2vh/1.4 Inter, Arial, sans-serif; color: #6d5a57; margin-top: 1.8vh; }
+  .tela .lista { margin-top: 2.6vh; display: grid; gap: 1vh; text-align: left; }
+  .tela .lista div { background: #fffaf5; border: .15vh solid #e8dacb; border-radius: 1.4vh; padding: 1.1vh 3vw; font: 600 1.9vh Inter, Arial, sans-serif; display: flex; justify-content: space-between; gap: 2vw; }
+  .tela .lista div span { color: #6e2a35; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .frase { font: italic 600 3.6vh/1.25 Georgia, serif !important; color: #6e2a35 !important; }
+</style>
+</head>
+<body>
+<div class="q">
+  <div class="marca">MÉTODO FEMININO</div>
+  <div class="topo"><span class="chip fase" id="chip-fase"></span><span class="chip" id="chip-dia"></span><span class="chip" id="chip-peso"></span></div>
+  <div class="palco"><div id="boneca-box"></div><span class="contador" id="contador"></span><span class="barra-ex" id="barra"></span></div>
+  <div class="card"><h2 id="ex-nome"></h2><div class="metricas" id="ex-met"></div><p class="dica" id="ex-dica"></p></div>
+  <div class="tela" id="abertura"></div>
+  <div class="tela sai" id="fim"></div>
+</div>
+<script src="personagem.js"></script>
+<script src="dados.js"></script>
+<script>
+  var T = window.TREINO, u = new URLSearchParams(location.search), d = +(u.get("dia") || 1);
+  var f = T.fase(d), F = T.F[f], POR_EX = 6500, ABRE = 3500, FECHA = 3500;
+  var p = Personagem.criar(document.getElementById("boneca-box"));
+  var $ = function (id) { return document.getElementById(id); };
+  $("chip-fase").textContent = "Fase " + f + " · " + F.nome;
+  $("chip-dia").textContent = "Dia " + d;
+  $("chip-peso").textContent = f === 1 ? "Sem peso" : "Garrafinha 500 ml";
+
+  var passos;
+  if (T.espelho(d)) {
+    passos = [
+      { nome: "Alongamento do tríceps", pose: "extensao", garrafa: false, met: [["Tempo", "30s cada braço"]], dica: "Mão nas costas, cotovelo apontando para o teto. Puxe de leve com a outra mão." },
+      { nome: "Abrir os braços", pose: "circulos", met: [["Tempo", "1 min"]], dica: "Círculos lentos para soltar os ombros." },
+      { nome: "Teste do Tchauzinho", pose: "acenar", met: [["Acenos", "10"], ["Nota", "0 a 10"]], dica: "Na frente do espelho, acene 10 vezes e dê uma nota para o quanto o braço balança. Anote no app." },
+      { nome: "Foto de progresso", pose: "comemorar", expr: "piscadinha", met: [["Fotos", "frente · lado · costas"]], dica: "Mesma roupa, mesma luz e mesma pose do dia 1." }
+    ];
+  } else {
+    passos = T.listaDoDia(d).map(function (e) {
+      var ex = T.EX[e.id];
+      var met = T.CIRC_DIA[d] ? [["Rodadas", "3"], ["Reps", e.reps], ["Pausa", (d === 20 ? 15 : F.desc) + "s"]] : [["Séries", e.series.split(" ")[0]], ["Reps", e.reps], ["Descanso", F.desc + "s"]];
+      return { nome: ex.nome, pose: ex.pose, garrafa: ex.garrafa && !e.semGarrafa, met: met, dica: "Dica: " + ex.dica };
+    });
+  }
+
+  // Abertura com a lista do dia
+  var titulo = T.espelho(d) ? "🪞 Dia do <em>Espelho</em>" : "Dia <em>" + d + "</em>";
+  var sub = T.espelho(d) ? "Alongamento, teste do tchauzinho e foto de progresso · ~10 min"
+    : (T.CIRC_DIA[d] ? "Circuito " + T.CIRC_DIA[d][0] + " · 3 rodadas · ~" + F.min + " min" : passos.length + " exercícios · ~" + F.min + " min");
+  $("abertura").innerHTML = "<div><small>Fase " + f + " · " + F.nome + "</small><h1>" + titulo + "</h1><p>" + sub + '</p><div class="lista">' +
+    passos.map(function (s) { return "<div>" + s.nome + "<span>" + (T.espelho(d) ? s.met[0][1] : s.met.map(function (m) { return m[1]; }).slice(0, 2).join(" × ")) + "</span></div>"; }).join("") + "</div></div>";
+  $("fim").innerHTML = '<div><small>Treino concluído</small><p class="frase">“' + T.FRASES[d - 1] + '”</p><p>Marque o Dia ' + d + " como concluído no app ✓</p></div>";
+
+  function mostra(i) {
+    var s = passos[i];
+    p.pose(s.pose, { garrafa: !!s.garrafa });
+    p.expressao(s.expr || (i % 2 ? "esforco" : "feliz"));
+    p.destacar(s.pose !== "acenar" && s.pose !== "comemorar");
+    $("ex-nome").textContent = s.nome;
+    $("ex-met").innerHTML = s.met.map(function (m) { return "<span><i>" + m[0] + "</i>" + m[1] + "</span>"; }).join("");
+    $("ex-dica").textContent = s.dica;
+    $("contador").textContent = (i + 1) + " / " + passos.length;
+    var b = $("barra"); b.style.transition = "none"; b.style.width = "0"; void b.offsetWidth;
+    b.style.transition = "width " + (POR_EX - 300) + "ms linear"; b.style.width = "100%";
+  }
+
+  function rodar() {
+    mostra(0);
+    setTimeout(function () { $("abertura").classList.add("sai"); }, ABRE);
+    passos.forEach(function (s, i) { if (i) setTimeout(function () { mostra(i); }, ABRE + i * POR_EX); });
+    setTimeout(function () { $("fim").classList.remove("sai"); p.pose("comemorar"); }, ABRE + passos.length * POR_EX);
+  }
+  window.DURACAO = ABRE + passos.length * POR_EX + FECHA;
+  setTimeout(rodar, 300);
+</script>
+</body>
+</html>

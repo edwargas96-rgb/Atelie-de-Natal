@@ -154,6 +154,25 @@ STYLES = {
     ),
 }
 
+def _star(x, y, r, col, op=1):
+    pts = []
+    for i in range(10):
+        a = -math.pi / 2 + i * math.pi / 5; rr = r if i % 2 == 0 else r * .42
+        pts.append(f"{x + rr * math.cos(a):.2f},{y + rr * math.sin(a):.2f}")
+    return f'<polygon points="{" ".join(pts)}" fill="{col}" opacity="{op}"/>'
+
+
+STYLES["fundador"] = dict(STYLES["classico"], name="Fundador 2027", accent="#9A6B12",
+    brand="Ateliê 2027 · Pacote Fundador", owner="Ateliê de Natal · Ateliê 2027", tagline="Ateliê 2027",
+    deco=lambda: (
+        '<rect x="5" y="5" width="200" height="287" fill="none" stroke="#C9962E" stroke-width=".9"/>'
+        '<rect x="7" y="7" width="196" height="283" fill="none" stroke="#C9962E" stroke-width=".25"/>'
+        + _star(17, 18, 4.2, "#C9962E") + _star(25, 13, 1.8, "#C9962E", .7) + _star(193, 18, 4.2, "#C9962E") + _star(185, 13, 1.8, "#C9962E", .7)
+        + _star(17, 280, 2.6, "#C9962E", .8) + _star(193, 280, 2.6, "#C9962E", .8)
+        + '<line x1="60" y1="51" x2="98" y2="51" stroke="#C9962E" stroke-width=".3"/><line x1="112" y1="51" x2="150" y2="51" stroke="#C9962E" stroke-width=".3"/>'
+        + _star(105, 51, 2.4, "#C9962E")))
+
+
 STITCHES = [("Ponto atrás", "nas linhas e nas letras"), ("Nó francês", "nas bolinhas"), ("Ponto corrido", "na moldura")]
 STEPS = [("Imprima", "Em papel firme (180 g ou mais), em tamanho real."), ("Fure", "Sobre um EVA ou isopor, fure cada pontinho com a agulha."), ("Borde", "Siga as linhas com a cor indicada, ponto a ponto.")]
 
@@ -200,7 +219,7 @@ h1{{position:absolute;top:{'18mm' if upper else '17mm'};left:0;right:0;margin:0;
 .foot{{position:absolute;left:0;right:0;bottom:{'9mm' if upper else '10mm'};text-align:center;font-size:2.4mm;color:{st['muted']};letter-spacing:.2mm}}
 </style></head><body><div class="pg">
 <svg class="deco" viewBox="0 0 210 297">{st['deco']()}</svg>
-<div class="brand">Ateliê de Natal · moldes de bordado em papel</div>
+<div class="brand">{st.get("brand","Ateliê de Natal · moldes de bordado em papel")}</div>
 <h1>{title}</h1>
 <div class="sub">{tagline}</div>
 <div class="chips"><span>Nível {nivel.lower()}</span><span>Tamanho {tamanho}</span><span>{len(d.holes) + len(d.knots)} furos</span></div>
@@ -214,7 +233,7 @@ h1{{position:absolute;top:{'18mm' if upper else '17mm'};left:0;right:0;margin:0;
 </div>
 <div class="steps">{steps}</div>
 <div class="ruler"><svg viewBox="0 0 50 4"><rect x="0" y="1" width="50" height="1.6" fill="{st['ink']}"/>{''.join(f'<rect x="{x}" y="0" width=".3" height="4" fill="{st["ink"]}"/>' for x in range(0, 51, 10))}</svg>Esta barra deve medir 5 cm na impressão. Imprima em 100% (tamanho real).</div>
-<div class="foot">© Ateliê de Natal · Uso pessoal · Não compartilhe nem revenda os arquivos</div>
+<div class="foot">© {st.get("owner","Ateliê de Natal")} · Uso pessoal · Não compartilhe nem revenda os arquivos</div>
 </div></body></html>"""
 
 
