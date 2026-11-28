@@ -40,6 +40,7 @@
       grad("gLeg", "#93404D", C.legging, C.leggingSombra) +
       grad("gCab", C.cabeloLuz, C.cabelo, "#48241A") +
       grad("gTenis", "#FFF6EA", C.tenis, "#E8D2B8") +
+      '<radialGradient id="gCinza"><stop offset="0" stop-color="#7d8a99" stop-opacity=".9"/><stop offset=".6" stop-color="#7d8a99" stop-opacity=".6"/><stop offset="1" stop-color="#7d8a99" stop-opacity="0"/></radialGradient>' +
       '<radialGradient id="gBrilho"><stop offset="0" stop-color="' + C.destaque + '" stop-opacity="1"/><stop offset=".6" stop-color="' + C.destaque + '" stop-opacity=".75"/><stop offset="1" stop-color="' + C.destaque + '" stop-opacity="0"/></radialGradient>' +
       // granulado leve de "massinha"
       '<filter id="massinha" x="-5%" y="-5%" width="110%" height="110%">' +
@@ -168,6 +169,14 @@
     coice: function (t) { // braço desce e estende para trás (vista frontal: abre e estica)
       var k = .5 + .5 * Math.cos(t * 3);
       return { r: [150 - 10 * k, -10 + 80 * k, 0], l: [30 + 10 * k, 10 - 80 * k, 0] };
+    },
+    puxar: function (t) { // rosca/puxar: só o bíceps trabalha
+      var k = .5 + .5 * Math.sin(t * 2.6);
+      return { r: [100, -20 - 120 * k, -10 * k], l: [80, 20 + 120 * k, 10 * k] };
+    },
+    pulsinho: function (t) { // pulsinhos pra trás: braços esticados, pulsos curtos
+      var o = Math.abs(Math.sin(t * 5.2)) * 7;
+      return { r: [104 + o, 0, 6], l: [76 - o, 0, -6] };
     },
     comemorar: function (t) {
       var o = Math.sin(t * 7) * 6;
@@ -311,7 +320,11 @@
         D.gar.setAttribute("opacity", garrafa ? 1 : 0);
       },
       expressao: expressao,
-      destacar: function (on) { estado.destaque = !!on; }
+      destacar: function (on, modo) {
+        estado.destaque = !!on;
+        var f = modo === "dormindo" ? "url(#gCinza)" : "url(#gBrilho)";
+        D.tri.setAttribute("fill", f); E.tri.setAttribute("fill", f);
+      }
     };
   }
 
