@@ -260,3 +260,51 @@ body { background: radial-gradient(120% 60% at 50% 0%, #fbe9ea 0%, var(--fundo) 
 .foto { margin: 0 0 14px; border-radius: 20px; overflow: hidden; box-shadow: var(--sombra); aspect-ratio: 4 / 3; background: #e9dccd; }
 .foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .video.real .video-tela video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Campo numérico (altura/peso) */
+.campo-num { position: relative; margin-top: 18px; }
+.campo-num .campo { margin-top: 0; padding-right: 56px; font-size: 22px; font-weight: 600; }
+.campo-num span { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: var(--tinta-2); font-weight: 600; }
+.campo::-webkit-outer-spin-button, .campo::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+/* Carregamento com a micro VSL */
+.carregando-vsl h2 { font-size: clamp(22px, 6vw, 28px); margin-bottom: 12px; }
+.vsl { position: relative; margin: 0 auto; height: min(62vh, 560px); aspect-ratio: 9 / 16; max-width: 100%; border-radius: 20px; overflow: hidden; background: #1f1618; box-shadow: var(--sombra); }
+.vsl video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.vsl-som { position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); border: 0; background: rgba(42,29,31,.85); color: #fff8ef; padding: 12px 18px; border-radius: 999px; font: 600 14px var(--sans); cursor: pointer; white-space: nowrap; animation: pulsa 1.4s ease-in-out infinite; }
+@keyframes pulsa { 50% { transform: translateX(-50%) scale(1.05); } }
+.vsl-pausa { position: absolute; inset: 0; display: grid; place-items: center; padding: 14px; background: rgba(240, 214, 210, .55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.pausa-card { position: relative; background: #f8ede5; border: 1.5px solid var(--ouro); border-radius: 22px; padding: 22px 18px 18px; text-align: center; width: 100%; box-shadow: 0 14px 34px rgba(110,42,53,.2); }
+.pausa-x { position: absolute; right: 12px; top: 10px; border: 0; background: none; font-size: 20px; color: var(--vinho); cursor: pointer; }
+.pausa-icone { width: 60px; height: 60px; margin: 0 auto 8px; border-radius: 14px; background: #e3a2a8; display: grid; place-items: center; }
+.pausa-marca { font: italic 600 22px var(--serif); color: var(--vinho); }
+.pausa-card .fio { margin: 8px auto 10px; }
+.pausa-titulo { font: 600 26px/1.05 var(--serif); color: var(--vinho); margin-bottom: 8px; }
+.pausa-texto { font-size: 14px; color: var(--tinta); margin-bottom: 4px; }
+.btn-vinho { background: #74262f; margin-top: 12px; text-transform: none; letter-spacing: 0; font-size: 16px; padding: 14px; }
+.diag-barra { height: 8px; border-radius: 8px; background: var(--linha); overflow: hidden; margin: 16px 0 8px; }
+.diag-barra span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--ouro), var(--vinho)); }
+.diag-etapa { text-align: center; font-size: 14px; color: var(--tinta-2); }
+.diag-etapa #vsl-pct { font-weight: 700; color: var(--vinho); }
+.vsl-cta { animation: entra .4s ease both, pulsa-btn 1.4s ease-in-out .4s infinite; }
+@keyframes pulsa-btn { 50% { transform: scale(1.03); } }
+
+/* Ficha técnica no resultado */
+.ficha { background: var(--cartao); border: 1px solid var(--linha); border-radius: 20px; padding: 18px; margin-bottom: 16px; }
+.ficha h3 { font-family: var(--serif); font-size: 22px; margin-bottom: 10px; }
+.ficha-grade { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.ficha-grade div { background: #fbf2e4; border-radius: 12px; padding: 8px 10px; }
+.ficha-grade span { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--tinta-2); }
+.ficha-grade b { font-size: 16px; }
+.imc-topo { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.imc-topo span { font-size: 13px; color: var(--tinta-2); }
+.imc-topo b { font: 600 30px var(--serif); }
+.imc-topo em { font-style: normal; font-weight: 700; font-size: 13px; }
+.imc-escala { position: relative; height: 10px; border-radius: 10px; margin: 8px 0 4px; background: linear-gradient(90deg, #e8cf8a 0 14%, #9fc48f 14% 40%, #eab06d 40% 60%, #e08a84 60% 100%); }
+.imc-escala i { position: absolute; top: -5px; width: 4px; height: 20px; border-radius: 3px; background: var(--tinta); transform: translateX(-50%); }
+.imc-legenda { position: relative; height: 14px; font-size: 10.5px; color: var(--tinta-2); }
+.imc-legenda span { position: absolute; transform: translateX(-50%); }
+.imc-legenda span:nth-child(1) { left: 14%; } .imc-legenda span:nth-child(2) { left: 40%; } .imc-legenda span:nth-child(3) { left: 60%; }
+.ficha-dica { font-size: 14.5px; margin-top: 10px; }
+.ficha-obs { font-size: 11.5px; color: var(--tinta-2); margin-top: 6px; }
+.vagas-aviso { margin-top: 8px; font-size: 13px; font-weight: 600; color: var(--vinho); }

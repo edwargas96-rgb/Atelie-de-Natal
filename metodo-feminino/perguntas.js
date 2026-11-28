@@ -242,6 +242,47 @@ window.ROTEIRO = [
     botao: "Continuar"
   },
 
+  /* ---------- DADOS TÉCNICOS (IMC e rotina) ---------- */
+  {
+    tipo: "info",
+    sobre: "Diagnóstico técnico",
+    titulo: "Agora, alguns dados para o seu <em>diagnóstico</em>",
+    texto: "Com sua altura, peso e rotina, calculamos o seu <strong>IMC</strong> e ajustamos a intensidade do plano ao seu corpo. Leva 20 segundos.",
+    botao: "Vamos lá"
+  },
+  {
+    tipo: "numero", chave: "altura",
+    titulo: "Qual é a sua altura?",
+    unidade: "cm", min: 130, max: 210, placeholder: "Ex.: 162"
+  },
+  {
+    tipo: "numero", chave: "peso",
+    titulo: "E o seu peso atual?",
+    sub: "Fica só entre nós. Usamos para calcular seu IMC.",
+    unidade: "kg", min: 35, max: 220, placeholder: "Ex.: 70"
+  },
+  {
+    tipo: "unica", chave: "rotina",
+    titulo: "Como é o seu esforço físico no dia a dia?",
+    opcoes: [
+      { e: "🛋️", t: "Passo a maior parte do dia sentada", v: "sedentaria" },
+      { e: "🧺", t: "Ando um pouco e faço tarefas de casa", v: "leve" },
+      { e: "🚶‍♀️", t: "Caminho ou me exercito 1 a 2x por semana", v: "moderada" },
+      { e: "🏃‍♀️", t: "Me exercito 3x ou mais por semana", v: "ativa" }
+    ],
+    fb: "Anotado. Isso define o ritmo da sua Fase 1."
+  },
+  {
+    tipo: "unica", chave: "sono",
+    titulo: "Quantas horas você costuma dormir por noite?",
+    opcoes: [
+      { t: "Menos de 6 horas", v: "pouco" },
+      { t: "De 6 a 7 horas", v: "medio" },
+      { t: "8 horas ou mais", v: "bom" }
+    ],
+    fb: "É no descanso que o músculo se recupera. Vamos considerar isso no seu plano."
+  },
+
   /* ---------- P4 · PUSH (data e decisão) ---------- */
   {
     tipo: "unica", chave: "data",
@@ -277,14 +318,23 @@ window.ROTEIRO = [
   /* ---------- CARREGAMENTO E RESULTADO ---------- */
   {
     tipo: "carregando",
-    titulo: "Analisando suas respostas…",
+    titulo: "{nome}, estamos montando o seu diagnóstico…",
+    video: "assets/vsl.mp4", poster: "assets/vsl-capa.jpg",
+    ctaEm: 44,                       // segundo do vídeo em que o diagnóstico termina e o botão aparece
+    botao: "Quero minha vaga",
     etapas: [
       "Analisando seu perfil e sua idade",
-      "Avaliando o nível do seu tríceps",
+      "Calculando seu IMC",
+      "Avaliando sua rotina e seu sono",
+      "Medindo o nível do seu tríceps",
       "Adaptando os exercícios ao seu ombro",
       "Montando seu plano de 21 dias"
     ],
-    duracao: 7000
+    pausa: {
+      titulo: "As vagas desta turma são limitadas",
+      texto: "Se a turma lotar, você terá que esperar a próxima abertura.",
+      botao: "Continuar assistindo"
+    }
   },
   { tipo: "resultado" }
 ];
