@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Micro VSL · Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --tinta: #2a1d1f; --vinho: #6e2a35; --ouro: #b08d57; --rose: #e59aa6; --creme: #f7f1ea; --verde: #DCEBD8; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: var(--creme); font-family: Inter, sans-serif; color: var(--tinta); }
+  .q { position: relative; width: 100vw; height: 100vh; overflow: hidden; background: radial-gradient(120% 70% at 50% 10%, #fbe9ea 0%, var(--creme) 60%); }
+  .marca { position: absolute; top: 3vh; left: 0; right: 0; text-align: center; font: 600 2.4vh "Cormorant Garamond", Georgia, serif; letter-spacing: .3em; z-index: 5; }
+  .cena { position: absolute; inset: 0; opacity: 0; transition: opacity .5s ease; }
+  .cena.on { opacity: 1; }
+  .t { position: absolute; left: 6vw; right: 6vw; text-align: center; font: 600 4.2vh/1.12 "Cormorant Garamond", Georgia, serif; }
+  .t em { color: var(--vinho); font-style: italic; }
+  .pop { opacity: 0; transform: translateY(2vh) scale(.96); transition: all .5s cubic-bezier(.2,.8,.2,1.2); }
+  .on .pop { opacity: 1; transform: none; }
+  .d1 { transition-delay: .5s !important; } .d2 { transition-delay: 1.1s !important; } .d3 { transition-delay: 1.7s !important; }
+  .legenda { position: absolute; left: 5vw; right: 5vw; bottom: 4vh; text-align: center; background: rgba(42,29,31,.88); color: #fff8ef; border-radius: 2vh; padding: 1.8vh 3vw; font: 600 2.3vh/1.3 Inter, sans-serif; z-index: 6; transition: opacity .3s; }
+  .legenda em { color: #F3A7B3; font-style: normal; }
+
+  /* palco da personagem */
+  .palco { position: absolute; left: 50%; transform: translateX(-50%); aspect-ratio: 1104 / 1840; border-radius: 3vh; overflow: hidden; box-shadow: 0 2vh 5vh rgba(74,44,36,.18); }
+  .palco svg { width: 100%; height: 100%; display: block; }
+
+  /* cena 1: flash de foto */
+  .flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; z-index: 4; }
+  .flash.vai { animation: flash .6s ease-out; }
+  @keyframes flash { 0% { opacity: .95; } 100% { opacity: 0; } }
+  .moldura { position: absolute; left: 50%; top: 14vh; transform: translateX(-50%); width: 62vw; height: 64vh; border: .6vh solid #fff; border-radius: 1vh; box-shadow: 0 0 0 .2vh var(--ouro); pointer-events: none; }
+
+  /* cena 2: passarela */
+  .passarela { position: absolute; left: 50%; bottom: 14vh; width: 70vw; height: 40vh; transform: translateX(-50%) perspective(60vh) rotateX(50deg); background: linear-gradient(#efe0d0, #f7efe6); border-radius: 1vh; }
+  .holofote { position: absolute; top: 14vh; width: 22vw; height: 38vh; background: radial-gradient(ellipse at top, rgba(255,240,210,.9), rgba(255,240,210,0) 70%); }
+  .grande { font-size: 10vh; color: var(--vinho); font-family: "Cormorant Garamond", serif; font-weight: 600; line-height: 1; }
+
+  /* cena 3: esforço x jeito certo */
+  .cards { position: absolute; top: 30vh; left: 6vw; right: 6vw; display: grid; gap: 2vh; }
+  .card { background: #fffaf5; border: .2vh solid #ead9c7; border-radius: 2vh; padding: 2.4vh 3vw; display: flex; align-items: center; gap: 3vw; font: 600 2.8vh Inter, sans-serif; box-shadow: 0 1vh 3vh rgba(74,44,36,.08); }
+  .card .ic { width: 6vh; height: 6vh; border-radius: 50%; display: grid; place-items: center; font-size: 3vh; color: #fff; flex: none; }
+  .card.x .ic { background: #c45a5a; } .card.x span:last-child { text-decoration: line-through; color: #8a7a77; }
+  .card.ok { border-color: var(--rose); } .card.ok .ic { background: var(--ouro); }
+
+  /* cena 4: mockup */
+  .mock { position: absolute; left: 50%; top: 22vh; width: 72vw; transform: translateX(-50%) translateY(8vh) scale(.9) rotate(-3deg); opacity: 0; transition: all .9s cubic-bezier(.2,.8,.2,1); filter: drop-shadow(0 3vh 4vh rgba(74,44,36,.25)); }
+  .on .mock { transform: translateX(-50%) rotate(0); opacity: 1; animation: flutua 4s ease-in-out .9s infinite; }
+  @keyframes flutua { 50% { transform: translateX(-50%) translateY(-1vh); } }
+  .selo35 { position: absolute; right: 7vw; top: 22vh; width: 13vh; height: 13vh; border-radius: 50%; background: var(--vinho); color: #fff8ef; display: grid; place-items: center; text-align: center; font: 700 2vh/1.1 Inter, sans-serif; box-shadow: 0 1vh 3vh rgba(110,42,53,.35); z-index: 2; }
+  .selo35 b { display: block; font: 600 4.6vh/1 "Cormorant Garamond", serif; }
+
+  /* cena 5: 10 min + garrafa */
+  .chips { position: absolute; top: 13vh; left: 4vw; right: 4vw; display: flex; justify-content: center; gap: 2vw; flex-wrap: wrap; z-index: 3; }
+  .chip { background: #fffaf5; border: .2vh solid #f0d3d6; border-radius: 99vh; padding: 1.2vh 3.4vw; font: 600 2.2vh Inter, sans-serif; box-shadow: 0 .6vh 2vh rgba(74,44,36,.1); }
+  .relogio { position: absolute; right: 6vw; top: 22vh; width: 14vh; height: 14vh; z-index: 3; }
+
+  /* cena 6: plano carregando */
+  .plano { position: absolute; left: 8vw; right: 8vw; top: 28vh; background: #fffaf5; border-radius: 3vh; padding: 4vh 6vw; box-shadow: 0 2vh 5vh rgba(74,44,36,.12); text-align: center; }
+  .plano .nome { font: 600 3.4vh "Cormorant Garamond", serif; margin-bottom: 2.4vh; }
+  .barra { height: 1.4vh; background: #eadccd; border-radius: 1vh; overflow: hidden; }
+  .barra span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--ouro), var(--vinho)); transition: width 4s ease-out; }
+  .on .barra span { width: 92%; }
+  .pct { font: 700 6vh Inter, sans-serif; color: var(--vinho); margin-top: 2vh; }
+  .itens { text-align: left; margin-top: 2vh; font: 500 2vh/2 Inter, sans-serif; color: #6d5a57; }
+
+  /* cena 7: vagas */
+  .vagas { position: absolute; left: 8vw; right: 8vw; top: 30vh; display: grid; grid-template-columns: repeat(6, 1fr); gap: 1.6vh; }
+  .vaga { aspect-ratio: 1; border-radius: 1.4vh; background: #fffaf5; border: .25vh solid #ead9c7; display: grid; place-items: center; font-size: 3vh; transition: all .3s; }
+  .vaga.ocupada { background: var(--rose); border-color: var(--rose); }
+  .contador { position: absolute; left: 0; right: 0; top: 68vh; text-align: center; font: 600 2.8vh Inter, sans-serif; }
+  .contador b { color: var(--vinho); font-size: 4.4vh; }
+
+  /* cena 8: valor aqui */
+  .seta { position: absolute; left: 50%; top: 52vh; transform: translateX(-50%); font-size: 14vh; color: var(--vinho); animation: desce 1s ease-in-out infinite; }
+  @keyframes desce { 50% { transform: translate(-50%, 2vh); } }
+  .botao { position: absolute; left: 10vw; right: 10vw; top: 72vh; background: linear-gradient(135deg, #c29b62, #9c7643); color: #fff; border-radius: 99vh; padding: 2.6vh; text-align: center; font: 700 2.6vh Inter, sans-serif; letter-spacing: .08em; box-shadow: 0 1.4vh 3vh rgba(156,118,67,.35); animation: pulsa 1.2s ease-in-out infinite; }
+  @keyframes pulsa { 50% { transform: scale(1.04); } }
+
+  /* cena 9: lotou */
+  .carimbo { position: absolute; left: 50%; top: 40vh; transform: translate(-50%, -50%) rotate(-10deg) scale(2.2); opacity: 0; border: .7vh solid var(--vinho); color: var(--vinho); border-radius: 1.6vh; padding: 1.6vh 4vw; font: 700 5vh Inter, sans-serif; letter-spacing: .12em; transition: all .35s cubic-bezier(.3,1.6,.4,1); }
+  .on .carimbo { transform: translate(-50%, -50%) rotate(-10deg) scale(1); opacity: 1; transition-delay: .4s; }
+</style>
+</head>
+<body>
+<div class="q">
+  <div class="marca">MÉTODO FEMININO</div>
+  <div class="flash" id="flash"></div>
+
+  <!-- 1. braço firme na foto -->
+  <section class="cena" id="c1">
+    <div class="palco" id="p1" style="top:12vh;height:72vh"></div>
+    <div class="moldura"></div>
+  </section>
+
+  <!-- 2. quase ninguém fora da passarela conhece -->
+  <section class="cena" id="c2">
+    <div class="holofote" style="left:12vw"></div><div class="holofote" style="right:12vw"></div>
+    <div class="passarela"></div>
+    <div class="t pop" style="top:22vh"><span class="grande">?</span></div>
+    <div class="t pop d1" style="top:38vh">Quase nenhuma mulher <em>fora da passarela</em> conhece isso</div>
+  </section>
+
+  <!-- 3. não é esforço, é jeito certo -->
+  <section class="cena" id="c3">
+    <div class="t pop" style="top:16vh">O problema nunca foi <em>você</em></div>
+    <div class="cards">
+      <div class="card x pop d1"><span class="ic">✕</span><span>Falta de esforço</span></div>
+      <div class="card ok pop d2"><span class="ic">✓</span><span>Falta do <em style="color:#6e2a35">jeito certo</em></span></div>
+    </div>
+  </section>
+
+  <!-- 4. mockup do app -->
+  <section class="cena" id="c4">
+    <div class="t pop" style="top:10vh">Adaptado pro <em>seu corpo</em></div>
+    <div class="selo35 pop d2"><div>para<b>35+</b></div></div>
+    <img class="mock" src="../assets/mockup-app.webp" alt="">
+  </section>
+
+  <!-- 5. 10 min, em casa, garrafinha -->
+  <section class="cena" id="c5">
+    <div class="chips">
+      <span class="chip pop">⏱ 10 min/dia</span><span class="chip pop d1">🏠 em casa</span><span class="chip pop d2">💧 garrafinha</span>
+    </div>
+    <div class="palco" id="p5" style="top:20vh;height:66vh"></div>
+  </section>
+
+  <!-- 6. plano quase pronto -->
+  <section class="cena" id="c6">
+    <div class="t pop" style="top:14vh">Seu plano está <em>quase pronto</em></div>
+    <div class="plano pop d1">
+      <div class="nome">Plano de 21 dias</div>
+      <div class="barra"><span></span></div>
+      <div class="pct" id="pct">0%</div>
+      <div class="itens">✓ Perfil analisado<br>✓ Exercícios adaptados<br>◌ Finalizando seu resultado…</div>
+    </div>
+  </section>
+
+  <!-- 7. vagas limitadas -->
+  <section class="cena" id="c7">
+    <div class="t pop" style="top:14vh">Vagas <em>limitadas</em> nesta turma</div>
+    <div class="vagas" id="vagas"></div>
+    <div class="contador pop d1">Acompanhamento de perto<br>de <b>cada aluna</b></div>
+  </section>
+
+  <!-- 8. valor aqui -->
+  <section class="cena" id="c8">
+    <div class="t pop" style="top:18vh">Garanta sua vaga pelo valor que vai aparecer <em>aqui</em></div>
+    <div class="seta">↓</div>
+    <div class="botao">QUERO MINHA VAGA</div>
+  </section>
+
+  <!-- 9. lotou -->
+  <section class="cena" id="c9">
+    <div class="carimbo">LOTOU?</div>
+    <div class="t pop d2" style="top:56vh">Só na <em>próxima turma</em>.</div>
+  </section>
+
+  <div class="legenda" id="leg"></div>
+</div>
+
+<script src="personagem.js"></script>
+<script>
+  // Personagens das cenas 1 e 5 (mesma boneca, na sala verde)
+  var p1 = Personagem.criar(document.getElementById("p1"));
+  var p5 = Personagem.criar(document.getElementById("p5"));
+  var vagasBox = document.getElementById("vagas");
+  for (var i = 0; i < 24; i++) { var v = document.createElement("div"); v.className = "vaga"; vagasBox.appendChild(v); }
+
+  var leg = document.getElementById("leg");
+  function cena(id, texto) {
+    document.querySelectorAll(".cena").forEach(function (c) { c.classList.toggle("on", c.id === id); });
+    leg.innerHTML = texto;
+  }
+
+  // Linha do tempo (ms) — cada bloco = uma frase da narração
+  var T = [
+    [0, function () {
+      cena("c1", "É ele que deixa o braço <em>firme na foto</em>.");
+      p1.pose("comemorar"); p1.expressao("sorrisao"); p1.destacar(true);
+      setTimeout(function () { var f = document.getElementById("flash"); f.classList.remove("vai"); void f.offsetWidth; f.classList.add("vai"); }, 1200);
+    }],
+    [3200, function () { cena("c2", "E sabe o que eu percebi? Quase nenhuma mulher <em>fora da passarela</em> conhece isso."); }],
+    [8800, function () { cena("c3", "Não é falta de esforço, é falta de alguém te mostrar o <em>jeito certo</em>."); }],
+    [13600, function () { cena("c4", "Foi por isso que a gente adaptou esse método pro corpo da mulher <em>depois dos 35</em>."); }],
+    [19000, function () {
+      cena("c5", "<em>Dez minutinhos</em> por dia, em casa, com uma garrafinha d’água.");
+      p5.pose("extensao"); p5.expressao("esforco"); p5.destacar(true);
+    }],
+    [21800, function () { p5.pose("pulsinho"); p5.expressao("feliz"); }],
+    [24000, function () {
+      cena("c6", "Seu plano tá quase pronto, fica comigo que <em>já vai aparecer</em>.");
+      var pct = document.getElementById("pct"), t0 = performance.now();
+      (function tick(a) { var k = Math.min(1, (a - t0) / 4000); pct.textContent = Math.round(92 * (1 - Math.pow(1 - k, 3))) + "%"; if (k < 1) requestAnimationFrame(tick); })(t0);
+    }],
+    [29000, function () {
+      cena("c7", "Mas, amiga, as vagas são <em>limitadas</em> pra gente acompanhar cada aluna de perto.");
+      var vs = vagasBox.children;
+      for (var i = 0; i < vs.length; i++) (function (el, k) { setTimeout(function () { if (k < 19) { el.classList.add("ocupada"); el.textContent = "♥"; } }, 500 + k * 170); })(vs[i], i);
+    }],
+    [35400, function () { cena("c8", "Se quiser entrar, garanta sua vaga pelo <em>valor que aparecer aqui</em>."); }],
+    [39600, function () { cena("c9", "Lotou, só na <em>próxima turma</em>."); }],
+    [42600, null]
+  ];
+  window.DURACAO = 42600;
+  function rodar() { T.forEach(function (x) { if (x[1]) setTimeout(x[1], x[0]); }); }
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(function () { setTimeout(rodar, 300); });
+</script>
+</body>
+</html>
