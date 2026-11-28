@@ -64,10 +64,9 @@
   /* ---------- Telas ---------- */
   var telas = {
     intro: function (s) {
-      return '<section class="tela"><p class="sobre">' + s.sobre + "</p><h1>" + s.titulo + "</h1>" +
+      return '<section class="tela capa"><h1>' + s.titulo + "</h1>" + slotImagem(s) +
         (s.bullets ? '<ul class="bullets">' + s.bullets.map(function (b) { return "<li>" + b + "</li>"; }).join("") + "</ul>" : "") +
-        (s.sub ? '<p class="sub">' + s.sub + "</p>" : "") +
-        '<button class="btn" data-ac="ok">' + s.botao + '</button><p class="nota">' + s.nota + "</p>" + slotImagem(s) + "</section>";
+        '<button class="btn" data-ac="ok">' + s.botao + '</button><p class="nota">' + s.nota + "</p></section>";
     },
     nome: function (s) {
       return '<section class="tela"><h2>' + s.titulo + '</h2><hr class="fio"><input class="campo" id="nome" autocomplete="given-name" maxlength="24" placeholder="' + s.placeholder + '" value="' + esc(estado.nome) + '">' +

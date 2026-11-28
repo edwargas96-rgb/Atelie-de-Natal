@@ -22,13 +22,13 @@ window.ROTEIRO = [
   /* ---------- ABERTURA ---------- */
   {
     tipo: "intro",
-    sobre: "Bastidores da passarela",
     titulo: "Aprenda em <em>21 dias</em>, com aulas guiadas, o método que as <em>modelos escondem</em> para ter braços firmes",
     bullets: [
-      "Agora adaptado para mulheres 35+",
+      "Adaptado para mulheres 35+",
       "Acesso imediato e vitalício",
       "Garantia de 7 dias",
       "4 bônus exclusivos",
+      "Só 10 a 20 min por dia",
       "Pagamento 100% seguro"
     ],
     img: "passarela",

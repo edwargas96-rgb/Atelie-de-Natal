@@ -232,3 +232,26 @@ body { background: radial-gradient(120% 60% at 50% 0%, #fbe9ea 0%, var(--fundo) 
   width: 18px; height: 18px; border-radius: 50%; background: #e59aa6; color: #fff;
   font-size: 11px; display: grid; place-items: center; font-weight: 700;
 }
+
+/* Marca maior e imponente */
+.topo { padding-top: 18px; }
+.marca {
+  font-size: 21px; letter-spacing: .3em; font-weight: 600; line-height: 1.1;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.marca::before, .marca::after { content: ""; width: 18px; height: 1px; background: var(--ouro); flex: none; }
+
+/* Capa: headline no topo, imagem, grade 2x3 de bullets */
+.capa h1 { margin: 4px 0 14px; }
+.capa .img-slot { margin: 0 0 14px; }
+.capa .img-slot svg { max-height: 210px; }
+.capa .bullets { grid-template-columns: 1fr 1fr; max-width: none; gap: 8px; margin: 0 0 4px; }
+.capa .bullets li {
+  border-radius: 14px; padding: 10px 10px 10px 34px; font-size: 13px; line-height: 1.3;
+  display: flex; align-items: center; min-height: 52px;
+}
+.capa .bullets li::before { left: 10px; width: 17px; height: 17px; font-size: 10px; }
+.topo { grid-template-columns: 32px 1fr 32px; }
+.marca { font-size: 18px; letter-spacing: .22em; white-space: nowrap; gap: 0; }
+.marca::before, .marca::after { display: none; }
+.marca { border-bottom: 1px solid var(--ouro); padding-bottom: 6px; justify-self: center; }
