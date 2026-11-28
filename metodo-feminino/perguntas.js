@@ -232,12 +232,12 @@ window.ROTEIRO = [
   },
   {
     tipo: "depoimentos",
-    sobre: "Quem já fez",
+    sobre: "Quem já está na turma",
     titulo: "Mulheres como você",
     itens: [
-      { texto: "Espaço para depoimento real (print ou texto).", quem: "Nome, idade · cidade" },
-      { texto: "Espaço para depoimento real (print ou texto).", quem: "Nome, idade · cidade" },
-      { texto: "Espaço para depoimento real (print ou texto).", quem: "Nome, idade · cidade" }
+      { foto: "assets/depo-rosangela.jpg", quem: "Rosângela, 49 anos", data: "12 de novembro", texto: "Hoje completei uma semana! Até separei uma garrafinha só pro treino 😂 Tô feliz de ter conseguido encaixar as aulas na minha rotina." },
+      { foto: "assets/depo-patricia.jpg", quem: "Patrícia, 42 anos", data: "19 de novembro", texto: "Vou começar amanhã! Já deixei a garrafinha na mesa pra lembrar. Tô animada pra fazer a primeira aula em casa." },
+      { foto: "assets/depo-marcia.jpg", quem: "Márcia, 56 anos", data: "26 de novembro", texto: "Garrafinha pronta por aqui 😊 Amanhã começo o Dia 1. Tô animada pra testar a aula e ver como é." }
     ],
     botao: "Continuar"
   },

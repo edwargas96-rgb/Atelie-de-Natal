@@ -103,7 +103,8 @@
     depoimentos: function (s) {
       return '<section class="tela"><p class="sobre">' + s.sobre + "</p><h2>" + s.titulo + '</h2><div class="depos">' +
         s.itens.map(function (d) {
-          return '<div class="depo"><div class="foto">' + window.Ilustra("busto") + '</div><div><span class="depo-slot">Foto + depoimento</span><div class="estrelas">★★★★★</div><p>“' + d.texto + '”</p><p class="quem">' + d.quem + "</p></div></div>";
+          var foto = d.foto ? '<img src="' + d.foto + '" alt="' + esc(d.quem) + '" width="64" height="64" loading="lazy">' : window.Ilustra("busto");
+          return '<div class="depo"><div class="depo-foto">' + foto + '</div><div><p class="quem"><b>' + d.quem + "</b>" + (d.data ? " · " + d.data : "") + "</p><p>“" + d.texto + "”</p></div></div>";
         }).join("") + '</div><button class="btn" data-ac="ok">' + s.botao + "</button></section>";
     },
     numero: function (s) {
