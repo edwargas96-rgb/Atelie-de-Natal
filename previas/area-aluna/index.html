@@ -208,7 +208,7 @@
     B: [["cadeira","10"],["desenv","12"],["abraco","15"],["rosca","12"],["tchauinv","30s"],["circulos","30s"]],
     C: [["extensao","15"],["coice","15 por braço"],["prancha","8 por lado"],["cadeira","12"],["desenv","12"],["pulsinho","40s"]]
   };
-  function mais(lista, n) { return lista.map(function (e) { return [e[0], e[1].replace(/^(\d+)/, function (m) { return +m + n; })]; }); }
+  function mais(lista, n) { return lista.map(function (e) { return [e[0], e[1].replace(/^(\d+)(s?)/, function (m, num, seg) { return (+num + (seg ? 5 : n)) + seg; })]; }); }
   var CIRC_DIA = { 15: ["A", CIRC.A], 16: ["B", CIRC.B], 17: ["A +2", mais(CIRC.A, 2)], 18: ["B +2", mais(CIRC.B, 2)], 19: ["C", CIRC.C], 20: ["C · grande final", CIRC.C] };
   var FRASES = [
     "Hoje é o primeiro passo. O resto vem com constância.",
