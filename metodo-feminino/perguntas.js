@@ -31,6 +31,8 @@ window.ROTEIRO = [
       "Só 10 a 20 min por dia",
       "Pagamento 100% seguro"
     ],
+    foto: "assets/capa.webp",
+    fotoAlt: "Modelo de vestido rosé caminhando na passarela",
     img: "passarela",
     imgDesc: "IMAGEM: modelo de costas na passarela, vestido sem manga, braço firme, luz de desfile. Tom elegante, bege/dourado.",
     botao: "Descobrir se é para mim",
@@ -165,6 +167,7 @@ window.ROTEIRO = [
     sobre: "Aula 1 · O músculo dormindo",
     titulo: "Veja o que acontece com a parte de trás do seu braço",
     anim: "mecanismo",
+    src: "assets/aula1-musculo-dormindo.mp4", poster: "assets/aula1-capa.jpg",
     rotulo: "VÍDEO: animação do tríceps adormecido acordando (15–30s). Personagem do app.",
     botao: "Continuar"
   },
@@ -218,8 +221,9 @@ window.ROTEIRO = [
     tipo: "video",
     sobre: "Dia 1 · Pulsinhos pra trás",
     titulo: "Esse é o primeiro exercício do método",
-    sub: "Viu? Dá pra fazer sentada, na sala de casa.",
+    sub: "Viu? Dá pra fazer em pé ou sentada, na sala de casa.",
     anim: "aula",
+    src: "assets/dia1-pulsinhos.mp4", poster: "assets/dia1-capa.jpg",
     rotulo: "VÍDEO: trecho real da aula do Dia 1 (6s em loop), personagem do app.",
     botao: "Continuar"
   },

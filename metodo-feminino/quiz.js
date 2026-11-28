@@ -22,6 +22,7 @@
   }
 
   function slotImagem(s) {
+    if (s.foto) return '<div class="foto"><img src="' + s.foto + '" alt="' + esc(s.fotoAlt || "") + '" width="1448" height="1086" fetchpriority="high"></div>';
     if (!s.img) return "";
     return '<div class="img-slot">' + window.Ilustra(s.img) + '<span class="etiqueta">' + esc(s.imgDesc || "IMAGEM") + "</span></div>";
   }
@@ -93,9 +94,10 @@
     },
     video: function (s) {
       return '<section class="tela"><p class="sobre">' + s.sobre + "</p><h2>" + txt(s.titulo) + "</h2>" + (s.sub ? '<p class="sub">' + s.sub + "</p>" : "") +
+        (s.src ? '<div class="video real"><div class="video-tela"><video src="' + s.src + '" poster="' + (s.poster || "") + '" autoplay muted loop playsinline preload="auto"></video></div></div>' :
         '<div class="video" id="video"><div class="video-tela">' + window.Ilustra(s.anim) +
         '<span class="video-tag">Aula</span><span class="video-rotulo">' + esc(s.rotulo) + '</span><span class="video-barra"></span></div>' +
-        '<button class="video-play" data-ac="play" aria-label="Assistir">▶</button></div>' +
+        '<button class="video-play" data-ac="play" aria-label="Assistir">▶</button></div>') +
         '<button class="btn" data-ac="ok">' + s.botao + "</button></section>";
     },
     depoimentos: function (s) {

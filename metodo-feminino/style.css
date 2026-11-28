@@ -255,3 +255,8 @@ body { background: radial-gradient(120% 60% at 50% 0%, #fbe9ea 0%, var(--fundo) 
 .marca { font-size: 18px; letter-spacing: .22em; white-space: nowrap; gap: 0; }
 .marca::before, .marca::after { display: none; }
 .marca { border-bottom: 1px solid var(--ouro); padding-bottom: 6px; justify-self: center; }
+
+/* Foto da capa e vídeos reais */
+.foto { margin: 0 0 14px; border-radius: 20px; overflow: hidden; box-shadow: var(--sombra); aspect-ratio: 4 / 3; background: #e9dccd; }
+.foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.video.real .video-tela video { width: 100%; height: 100%; object-fit: cover; display: block; }
