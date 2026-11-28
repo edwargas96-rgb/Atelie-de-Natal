@@ -178,6 +178,30 @@
       var o = Math.abs(Math.sin(t * 5.2)) * 7;
       return { r: [104 + o, 0, 6], l: [76 - o, 0, -6] };
     },
+    circulos: function (t) { // braços abertos, círculos pequenos
+      var a = Math.sin(t * 6) * 7, b = Math.cos(t * 6) * 9;
+      return { r: [180 + a, b, 0], l: [0 - a, -b, 0] };
+    },
+    tchauinv: function (t) { // braços para trás, mãos sobem e descem
+      var o = Math.sin(t * 6) * 22;
+      return { r: [112, -6, 20 + o], l: [68, 6, -20 - o] };
+    },
+    parede: function (t) { // empurrar: braços à frente dobrando e esticando
+      var k = .5 + .5 * Math.sin(t * 2.4);
+      return { r: [160, -70 * k, 0], l: [20, 70 * k, 0] };
+    },
+    lateral: function (t) { // elevação lateral
+      var k = .5 + .5 * Math.sin(t * 2.4);
+      return { r: [112 + 66 * k, -4, 0], l: [68 - 66 * k, 4, 0] };
+    },
+    desenvolvimento: function (t) { // empurrar acima da cabeça
+      var k = .5 + .5 * Math.sin(t * 2.4);
+      return { r: [196 + 60 * k, 80 - 70 * k, 0], l: [-16 - 60 * k, -80 + 70 * k, 0] };
+    },
+    abraco: function (t) { // abrir e fechar como num abraço
+      var k = .5 + .5 * Math.sin(t * 2.2);
+      return { r: [180 + 40 * k, 10 + 40 * k, 0], l: [0 - 40 * k, -10 - 40 * k, 0] };
+    },
     comemorar: function (t) {
       var o = Math.sin(t * 7) * 6;
       return { r: [236 + o, 30, 10], l: [304 - o, -30, -10] };
@@ -312,12 +336,13 @@
 
     return {
       svg: svg,
-      pose: function (nome) {
+      pose: function (nome, op) {
         estado.pose = POSES[nome] ? nome : "repouso";
         estado.t0 = performance.now();
-        var garrafa = nome === "extensao";
-        camadas(garrafa);
+        var garrafa = op && op.garrafa != null ? op.garrafa : nome === "extensao";
+        camadas(nome === "extensao");
         D.gar.setAttribute("opacity", garrafa ? 1 : 0);
+        E.gar.setAttribute("opacity", garrafa && nome !== "extensao" ? 1 : 0);
       },
       expressao: expressao,
       destacar: function (on, modo) {

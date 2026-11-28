@@ -1,0 +1,415 @@
+<title>Área da Aluna</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Layout: app de uma coluna (celular), cabeçalho fixo da marca, telas trocadas por hash (#inicio, #dia-N, #bonus). Visual único e claro da marca. */
+  :root {
+    --fundo: #f7f1ea;
+    --cartao: #fffaf5;
+    --tinta: #2a1d1f;
+    --tinta-2: #6d5a57;
+    --linha: #e8dacb;
+    --ouro: #b08d57;
+    --ouro-claro: #ecdcbc;
+    --vinho: #6e2a35;
+    --rose: #e59aa6;
+    --rose-claro: #f8e3e5;
+    --verde: #DCEBD8;
+    --f1: #e9b9a0; --f2: #e59aa6; --f3: #b65b6b;
+    --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    --sans: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--fundo); color: var(--tinta); font-family: var(--sans); font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.1; margin: 0; text-wrap: balance; }
+  button { font: inherit; color: inherit; }
+  button:focus-visible, a:focus-visible { outline: 2px solid var(--vinho); outline-offset: 2px; }
+
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--fundo); }
+  .topo { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(247, 241, 234, .92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom: 1px solid var(--linha); }
+  .topo-in { max-width: 560px; margin: 0 auto; display: grid; grid-template-columns: 40px 1fr 40px; align-items: center; padding-block: 10px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .marca { text-align: center; font-family: var(--serif); font-weight: 600; letter-spacing: .24em; font-size: 16px; white-space: nowrap; }
+  .voltar { width: 40px; height: 40px; border: 0; background: none; font-size: 22px; color: var(--tinta-2); cursor: pointer; }
+  .voltar[aria-hidden="true"] { visibility: hidden; }
+
+  main { max-width: 560px; margin: 0 auto; padding-block: 18px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .aviso-previa { font-size: 12px; text-align: center; color: var(--tinta-2); background: var(--ouro-claro); border-radius: 10px; padding: 6px 10px; margin-bottom: 16px; }
+
+  /* Início */
+  .ola { display: grid; gap: 4px; margin-bottom: 16px; }
+  .ola small { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--ouro); font-weight: 600; }
+  .ola h1 { font-size: 34px; }
+  .ola h1 em { color: var(--vinho); }
+  .progresso { background: var(--cartao); border: 1px solid var(--linha); border-radius: 18px; padding: 16px; display: grid; gap: 10px; margin-bottom: 16px; }
+  .prog-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .prog-top b { font-family: var(--serif); font-size: 26px; }
+  .prog-top span { font-size: 13px; color: var(--tinta-2); font-variant-numeric: tabular-nums; }
+  .trilho { display: grid; grid-template-columns: repeat(21, 1fr); gap: 3px; }
+  .trilho i { height: 8px; border-radius: 4px; background: var(--linha); }
+  .trilho i.f1.ok { background: var(--f1); } .trilho i.f2.ok { background: var(--f2); } .trilho i.f3.ok { background: var(--f3); }
+  .trilho i.hoje { outline: 2px solid var(--vinho); outline-offset: 1px; }
+
+  .hoje-card { position: relative; overflow: hidden; border-radius: 22px; background: var(--vinho); color: #fff8ef; padding: 20px; display: grid; grid-template-columns: 1fr 112px; gap: 10px; align-items: center; margin-bottom: 22px; cursor: pointer; border: 0; text-align: left; width: 100%; }
+  .hoje-card small { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--ouro-claro); font-weight: 600; }
+  .hoje-card h2 { font-size: 30px; margin: 4px 0 6px; }
+  .hoje-card p { margin: 0 0 12px; font-size: 14px; opacity: .85; }
+  .hoje-card .ir { display: inline-block; background: #fff8ef; color: var(--vinho); border-radius: 999px; padding: 9px 16px; font-weight: 700; font-size: 13px; letter-spacing: .04em; }
+  .hoje-card .mini { height: 150px; border-radius: 16px; overflow: hidden; background: var(--verde); }
+  .hoje-card .mini svg { width: 100%; height: 100%; display: block; }
+
+  .secao-t { display: flex; justify-content: space-between; align-items: baseline; margin: 0 0 10px; }
+  .secao-t h2 { font-size: 24px; }
+  .secao-t span { font-size: 12px; color: var(--tinta-2); }
+  .fase { margin-bottom: 18px; }
+  .fase-cab { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .fase-cab i { width: 10px; height: 10px; border-radius: 50%; }
+  .fase-cab b { font-family: var(--serif); font-size: 19px; }
+  .fase-cab span { font-size: 12px; color: var(--tinta-2); }
+  .dias { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .dia-b { aspect-ratio: 1; border-radius: 12px; border: 1px solid var(--linha); background: var(--cartao); display: grid; place-items: center; font-weight: 700; font-size: 15px; cursor: pointer; position: relative; font-variant-numeric: tabular-nums; padding: 0; }
+  .dia-b.espelho { font-size: 16px; }
+  .dia-b.ok { color: #fff; border-color: transparent; }
+  .dia-b.ok.f1 { background: var(--f1); } .dia-b.ok.f2 { background: var(--f2); } .dia-b.ok.f3 { background: var(--f3); }
+  .dia-b.hoje { border: 2px solid var(--vinho); }
+  .dia-b.trava { opacity: .45; }
+
+  .bonus-lista { display: grid; gap: 8px; margin-top: 6px; }
+  .bonus-item { display: grid; grid-template-columns: 44px 1fr auto; gap: 12px; align-items: center; background: var(--cartao); border: 1px solid var(--linha); border-radius: 16px; padding: 12px; text-align: left; cursor: pointer; width: 100%; }
+  .bonus-item .ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--rose-claro); font-size: 20px; }
+  .bonus-item b { display: block; font-size: 14.5px; }
+  .bonus-item small { color: var(--tinta-2); font-size: 12.5px; }
+  .bonus-item .seta { color: var(--ouro); font-size: 18px; }
+
+  /* Tela do dia */
+  .dia-cab { display: grid; gap: 6px; margin-bottom: 14px; }
+  .dia-cab .chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip { font-size: 12px; font-weight: 600; padding: 5px 10px; border-radius: 999px; background: var(--cartao); border: 1px solid var(--linha); color: var(--tinta-2); }
+  .chip.fase1 { background: #fbeee6; color: #9c5a3c; border-color: transparent; }
+  .chip.fase2 { background: var(--rose-claro); color: var(--vinho); border-color: transparent; }
+  .chip.fase3 { background: #f2dde1; color: #7d2c3c; border-color: transparent; }
+  .dia-cab h1 { font-size: 36px; }
+
+  .palco { position: relative; border-radius: 22px; overflow: hidden; background: var(--verde); aspect-ratio: 4 / 5; max-height: 52vh; width: 100%; margin: 0 auto 10px; }
+  .palco > #palco { position: absolute; inset: 0; display: grid; place-items: center; }
+  .palco svg { height: 112%; width: auto; max-width: none; display: block; transform: translateY(2%); }
+  .palco-rot { position: absolute; left: 10px; right: 10px; bottom: 10px; background: rgba(42, 29, 31, .82); color: #fff8ef; border-radius: 14px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 13px; }
+  .palco-rot b { font-size: 14px; }
+  .palco-rot span { font-variant-numeric: tabular-nums; color: var(--ouro-claro); font-weight: 600; white-space: nowrap; }
+  .palco-nota { position: absolute; top: 10px; left: 10px; font-size: 10.5px; background: rgba(255, 250, 245, .9); border-radius: 8px; padding: 4px 8px; color: var(--tinta-2); }
+
+  .exercicios { display: grid; gap: 8px; margin: 14px 0 18px; }
+  .ex { background: var(--cartao); border: 1px solid var(--linha); border-radius: 16px; overflow: hidden; }
+  .ex.ativo { border-color: var(--rose); box-shadow: 0 0 0 3px var(--rose-claro); }
+  .ex-top { display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; align-items: center; padding: 12px 14px; width: 100%; border: 0; background: none; text-align: left; cursor: pointer; }
+  .ex-num { width: 30px; height: 30px; border-radius: 50%; background: var(--rose-claro); color: var(--vinho); display: grid; place-items: center; font-weight: 700; font-size: 13px; }
+  .ex.feito .ex-num { background: var(--vinho); color: #fff; }
+  .ex-top b { display: block; font-size: 15px; }
+  .ex-top small { color: var(--tinta-2); font-size: 13px; font-variant-numeric: tabular-nums; }
+  .ex-top .play { color: var(--vinho); font-size: 13px; font-weight: 700; }
+  .ex-corpo { padding: 0 14px 14px 54px; display: grid; gap: 8px; font-size: 14px; }
+  .ex-corpo p { margin: 0; }
+  .metricas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .metricas div { background: var(--fundo); border-radius: 10px; padding: 6px 8px; text-align: center; }
+  .metricas span { display: block; font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em; color: var(--tinta-2); }
+  .metricas b { font-size: 15px; font-variant-numeric: tabular-nums; }
+  .leve { background: #fbeee6; border-radius: 10px; padding: 8px 10px; font-size: 13.5px; }
+  .leve b { color: #9c5a3c; }
+  .acoes { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn-s { border: 1px solid var(--linha); background: var(--fundo); border-radius: 999px; padding: 8px 14px; font-size: 13px; font-weight: 600; cursor: pointer; }
+  .btn-s.on { background: var(--vinho); color: #fff; border-color: var(--vinho); }
+
+  .descanso { position: fixed; left: 0; right: 0; bottom: 0; z-index: 8; background: var(--tinta); color: #fff8ef; padding-block: 14px calc(14px + env(safe-area-inset-bottom, 0px)); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .descanso-in { max-width: 560px; margin: 0 auto; display: flex; align-items: center; gap: 14px; }
+  .descanso-in b { font-family: var(--serif); font-size: 34px; font-variant-numeric: tabular-nums; min-width: 72px; }
+  .descanso-in p { margin: 0; flex: 1; font-size: 14px; }
+  .descanso-in button { border: 0; background: var(--ouro); color: #fff; border-radius: 999px; padding: 10px 14px; font-weight: 700; cursor: pointer; }
+
+  .frase { text-align: center; font-family: var(--serif); font-style: italic; font-size: 21px; color: var(--vinho); margin: 6px 6px 14px; }
+  .btn { display: block; width: 100%; border: 0; border-radius: 999px; padding: 17px; font-weight: 700; font-size: 15px; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; background: var(--tinta); color: #fff8ef; }
+  .btn.feito { background: var(--ouro); }
+  .nav-dias { display: flex; justify-content: space-between; margin-top: 12px; }
+  .nav-dias button { border: 0; background: none; color: var(--tinta-2); font-weight: 600; cursor: pointer; padding: 8px 0; }
+  .nav-dias button:disabled { visibility: hidden; }
+
+  /* Dia do Espelho */
+  .passos { display: grid; gap: 10px; margin: 14px 0 18px; }
+  .passo { background: var(--cartao); border: 1px solid var(--linha); border-radius: 16px; padding: 14px; display: grid; gap: 8px; }
+  .passo h3 { font-size: 20px; }
+  .passo ul { margin: 0; padding-left: 18px; font-size: 14px; }
+  .passo p { margin: 0; font-size: 14px; color: var(--tinta-2); }
+  .nota-row { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; }
+  .nota-row input { width: 100%; accent-color: var(--vinho); }
+  .nota-row output { font-family: var(--serif); font-size: 30px; font-weight: 600; color: var(--vinho); min-width: 44px; text-align: right; font-variant-numeric: tabular-nums; }
+  .nota-hist { font-size: 12.5px; color: var(--tinta-2); }
+  .foto-box { border: 1.5px dashed var(--ouro); border-radius: 14px; aspect-ratio: 4 / 5; max-height: 280px; display: grid; place-items: center; overflow: hidden; background: var(--fundo); cursor: pointer; position: relative; }
+  .foto-box img { width: 100%; height: 100%; object-fit: cover; }
+  .foto-box span { font-size: 13px; color: var(--tinta-2); text-align: center; padding: 10px; }
+  .foto-box input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+
+  /* Bônus */
+  .bonus-pag { display: grid; gap: 10px; }
+  .bonus-pag .passo h3 { display: flex; gap: 8px; align-items: center; }
+
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+
+<header class="topo">
+  <div class="topo-in">
+    <button class="voltar" id="voltar" aria-label="Voltar para o início">&larr;</button>
+    <div class="marca">MÉTODO FEMININO</div>
+    <span></span>
+  </div>
+</header>
+<main id="app"></main>
+<div class="descanso" id="descanso" hidden>
+  <div class="descanso-in"><b id="desc-t">0:30</b><p id="desc-p">Descanse e respire. Já já vem a próxima série.</p><button id="desc-x">Pular</button></div>
+</div>
+
+<script src="personagem.js"></script>
+<script>
+(function () {
+  /* ---------- Biblioteca de exercícios ---------- */
+  var EX = {
+    pulsinho:  { nome: "Pulsinhos pra trás", pose: "pulsinho", como: "Em pé, braços esticados ao lado do corpo, palmas viradas para trás. Leve os braços um pouco para trás e faça pulsos curtos.", dica: "O movimento é pequeno. Pense em apertar a parte de trás do braço.", leve: "Sentada na beira da cadeira." },
+    circulos:  { nome: "Círculos de braço", pose: "circulos", como: "Braços abertos na altura do ombro. Faça círculos pequenos para trás.", dica: "Ombros longe das orelhas, abdômen firme.", leve: "Braços mais baixos e círculos menores." },
+    tchauinv:  { nome: "Tchauzinho invertido", pose: "tchauinv", como: "Tronco levemente inclinado, braços esticados para trás e palmas para cima. Suba e desça as mãos como se desse tchau para trás.", dica: "Mantenha os cotovelos esticados o tempo todo.", leve: "Sentada, um braço de cada vez." },
+    parede:    { nome: "Flexão na parede", pose: "parede", como: "Mãos na parede na altura do peito e cotovelos colados ao corpo. Desça o peito até a parede e empurre.", dica: "Cotovelos apontando para trás, não para os lados: assim o tríceps trabalha.", leve: "Pés mais perto da parede.", perfil: true },
+    cadeira:   { nome: "Tríceps na cadeira", pose: "coice", como: "Mãos na borda de uma cadeira firme e joelhos dobrados. Desça o quadril de 5 a 10 cm dobrando os cotovelos e suba.", dica: "Desça pouco. Se sentir o ombro, pare e troque pelo coice.", leve: "Desça só a metade, com os pés bem perto da cadeira.", perfil: true, ombro: "coice" },
+    coice:     { nome: "Coice com garrafa", pose: "coice", garrafa: true, como: "Tronco inclinado à frente e cotovelo colado na cintura. Estenda o antebraço para trás até o braço ficar reto.", dica: "Só o antebraço se mexe. O cotovelo fica parado.", leve: "Sem garrafa, com a outra mão apoiada na mesa." },
+    extensao:  { nome: "Extensão acima da cabeça", pose: "extensao", garrafa: true, como: "Garrafa com as duas mãos acima da cabeça e cotovelos apontando para o teto. Desça a garrafa atrás da cabeça e suba.", dica: "Cotovelos perto da cabeça, sem abrir.", leve: "Sentada, sem garrafa, um braço de cada vez.", ombro: "coice" },
+    lateral:   { nome: "Elevação lateral", pose: "lateral", garrafa: true, como: "Uma garrafa em cada mão. Suba os braços pelos lados até a altura do ombro.", dica: "Suba devagar e desça mais devagar ainda.", leve: "Sem garrafa, subindo até a metade." },
+    desenv:    { nome: "Desenvolvimento", pose: "desenvolvimento", garrafa: true, como: "Garrafas na altura dos ombros. Empurre para cima até esticar e volte.", dica: "Não trave os cotovelos lá em cima.", leve: "Sentada, sem garrafa." },
+    rosca:     { nome: "Rosca com garrafa", pose: "puxar", garrafa: true, como: "Cotovelos colados no corpo. Dobre levando a garrafa até o ombro.", dica: "Sem balançar o corpo.", leve: "Sem garrafa." },
+    abraco:    { nome: "Abraço deitada", pose: "abraco", garrafa: true, como: "Deitada de barriga para cima, braços abertos com garrafas. Feche os braços como num abraço acima do peito.", dica: "Cotovelos levemente dobrados.", leve: "Sem garrafa.", perfil: true },
+    prancha:   { nome: "Prancha com toque no ombro", pose: "comemorar", como: "Em prancha com os braços esticados, toque a mão no ombro oposto, alternando.", dica: "Quadril parado, sem rebolar.", leve: "De joelhos, ou de pé com as mãos na parede.", perfil: true }
+  };
+
+  /* ---------- Os 21 dias: [exercício, séries, repetições] ---------- */
+  var F = { 1: { nome: "Acordar", min: 10, desc: 30, cor: "f1" }, 2: { nome: "Firmar", min: 15, desc: 40, cor: "f2" }, 3: { nome: "Desenhar", min: 20, desc: 20, cor: "f3" } };
+  var DIAS = {
+    1: [["pulsinho",2,"15"],["circulos",2,"30s"],["parede",2,"8"],["tchauinv",2,"12"]],
+    2: [["pulsinho",2,"15"],["tchauinv",2,"12"],["parede",2,"10"],["coice",2,"10 por braço",1]],
+    3: [["circulos",2,"30s"],["coice",2,"12 por braço",1],["extensao",2,"10",1],["pulsinho",2,"20"]],
+    4: [["parede",2,"10"],["cadeira",2,"6"],["tchauinv",2,"15"],["circulos",2,"30s"]],
+    5: [["pulsinho",3,"15"],["coice",3,"12 por braço",1],["parede",2,"12"],["abraco",2,"12",1]],
+    6: [["extensao",3,"10",1],["cadeira",2,"8"],["pulsinho",3,"20"],["circulos",2,"40s"]],
+    8: [["coice",3,"10 por braço"],["extensao",3,"10"],["pulsinho",3,"20"],["parede",3,"10"],["lateral",2,"10"]],
+    9: [["desenv",3,"10"],["coice",3,"12 por braço"],["cadeira",3,"8"],["tchauinv",3,"15"],["rosca",2,"12"]],
+    10: [["extensao",3,"12"],["abraco",3,"12"],["parede",3,"12"],["pulsinho",3,"25"],["lateral",3,"10"]],
+    11: [["coice",3,"12 por braço"],["desenv",3,"12"],["cadeira",3,"10"],["rosca",3,"12"],["circulos",2,"40s"]],
+    12: [["extensao",3,"12"],["coice",3,"15 por braço"],["lateral",3,"12"],["abraco",3,"15"],["pulsinho",3,"25"]],
+    13: [["cadeira",3,"12"],["extensao",3,"15"],["parede",3,"15"],["desenv",3,"12"],["tchauinv",3,"20"]]
+  };
+  var CIRC = {
+    A: [["coice","12 por braço"],["extensao","12"],["prancha","6 por lado"],["lateral","12"],["pulsinho","30s"],["parede","12"]],
+    B: [["cadeira","10"],["desenv","12"],["abraco","15"],["rosca","12"],["tchauinv","30s"],["circulos","30s"]],
+    C: [["extensao","15"],["coice","15 por braço"],["prancha","8 por lado"],["cadeira","12"],["desenv","12"],["pulsinho","40s"]]
+  };
+  function mais(lista, n) { return lista.map(function (e) { return [e[0], e[1].replace(/^(\d+)/, function (m) { return +m + n; })]; }); }
+  var CIRC_DIA = { 15: ["A", CIRC.A], 16: ["B", CIRC.B], 17: ["A +2", mais(CIRC.A, 2)], 18: ["B +2", mais(CIRC.B, 2)], 19: ["C", CIRC.C], 20: ["C · grande final", CIRC.C] };
+  var FRASES = [
+    "Hoje é o primeiro passo. O resto vem com constância.",
+    "Seu tríceps está acordando. Continue.",
+    "Dez minutos por dia mudam o que um mês de pressa não muda.",
+    "Feito é melhor que perfeito.",
+    "Você está fazendo algo só por você. Isso já é muito.",
+    "O braço firme começa na decisão de hoje.",
+    "Uma semana! Olhe para trás e veja o quanto já fez.",
+    "Agora entra a garrafinha. Você está pronta.",
+    "Força não é idade. É hábito.",
+    "Cada repetição conta, mesmo as difíceis.",
+    "Seu corpo responde a quem cuida dele.",
+    "Metade do caminho. Não pare agora.",
+    "O espelho vai notar antes de você.",
+    "Duas semanas de cuidado. Orgulhe-se.",
+    "Fase final: agora a gente desenha o contorno.",
+    "Mais rápido, mais firme, mais você.",
+    "Você já é outra mulher em relação ao dia 1.",
+    "Constância é o segredo que ninguém conta.",
+    "Faltam poucos dias. Sinta a diferença.",
+    "Grande final! Dê tudo de você hoje.",
+    "Você conseguiu. Esse braço é conquista sua."
+  ];
+  var BONUS = [
+    { ic: "👋", nome: "Teste do Tchauzinho", desc: "Gordura ou músculo dormindo? Descubra em 2 minutos." },
+    { ic: "🗓️", nome: "Calendário dos 21 dias", desc: "Para imprimir e colar na geladeira." },
+    { ic: "🌸", nome: "Firme sem ficar bombada", desc: "Por que a garrafinha não deixa seu braço grande." },
+    { ic: "🥗", nome: "Cardápio simples", desc: "Refeições fáceis para um déficit calórico leve." }
+  ];
+
+  function fase(d) { return d <= 7 ? 1 : d <= 14 ? 2 : 3; }
+  function espelho(d) { return d === 7 || d === 14 || d === 21; }
+
+  /* ---------- Progresso salvo neste navegador ---------- */
+  var CHAVE = "mf-area-previa";
+  var P = { feitos: {}, notas: {}, nome: "Maria" };
+  try { var s = JSON.parse(localStorage.getItem(CHAVE) || "null"); if (s) P = Object.assign(P, s); } catch (e) {}
+  function salvar() { try { localStorage.setItem(CHAVE, JSON.stringify(P)); } catch (e) {} }
+  function total() { return Object.keys(P.feitos).length; }
+  function diaAtual() { for (var d = 1; d <= 21; d++) if (!P.feitos[d]) return d; return 21; }
+
+  var app = document.getElementById("app"), voltar = document.getElementById("voltar");
+  var bonecas = [];
+  function limparBonecas() { bonecas = []; }
+
+  /* ---------- Telas ---------- */
+  function inicio() {
+    var hoje = diaAtual(), f = fase(hoje), feitos = total();
+    var trilho = "";
+    for (var d = 1; d <= 21; d++) trilho += '<i class="' + F[fase(d)].cor + (P.feitos[d] ? " ok" : "") + (d === hoje ? " hoje" : "") + '"></i>';
+    var fasesHtml = [1, 2, 3].map(function (n) {
+      var ini = (n - 1) * 7 + 1, b = "";
+      for (var d = ini; d < ini + 7; d++) {
+        b += '<button class="dia-b ' + F[n].cor + (P.feitos[d] ? " ok" : "") + (d === hoje ? " hoje" : "") + (espelho(d) ? " espelho" : "") +
+          '" data-dia="' + d + '" aria-label="Dia ' + d + (espelho(d) ? ", Dia do Espelho" : "") + (P.feitos[d] ? ", concluído" : "") + '">' + (espelho(d) ? "🪞" : d) + "</button>";
+      }
+      return '<div class="fase"><div class="fase-cab"><i style="background:var(--' + F[n].cor + ')"></i><b>Fase ' + n + " · " + F[n].nome + "</b><span>~" + F[n].min + " min/dia</span></div><div class=\"dias\">" + b + "</div></div>";
+    }).join("");
+    app.innerHTML =
+      '<p class="aviso-previa">Prévia da área da aluna · sem login · o progresso fica só neste navegador</p>' +
+      '<div class="ola"><small>Sua jornada de 21 dias</small><h1>Oi, <em>' + P.nome + "</em></h1></div>" +
+      '<div class="progresso"><div class="prog-top"><b>' + feitos + " de 21 dias</b><span>" + Math.round(feitos / 21 * 100) + "% concluído</span></div><div class=\"trilho\">" + trilho + "</div></div>" +
+      '<button class="hoje-card" data-dia="' + hoje + '"><div><small>Treino de hoje · Fase ' + f + "</small><h2>" + (espelho(hoje) ? "Dia do Espelho" : "Dia " + hoje) + "</h2><p>" +
+        (espelho(hoje) ? "Alongamento, teste do tchauzinho e foto de progresso." : "~" + F[f].min + " minutos · " + (CIRC_DIA[hoje] ? "circuito " + CIRC_DIA[hoje][0] : (DIAS[hoje] || []).length + " exercícios")) +
+        '</p><span class="ir">Começar treino →</span></div><div class="mini" id="mini"></div></button>' +
+      '<div class="secao-t"><h2>Seus 21 dias</h2><span>🪞 = Dia do Espelho</span></div>' + fasesHtml +
+      '<div class="secao-t" style="margin-top:8px"><h2>Seus bônus</h2></div><div class="bonus-lista">' +
+        BONUS.map(function (b, i) { return '<button class="bonus-item" data-bonus="' + i + '"><span class="ic">' + b.ic + "</span><span><b>" + b.nome + "</b><small>" + b.desc + '</small></span><span class="seta">→</span></button>'; }).join("") + "</div>";
+    var p = Personagem.criar(document.getElementById("mini"));
+    p.pose("acenar"); p.expressao("sorrisao");
+  }
+
+  function listaDoDia(d) {
+    if (CIRC_DIA[d]) return CIRC_DIA[d][1].map(function (e) { return { id: e[0], series: "3 rodadas", reps: e[1], semGarrafa: false }; });
+    return (DIAS[d] || []).map(function (e) { return { id: e[0], series: e[1] + " séries", reps: e[2], semGarrafa: !!e[3] || fase(d) === 1 }; });
+  }
+
+  var palco = null, exAtivo = 0;
+  function tocar(lista, i) {
+    exAtivo = i;
+    var e = lista[i], ex = EX[e.id];
+    palco.pose(ex.pose, { garrafa: ex.garrafa && !e.semGarrafa });
+    palco.expressao(i % 2 ? "esforco" : "feliz");
+    palco.destacar(true);
+    document.getElementById("rot-nome").textContent = ex.nome;
+    document.getElementById("rot-reps").textContent = e.series + " · " + e.reps;
+    document.getElementById("rot-nota").hidden = !ex.perfil;
+    app.querySelectorAll(".ex").forEach(function (el, k) { el.classList.toggle("ativo", k === i); });
+  }
+
+  function dia(d) {
+    if (espelho(d)) return diaEspelho(d);
+    var f = fase(d), lista = listaDoDia(d), circ = CIRC_DIA[d];
+    app.innerHTML =
+      '<div class="dia-cab"><div class="chips"><span class="chip fase' + f + '">Fase ' + f + " · " + F[f].nome + '</span><span class="chip">⏱ ~' + F[f].min + ' min</span><span class="chip">' + (f === 1 ? "Sem peso" : "💧 Garrafinha 500 ml") + "</span></div>" +
+      "<h1>Dia " + d + (circ ? " · Circuito " + circ[0] : "") + "</h1>" +
+      (circ ? '<p style="margin:0;color:var(--tinta-2);font-size:14px">Faça os 6 em sequência = 1 rodada. 20s entre exercícios' + (d === 20 ? " (hoje só 15s)" : "") + ", 60s entre rodadas.</p>" : "") + "</div>" +
+      '<div class="palco"><div id="palco"></div><span class="palco-nota" id="rot-nota" hidden>Animação de perfil em produção</span><div class="palco-rot"><b id="rot-nome"></b><span id="rot-reps"></span></div></div>' +
+      '<div class="exercicios">' + lista.map(function (e, i) {
+        var ex = EX[e.id];
+        return '<div class="ex" data-i="' + i + '"><button class="ex-top" data-tocar="' + i + '"><span class="ex-num">' + (i + 1) + "</span><span><b>" + ex.nome + "</b><small>" + e.series + " · " + e.reps + '</small></span><span class="play">▶ Ver</span></button>' +
+          '<div class="ex-corpo"><div class="metricas"><div><span>' + (circ ? "Rodadas" : "Séries") + "</span><b>" + (circ ? "3" : e.series.split(" ")[0]) + "</b></div><div><span>Repetições</span><b>" + e.reps.replace(" por braço", "/braço").replace(" por lado", "/lado") + "</b></div><div><span>Descanso</span><b>" + F[f].desc + "s</b></div></div>" +
+          "<p>" + ex.como + "</p><p><b>Dica:</b> " + ex.dica + "</p>" + (e.semGarrafa && ex.garrafa ? '<p style="color:var(--tinta-2);font-size:13px">Nesta fase, faça sem a garrafa.</p>' : "") +
+          '<div class="leve"><b>Versão leve:</b> ' + ex.leve + (ex.ombro ? " Com dor no ombro, troque pelo " + EX[ex.ombro].nome.toLowerCase() + "." : "") + "</div>" +
+          '<div class="acoes"><button class="btn-s" data-descanso="' + F[f].desc + '">⏱ Descanso ' + F[f].desc + 's</button><button class="btn-s' + (P.feitos[d] ? " on" : "") + '" data-feito="' + i + '">✓ Feito</button></div></div></div>';
+      }).join("") + "</div>" +
+      '<p class="frase">“' + FRASES[d - 1] + "”</p>" +
+      '<button class="btn' + (P.feitos[d] ? " feito" : "") + '" data-concluir="' + d + '">' + (P.feitos[d] ? "✓ Dia concluído" : "Marcar dia como concluído") + "</button>" +
+      navDias(d);
+    palco = Personagem.criar(document.getElementById("palco"));
+    tocar(lista, 0);
+  }
+
+  function diaEspelho(d) {
+    var antes = [7, 14, 21].filter(function (x) { return x < d && P.notas[x] != null; }).map(function (x) { return "Dia " + x + ": " + P.notas[x]; }).join(" · ");
+    var nota = P.notas[d] != null ? P.notas[d] : 5;
+    app.innerHTML =
+      '<div class="dia-cab"><div class="chips"><span class="chip fase' + fase(d) + '">Fase ' + fase(d) + '</span><span class="chip">⏱ ~10 min</span></div><h1>🪞 Dia do Espelho' + (d === 21 ? " final" : "") + "</h1></div>" +
+      '<div class="palco"><div id="palco"></div><div class="palco-rot"><b>Alongamento do tríceps</b><span>30s cada braço</span></div></div>' +
+      '<div class="passos">' +
+        '<div class="passo"><h3>1. Alongamento (5 min)</h3><ul><li>Tríceps atrás da cabeça · 30s cada braço</li><li>Peitoral no batente da porta · 30s</li><li>Braço cruzado na frente do peito · 30s cada</li><li>Círculos lentos · 1 min</li></ul></div>' +
+        '<div class="passo"><h3>2. Teste do Tchauzinho</h3><p>De frente para o espelho, acene 10 vezes. Quanto o braço balança? (0 = nada, 10 = muito)</p>' +
+          '<div class="nota-row"><input type="range" id="nota-' + d + '" min="0" max="10" value="' + nota + '" aria-label="Nota do teste do tchauzinho"><output id="nota-out">' + nota + "</output></div>" +
+          (antes ? '<p class="nota-hist">Suas notas anteriores · ' + antes + "</p>" : "") + "</div>" +
+        '<div class="passo"><h3>3. Foto de progresso</h3><p>Mesma roupa, mesma luz e mesma pose: de frente, de lado e de costas com o braço aberto. A foto fica só no seu celular.</p>' +
+          '<label class="foto-box" id="foto-box"><span>Toque para escolher a foto de hoje</span><input type="file" id="foto-' + d + '" accept="image/*"></label></div>' +
+      "</div>" +
+      '<p class="frase">“' + FRASES[d - 1] + "”</p>" +
+      '<button class="btn' + (P.feitos[d] ? " feito" : "") + '" data-concluir="' + d + '">' + (P.feitos[d] ? "✓ Dia concluído" : "Marcar dia como concluído") + "</button>" + navDias(d);
+    palco = Personagem.criar(document.getElementById("palco"));
+    palco.pose("extensao", { garrafa: false }); palco.expressao("orgulho");
+    var r = document.getElementById("nota-" + d), o = document.getElementById("nota-out");
+    r.addEventListener("input", function () { o.textContent = r.value; P.notas[d] = +r.value; salvar(); });
+    document.getElementById("foto-" + d).addEventListener("change", function (e) {
+      var f = e.target.files && e.target.files[0]; if (!f) return;
+      var img = document.createElement("img"); img.alt = "Foto de progresso do dia " + d; img.src = URL.createObjectURL(f);
+      var box = document.getElementById("foto-box"); box.querySelector("span").replaceWith(img);
+    });
+  }
+
+  function navDias(d) {
+    return '<div class="nav-dias"><button data-dia="' + (d - 1) + '"' + (d <= 1 ? " disabled" : "") + ">← Dia " + (d - 1) + '</button><button data-dia="' + (d + 1) + '"' + (d >= 21 ? " disabled" : "") + ">Dia " + (d + 1) + " →</button></div>";
+  }
+
+  function bonus(i) {
+    var b = BONUS[i];
+    app.innerHTML = '<div class="dia-cab"><div class="chips"><span class="chip">Bônus ' + (i + 1) + ' de 4</span></div><h1>' + b.ic + " " + b.nome + "</h1></div>" +
+      '<div class="bonus-pag"><div class="passo"><p>' + b.desc + '</p><p>Conteúdo completo deste bônus entra aqui (texto, PDF ou vídeo).</p></div></div>';
+  }
+
+  /* ---------- Navegação por hash ---------- */
+  function rota() {
+    limparBonecas();
+    var h = location.hash.replace("#", "");
+    var m = h.match(/^dia-(\d+)$/), b = h.match(/^bonus-(\d)$/);
+    if (m && +m[1] >= 1 && +m[1] <= 21) dia(+m[1]);
+    else if (b && BONUS[+b[1]]) bonus(+b[1]);
+    else inicio();
+    voltar.setAttribute("aria-hidden", h && h !== "inicio" ? "false" : "true");
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener("hashchange", rota);
+  voltar.addEventListener("click", function () { location.hash = "inicio"; });
+
+  /* ---------- Descanso ---------- */
+  var timer = null, desc = document.getElementById("descanso"), descT = document.getElementById("desc-t");
+  function iniciarDescanso(s) {
+    clearInterval(timer); desc.hidden = false;
+    var fim = Date.now() + s * 1000;
+    (function tick() {
+      var r = Math.max(0, Math.round((fim - Date.now()) / 1000));
+      descT.textContent = Math.floor(r / 60) + ":" + ("0" + r % 60).slice(-2);
+      if (!r) { clearInterval(timer); document.getElementById("desc-p").textContent = "Bora! Próxima série."; setTimeout(function () { desc.hidden = true; document.getElementById("desc-p").textContent = "Descanse e respire. Já já vem a próxima série."; }, 1600); }
+    })();
+    timer = setInterval(function () { var r = Math.max(0, Math.round((fim - Date.now()) / 1000)); descT.textContent = Math.floor(r / 60) + ":" + ("0" + r % 60).slice(-2); if (!r) { clearInterval(timer); document.getElementById("desc-p").textContent = "Bora! Próxima série."; setTimeout(function () { desc.hidden = true; document.getElementById("desc-p").textContent = "Descanse e respire. Já já vem a próxima série."; }, 1600); } }, 250);
+  }
+  document.getElementById("desc-x").addEventListener("click", function () { clearInterval(timer); desc.hidden = true; });
+
+  app.addEventListener("click", function (ev) {
+    var el = ev.target.closest("[data-dia],[data-bonus],[data-tocar],[data-descanso],[data-concluir],[data-feito]");
+    if (!el) return;
+    if (el.dataset.dia) { location.hash = "dia-" + el.dataset.dia; return; }
+    if (el.dataset.bonus) { location.hash = "bonus-" + el.dataset.bonus; return; }
+    var m = location.hash.match(/dia-(\d+)/), d = m ? +m[1] : diaAtual();
+    if (el.dataset.tocar) { tocar(listaDoDia(d), +el.dataset.tocar); document.querySelector(".palco").scrollIntoView({ behavior: "smooth", block: "start" }); }
+    else if (el.dataset.descanso) iniciarDescanso(+el.dataset.descanso);
+    else if (el.dataset.feito) {
+      el.classList.toggle("on"); var card = el.closest(".ex"); card.classList.toggle("feito", el.classList.contains("on"));
+      var prox = +el.dataset.feito + 1, lista = listaDoDia(d);
+      if (el.classList.contains("on") && prox < lista.length) tocar(lista, prox);
+    }
+    else if (el.dataset.concluir) {
+      if (P.feitos[d]) delete P.feitos[d]; else P.feitos[d] = Date.now();
+      salvar();
+      el.classList.toggle("feito", !!P.feitos[d]);
+      el.textContent = P.feitos[d] ? "✓ Dia concluído" : "Marcar dia como concluído";
+      if (P.feitos[d] && palco) { palco.pose("comemorar"); palco.expressao("piscadinha"); }
+    }
+  });
+
+  rota();
+})();
+</script>
