@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Personagem · Teste</title>
+<style>
+  :root { --fundo: #f7f1ea; --tinta: #2a1d1f; --ouro: #b08d57; --rose: #e59aa6; --linha: #e3d5c6; }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--fundo); color: var(--tinta); font-family: system-ui, sans-serif; padding: 16px; }
+  h1 { font-family: Georgia, serif; font-size: 20px; text-align: center; letter-spacing: .2em; margin: 6px 0 4px; }
+  p { text-align: center; font-size: 13px; color: #6d5a57; margin-bottom: 10px; }
+  #palco { max-width: 340px; margin: 0 auto; }
+  #palco svg { width: 100%; height: auto; display: block; }
+  .grupo { max-width: 420px; margin: 10px auto 0; }
+  .grupo b { display: block; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--ouro); margin-bottom: 6px; }
+  .botoes { display: flex; flex-wrap: wrap; gap: 6px; }
+  button { border: 1px solid var(--linha); background: #fffaf5; border-radius: 999px; padding: 9px 14px; font-size: 14px; cursor: pointer; color: var(--tinta); }
+  button.on { background: var(--tinta); color: #fff8ef; border-color: var(--tinta); }
+</style>
+</head>
+<body>
+  <h1>PERSONAGEM</h1>
+  <p>Teste de movimento e expressões</p>
+  <div id="palco"></div>
+
+  <div class="grupo"><b>Movimento</b><div class="botoes" id="poses"></div></div>
+  <div class="grupo"><b>Expressão</b><div class="botoes" id="expr"></div></div>
+  <div class="grupo"><b>Destaque</b><div class="botoes"><button id="tri">Brilho no tríceps</button></div></div>
+
+  <script src="personagem.js"></script>
+  <script>
+    var p = Personagem.criar(document.getElementById("palco"));
+    var nomes = { repouso: "Parada", acenar: "Acenar", extensao: "Extensão c/ garrafa", coice: "Abrir e estender", comemorar: "Comemorar" };
+    var exprN = { feliz: "Feliz", sorrisao: "Sorrisão", piscadinha: "Piscadinha", esforco: "Esforço", orgulho: "Orgulho" };
+    function grupo(id, lista, rot, fn, ini) {
+      var box = document.getElementById(id);
+      lista.forEach(function (n) {
+        var b = document.createElement("button"); b.textContent = rot[n]; if (n === ini) b.className = "on";
+        b.onclick = function () { box.querySelectorAll("button").forEach(function (x) { x.className = ""; }); b.className = "on"; fn(n); };
+        box.appendChild(b);
+      });
+    }
+    grupo("poses", Personagem.poses, nomes, function (n) { p.pose(n); }, "repouso");
+    grupo("expr", Personagem.expressoes, exprN, function (n) { p.expressao(n); }, "feliz");
+    var tri = document.getElementById("tri"), on = false;
+    tri.onclick = function () { on = !on; tri.className = on ? "on" : ""; p.destacar(on); };
+    // estado inicial via URL: ?pose=acenar&expr=sorrisao
+    var u = new URLSearchParams(location.search);
+    if (u.get("pose")) p.pose(u.get("pose"));
+    if (u.get("expr")) p.expressao(u.get("expr"));
+    if (u.get("tri")) p.destacar(true);
+  </script>
+</body>
+</html>
