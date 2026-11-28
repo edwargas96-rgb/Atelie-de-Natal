@@ -16,7 +16,7 @@
     legging: "#82323F", leggingSombra: "#6E2A35",
     tenis: "#F4E3CF", sola: "#DCC3A3",
     olho: "#3A2118", boca: "#C8505A", vinco: "#C98A5C", bochecha: "#EE8F84",
-    destaque: "#E59AA6"
+    destaque: "#E0405E"
   };
 
   // Pivôs e comprimentos derivados do JSON
@@ -40,7 +40,7 @@
       grad("gLeg", "#93404D", C.legging, C.leggingSombra) +
       grad("gCab", C.cabeloLuz, C.cabelo, "#48241A") +
       grad("gTenis", "#FFF6EA", C.tenis, "#E8D2B8") +
-      '<radialGradient id="gBrilho"><stop offset="0" stop-color="' + C.destaque + '" stop-opacity=".95"/><stop offset="1" stop-color="' + C.destaque + '" stop-opacity="0"/></radialGradient>' +
+      '<radialGradient id="gBrilho"><stop offset="0" stop-color="' + C.destaque + '" stop-opacity="1"/><stop offset=".6" stop-color="' + C.destaque + '" stop-opacity=".75"/><stop offset="1" stop-color="' + C.destaque + '" stop-opacity="0"/></radialGradient>' +
       // granulado leve de "massinha"
       '<filter id="massinha" x="-5%" y="-5%" width="110%" height="110%">' +
       '<feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves="2" seed="3" result="r"/>' +
@@ -58,7 +58,7 @@
     return '<g id="' + id + '" filter="url(#massinha)">' +
       '<g class="seg-u">' +
         '<path d="' + capsula(B.u, 100, 80) + '" fill="url(#gPele)"/>' +
-        '<ellipse class="triceps" cx="' + (B.u * .5) + '" cy="0" rx="' + (B.u * .55) + '" ry="52" fill="url(#gBrilho)" opacity="0"/>' +
+        '<ellipse class="triceps" cx="' + (B.u * .55) + '" cy="0" rx="' + (B.u * .42) + '" ry="42" fill="url(#gBrilho)" opacity="0" style="mix-blend-mode:multiply"/>' +
         '<g class="seg-f" transform="translate(' + B.u + ',0)">' +
           '<circle r="40" fill="' + C.pele + '"/>' +
           '<path d="' + capsula(B.f, 78, 60) + '" fill="url(#gPele)"/>' +
@@ -162,8 +162,8 @@
       return { r: [228, 42 + o * 24, o * 12], l: [58, 4, 0] };
     },
     extensao: function (t) { // extensão acima da cabeça com garrafa
-      var k = .5 + .5 * Math.cos(t * 2.4); // 1 = dobrado atrás da cabeça
-      return { r: [256, 12 + 150 * k, 0], l: [284, -(12 + 150 * k), 0] };
+      var k = .5 + .5 * Math.cos(t * 2.2); // 1 = dobrado atrás da cabeça
+      return { r: [264, 10 + 172 * k, 0], l: [276, -(10 + 172 * k), 0], sobe: 95 };
     },
     coice: function (t) { // braço desce e estende para trás (vista frontal: abre e estica)
       var k = .5 + .5 * Math.cos(t * 3);
@@ -175,12 +175,63 @@
     }
   };
 
-  function criar(alvo) {
+  function cenario() {
+    var M = '#5c6b58';
+    return '<g id="sala">' +
+      // parede e rodapé
+      '<rect x="-40" y="-300" width="1104" height="1560" fill="#DCEBD8"/>' +
+      '<rect x="-40" y="1230" width="1104" height="310" fill="#EBE1D2"/>' +
+      '<rect x="-40" y="1222" width="1104" height="16" fill="#C9DBC4"/>' +
+      // quadro na parede
+      '<rect x="640" y="-80" width="200" height="250" rx="10" fill="#F7F1EA" stroke="#B08D57" stroke-width="8"/>' +
+      '<path d="M690,110 Q740,10 790,110" fill="none" stroke="#E59AA6" stroke-width="10" stroke-linecap="round"/>' +
+      '<circle cx="740" cy="40" r="18" fill="#E59AA6" opacity=".8"/>' +
+      // sofá (lado esquerdo, atrás dela)
+      '<g>' +
+        '<rect x="-30" y="840" width="430" height="200" rx="60" fill="#A9C3A4"/>' +
+        '<rect x="-30" y="990" width="460" height="170" rx="40" fill="#97B592"/>' +
+        '<rect x="-50" y="900" width="90" height="260" rx="40" fill="#8EAD89"/>' +
+        '<rect x="20" y="870" width="150" height="130" rx="34" fill="#F7E3D6" transform="rotate(-8 95 935)"/>' +
+        '<rect x="-20" y="1150" width="24" height="70" rx="8" fill="#B08D57"/>' +
+        '<rect x="390" y="1150" width="24" height="70" rx="8" fill="#B08D57"/>' +
+      '</g>' +
+      // estante / mesinha com abajur (lado direito)
+      '<g>' +
+        '<rect x="770" y="900" width="250" height="330" rx="12" fill="#D8B48A"/>' +
+        '<rect x="770" y="900" width="250" height="24" rx="8" fill="#C59C6E"/>' +
+        '<rect x="790" y="1050" width="210" height="14" rx="6" fill="#C59C6E"/>' +
+        '<rect x="800" y="1000" width="60" height="50" rx="6" fill="#E59AA6"/>' +
+        '<rect x="866" y="990" width="40" height="60" rx="6" fill="#F7F1EA"/>' +
+        // abajur
+        '<ellipse cx="840" cy="560" rx="150" ry="120" fill="#FFF3D6" opacity=".55"/>' +
+        '<rect x="828" y="700" width="24" height="200" fill="#B08D57"/>' +
+        '<ellipse cx="840" cy="895" rx="56" ry="14" fill="#B08D57"/>' +
+        '<path d="M760,710 L920,710 L880,560 L800,560 Z" fill="#FBEFD9" stroke="#E8D6B4" stroke-width="5"/>' +
+      '</g>' +
+      // gatinho sentado em cima da estante
+      '<g id="gato">' +
+        '<g class="rabo"><path d="M985,885 C1040,880 1050,820 1020,790" fill="none" stroke="#9A9A9A" stroke-width="16" stroke-linecap="round"/></g>' +
+        '<ellipse cx="955" cy="850" rx="52" ry="52" fill="#A8A8A8"/>' +
+        '<circle cx="940" cy="782" r="36" fill="#A8A8A8"/>' +
+        '<path d="M912,762 L914,730 L936,752 Z M946,750 L966,728 L970,760 Z" fill="#A8A8A8"/>' +
+        '<path d="M917,758 L918,742 L929,753 Z M952,752 L963,740 L965,757 Z" fill="#E59AA6"/>' +
+        '<path d="M926,780 q4,-5 8,0 M946,780 q4,-5 8,0" stroke="' + M + '" stroke-width="3.5" fill="none" stroke-linecap="round"/>' +
+        '<path d="M936,792 q4,4 8,0" stroke="' + M + '" stroke-width="3" fill="none" stroke-linecap="round"/>' +
+        '<ellipse cx="930" cy="896" rx="18" ry="10" fill="#BDBDBD"/><ellipse cx="968" cy="898" rx="18" ry="10" fill="#BDBDBD"/>' +
+      '</g>' +
+      // tapete aos pés dela
+      '<ellipse cx="512" cy="1490" rx="360" ry="72" fill="#F3D6D9"/>' +
+      '<ellipse cx="512" cy="1490" rx="320" ry="56" fill="none" stroke="#FBEFF0" stroke-width="8" stroke-dasharray="4 18" stroke-linecap="round"/>' +
+      '</g>';
+  }
+
+  function criar(alvo, opcoes) {
+    opcoes = opcoes || {};
     var svg = document.createElementNS(NS, "svg");
     svg.setAttribute("viewBox", "-40 -300 1104 1840");
     svg.setAttribute("role", "img");
     svg.setAttribute("aria-label", "Personagem do Método Feminino");
-    svg.innerHTML = defs() + '<g id="boneca">' + corpo() + braco("braco-d", BR, false) + braco("braco-e", BL, true) + cabeca() + "</g>";
+    svg.innerHTML = defs() + (opcoes.cenario === false ? "" : cenario()) + '<g id="boneca">' + corpo() + braco("braco-d", BR, false) + braco("braco-e", BL, true) + cabeca() + "</g>";
     alvo.appendChild(svg);
 
     var q = function (s) { return svg.querySelector(s); };
@@ -189,14 +240,20 @@
       return { u: b.querySelector(".seg-u"), f: b.querySelector(".seg-f"), m: b.querySelector(".seg-m"), tri: b.querySelector(".triceps"), gar: b.querySelector(".garrafa") };
     };
     var D = seg("braco-d"), E = seg("braco-e");
-    var cab = q("#cabeca"), tronco = q("#tronco");
+    var cab = q("#cabeca"), tronco = q("#tronco"), rabo = q("#gato .rabo");
+    var bD = q("#braco-d"), bE = q("#braco-e");
+    function camadas(atras) {
+      var ref = atras ? tronco : cab;
+      ref.parentNode.insertBefore(bD, ref); ref.parentNode.insertBefore(bE, ref);
+    }
     var olhos = [q("#olho-d"), q("#olho-e")], olhoFechado = q("#olho-e-fechado");
 
     var atual = { r: [122.3, 2.1, 0], l: [56.3, 1, 0] };
     var estado = { pose: "repouso", expr: "feliz", destaque: false, t0: performance.now(), piscaEm: 1500 };
 
+    var sobe = 0;
     function aplica(S, B, a, lado) {
-      S.u.setAttribute("transform", "translate(" + B.ombro[0] + "," + B.ombro[1] + ") rotate(" + a[0] + ")");
+      S.u.setAttribute("transform", "translate(" + B.ombro[0] + "," + (B.ombro[1] - sobe) + ") rotate(" + a[0] + ")");
       S.f.setAttribute("transform", "translate(" + B.u + ",0) rotate(" + a[1] + ")");
       S.m.setAttribute("transform", "translate(" + B.f + ",0) rotate(" + a[2] + ")");
     }
@@ -215,6 +272,7 @@
     function quadro(agora) {
       var t = (agora - estado.t0) / 1000;
       var alvoP = POSES[estado.pose](t);
+      sobe += ((alvoP.sobe || 0) - sobe) * .14;
       // aproximação suave da pose (efeito "massinha" elástico)
       ["r", "l"].forEach(function (k) {
         for (var i = 0; i < 3; i++) atual[k][i] += (alvoP[k][i] - atual[k][i]) * .14;
@@ -234,8 +292,9 @@
       if (estado.expr !== "piscadinha") olhos[1].setAttribute("transform", "translate(0," + 206 * fecha * .9 + ") scale(1," + (1 - fecha * .9) + ")");
 
       // brilho do tríceps
-      var br = estado.destaque ? .45 + .4 * Math.sin(agora / 260) : 0;
+      var br = estado.destaque ? .75 + .25 * Math.sin(agora / 260) : 0;
       D.tri.setAttribute("opacity", br); E.tri.setAttribute("opacity", br);
+      if (rabo) rabo.setAttribute("transform", "rotate(" + (Math.sin(agora / 420) * 14) + " 985 885)");
       requestAnimationFrame(quadro);
     }
 
@@ -248,6 +307,7 @@
         estado.pose = POSES[nome] ? nome : "repouso";
         estado.t0 = performance.now();
         var garrafa = nome === "extensao";
+        camadas(garrafa);
         D.gar.setAttribute("opacity", garrafa ? 1 : 0);
       },
       expressao: expressao,
